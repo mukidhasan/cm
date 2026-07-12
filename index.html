@@ -1,53 +1,816 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hasan Library</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M. Mukid Hasan Seiam - Tech & Creative Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- PDFJS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-blue': '#0ea5e9',
+                        'brand-black': '#111111',
+                    },
+                    fontFamily: {
+                        'heading': ['Anton', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                        'signature': ['"Brush Script MT"', 'cursive']
+                    }
+                }
+            }
+        }
+
+        function handleMissingImage(img, filename) {
+            if (img.src.includes('data:image/gif')) return; 
+            const parent = img.parentElement;
+            parent.classList.add('min-h-[250px]'); // Prevents collapse when image is missing
+            img.style.display = 'none';
+            if (!parent.querySelector('.error-box')) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = "error-box absolute inset-0 flex flex-col items-center justify-center p-4 bg-gray-100 border border-dashed border-sky-400 text-center z-10";
+                errorDiv.innerHTML = `<svg class="w-8 h-8 text-brand-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg><span class="text-xs font-mono font-bold text-brand-black">${filename}</span><span class="text-[10px] uppercase tracking-wider font-bold text-brand-blue mt-1">(File Missing)</span>`;
+                parent.appendChild(errorDiv);
+            }
+        }
+
+        function openModal() {
+            const modal = document.getElementById('contactModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('contactModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+            const form = event.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('submitBtn');
+            const btnOriginalText = submitBtn.innerHTML;
+            const name = formData.get('name'), address = formData.get('address'), phone = formData.get('phone'), subject = formData.get('subject');
+
+            const currentLang = localStorage.getItem('lang') || 'EN';
+            const sendingText = currentLang === 'BN' ? 'পাঠানো হচ্ছে...' : 'Sending...';
+
+            submitBtn.innerHTML = sendingText;
+            submitBtn.disabled = true;
+
+            fetch('https://formsubmit.co/ajax/seamrex@gmail.com', {
+                method: 'POST', headers: { 'Accept': 'application/json' }, body: formData
+            })
+            .then(response => {
+                if (response.ok) { alert(currentLang === 'BN' ? "বার্তা সফলভাবে পাঠানো হয়েছে!" : "Message sent successfully!"); form.reset(); closeModal(); } 
+                else { throw new Error("FormSubmit server issue."); }
+            })
+            .catch(error => {
+                const mailtoSubject = encodeURIComponent(subject);
+                const mailtoBody = encodeURIComponent(`Name: ${name}\nAddress: ${address}\nPhone Number: ${phone}\n\n(Write your additional message here...)`);
+                window.location.href = `mailto:seamrex@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+                form.reset(); closeModal();
+            })
+            .finally(() => { submitBtn.innerHTML = btnOriginalText; submitBtn.disabled = false; });
+        }
+    </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            text-align: center;
-            padding: 50px;
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        .font-heading { font-family: 'Anton', sans-serif; letter-spacing: 0.02em; }
+        .circular-text { animation: rotate 15s linear infinite; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        /* 3D Book Mockup CSS */
+        .book-container-3d { perspective: 1000px; }
+        .book-mockup {
+            width: 220px; height: 320px; position: relative; transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
-        h1 {
-            color: #333;
+        .book-container-3d:hover .book-mockup {
+            transform: rotateY(-28deg) rotateX(10deg); box-shadow: -10px 20px 40px rgba(0,0,0,0.4);
         }
-        .book-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 400px;
-            margin: 30px auto;
+        .book-cover {
+            position: absolute; width: 100%; height: 100%; background: linear-gradient(135deg, #0b1121, #020617);
+            border-radius: 0 5px 5px 0; transform: translateZ(12px); z-index: 2; overflow: hidden;
+            border-left: 6px solid #020617; display: flex; flex-direction: column; justify-content: space-between; padding: 24px 16px;
         }
-        .book-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: 0.3s;
+        .book-cover::before {
+            content: ''; position: absolute; top: -20%; left: -20%; width: 200px; height: 200px;
+            background: linear-gradient(135deg, #4f46e5, #9333ea); border-radius: 50%; filter: blur(50px); opacity: 0.5; z-index: 0;
         }
-        .book-btn:hover {
-            background-color: #0056b3;
+        .book-cover::after {
+            content: ''; position: absolute; bottom: -20%; right: -20%; width: 180px; height: 180px;
+            background: linear-gradient(135deg, #06b6d4, #2563eb); border-radius: 50%; filter: blur(40px); opacity: 0.4; z-index: 0;
         }
+        .book-cover-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; justify-content: space-between; text-align: center; }
+        .book-cover-content h3 { font-family: 'Inter', sans-serif; font-weight: 700; }
+        .book-spine { position: absolute; width: 24px; height: 100%; background: #020617; transform: rotateY(-90deg) translateZ(12px); transform-origin: left; z-index: 1; box-shadow: inset -3px 0 10px rgba(255,255,255,0.1); }
+        .book-pages { position: absolute; width: 212px; height: 310px; background: #f1f5f9; top: 5px; right: 1px; transform: translateZ(6px); box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 0; border-radius: 0 4px 4px 0; background-image: linear-gradient(to right, #f1f5f9 95%, #cbd5e1 100%); }
+
+        /* 3D Book Interactive Reader Modal CSS */
+        .modal-book-container { perspective: 2000px; -webkit-perspective: 2000px; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; overflow: visible; }
+        .modal-book { width: 380px; height: 540px; position: relative; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; box-shadow: 0 30px 60px rgba(0,0,0,0.8); border-radius: 5px 15px 15px 5px; cursor: pointer; display: none; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+        .modal-page { width: 100%; height: 100%; position: absolute; top: 0; left: 0; transform-origin: left center; -webkit-transform-origin: left center; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); -webkit-transition: -webkit-transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); border-radius: 5px 15px 15px 5px; }
+        .modal-front, .modal-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 35px; border: 1px solid #e2e8f0; box-shadow: inset 0 0 20px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; }
+        .modal-front { background-color: #ffffff; border-radius: 5px 15px 15px 5px; }
+        .modal-back { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); background-color: #f8fafc; border-radius: 15px 5px 5px 15px; }
+        .modal-front.modal-cover-front { background-color: #0b1121; border-left: 12px solid #020617; justify-content: center; align-items: center; position: relative; color: #ffffff; }
+        .modal-back.modal-cover-back { background-color: #0b1121; border-right: 12px solid #020617; justify-content: center; align-items: center; position: relative; color: #ffffff; }
+        .modal-front.modal-cover-front h1 { font-size: 26px; font-weight: 800; text-align: center; text-transform: uppercase; line-height: 1.3; }
+        .modal-front.modal-cover-front .modal-context { margin-top: 25px; padding: 10px 18px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px; font-size: 11px; text-align: center; line-height: 1.4; }
+        .modal-front.modal-cover-front .modal-author { font-size: 13px; margin-top: 50px; color: #94a3b8; }
+        .modal-back.modal-cover-back h2 { font-size: 24px; color: #ffffff; border: none; }
+        .modal-front canvas, .modal-back canvas { width: 100%; height: 100%; object-fit: contain; }
+        .modal-page.flipped { transform: rotateY(-180deg) !important; -webkit-transform: rotateY(-180deg) !important; }
+        .modal-book-verse { background-color: #f1f5f9; border-left: 4px solid #3b82f6; padding: 16px; font-size: 12px; font-style: italic; color: #475569; border-radius: 0 6px 6px 0; margin: 16px 0; }
+
+        @media (max-width: 850px) { .modal-book { width: 300px; height: 426px; } .modal-front, .modal-back { padding: 25px; } .modal-front.modal-cover-front h1 { font-size: 22px; } }
+        @media (max-width: 550px) { .modal-book { width: 45vw; height: 64vw; } .modal-front, .modal-back { padding: 15px; } .modal-front.modal-cover-front h1 { font-size: 16px; } .modal-front.modal-cover-front .modal-context { font-size: 9px; margin-top: 15px; padding: 8px; } .modal-front.modal-cover-front .modal-author { font-size: 10px; margin-top: 20px; } .modal-front h2, .modal-back h2 { font-size: 13px; margin-bottom: 6px; padding-bottom: 4px; } .modal-front p, .modal-back p { font-size: 9px; margin-bottom: 6px; line-height: 1.4; } .modal-book-verse { padding: 8px; font-size: 8.5px; margin: 8px 0; } }
     </style>
 </head>
-<body>
+<body class="bg-[#fafafa] text-brand-black overflow-x-hidden">
 
-    <h1>Welcome to Hasan Library</h1>
-    <p>Nicher theke kono ekta boi select koro:</p>
+    <div class="w-full mx-auto px-6 md:px-12 lg:px-16 bg-white shadow-sm border border-gray-100 relative min-h-screen">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center py-6 border-b border-gray-200">
+            <span onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-3xl font-black tracking-tighter hover:opacity-80 transition cursor-pointer">M<span class="text-brand-blue">.</span></span>
+            <nav class="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-gray-600">
+                <span onclick="openBooksModal()" data-translate="nav_books" class="hover:text-brand-black transition cursor-pointer">My Books</span>
+                <span onclick="document.getElementById('expertise').scrollIntoView({behavior: 'smooth'})" data-translate="nav_expertise" class="hover:text-brand-black transition cursor-pointer">Expertise</span>
+                <span onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})" data-translate="nav_about" class="hover:text-brand-black transition cursor-pointer">About</span>
+                <span onclick="document.getElementById('experience').scrollIntoView({behavior: 'smooth'})" data-translate="nav_experience" class="hover:text-brand-black transition cursor-pointer">Experience</span>
+                <span onclick="openModal()" data-translate="nav_contact" class="hover:text-brand-black transition cursor-pointer">Contact</span>
+            </nav>
+            <button onclick="openModal()" data-translate="let_talk" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-wider py-3 px-6 flex items-center gap-2 hover:bg-sky-600 transition">
+                Let's Talk <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M5 19L19 5M19 5v14M19 5H5"></path></svg>
+            </button>
+        </header>
 
-    <div class="book-list">
-        <!-- Niche boi gulor link dewa ache -->
-        
-        <a href="book1.html" target="_blank" class="book-btn">Amar Prothom Boi er Naam</a>
-        
-        <a href="book2.html" target="_blank" class="book-btn">Amar Ditiyo Boi er Naam</a>
-        
-        <!-- Aro boi thakle uporer line ta copy kore ekhane paste korte parbe -->
+        <!-- Hero Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-16 pb-0 relative">
+            <div class="lg:col-span-7 flex flex-col justify-center z-10 relative">
+                <h1 id="hero_title" data-translate="hero_title" class="font-heading text-[5.5rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] uppercase text-brand-black mb-6 relative">
+                    TECH <span class="text-brand-blue absolute top-0 text-[4rem] md:text-[6rem] lg:text-[8rem]">*</span><br>SPECIALIST
+                </h1>
+                <div class="max-w-md mt-4">
+                    <h2 class="text-xl md:text-2xl font-bold uppercase leading-tight mb-4">
+                        <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Bridging hardware logic with</span><br>
+                        <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">creative digital experiences.</span>
+                    </h2>
+                    <p id="hero_desc" data-translate="hero_desc" class="text-gray-500 text-sm mb-8 leading-relaxed">
+                        I am M. Mukid Hasan Seiam. With over 8 years in tech diagnostics...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Image 1 (Auto-fit Canva Ratio applied here) -->
+            <div class="lg:col-span-5 relative min-h-[500px] flex items-start justify-end">
+                <div class="absolute top-0 right-0 w-[80%] h-full bg-brand-blue z-0"></div>
+                <div class="absolute top-8 right-8 text-white text-right text-[10px] font-bold uppercase tracking-widest z-20" data-translate="based_in">Based in<br>Dhaka, BD</div>
+                <div class="relative z-10 w-[90%] bg-gray-200 overflow-hidden border-b-8 border-brand-black">
+                    <img id="img-photo1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Tech Setup" class="w-full h-auto block object-cover" onerror="handleMissingImage(this, 'photo1')">
+                </div>
+                <div class="absolute bottom-10 -left-16 z-30 w-40 h-40 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-xl">
+                    <svg class="w-full h-full circular-text absolute" viewBox="0 0 100 100">
+                        <path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" id="circle" fill="none" />
+                        <text class="text-[9.5px] font-bold uppercase tracking-widest" fill="#000">
+                            <textPath id="circular-text-path" data-translate="circular_text" href="#circle" startOffset="0%">• IT SUPPORT • 2D GAME Dev • DATA Entry</textPath>
+                        </text>
+                    </svg>
+                    <div class="text-center">
+                        <span class="block text-[9px] font-bold uppercase tracking-widest text-gray-500" data-translate="ready_for">Ready For</span>
+                        <span class="block text-xs font-black uppercase tracking-wider text-brand-black" data-translate="new_roles">New Roles</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="bg-brand-black text-white py-12 px-6 mt-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-gray-700 text-center">
+                <div class="flex flex-col items-center">
+                    <span id="stat1_num" class="text-brand-blue font-heading text-5xl md:text-6xl mb-2">8+</span>
+                    <span id="stat1_text" data-translate="stat1_text" class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Years Tech<br>Experience</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="stat2_num" class="text-brand-blue font-heading text-5xl md:text-6xl mb-2">100+</span>
+                    <span id="stat2_text" data-translate="stat2_text" class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Hardware Issues<br>Resolved</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="stat3_num" class="text-brand-blue font-heading text-5xl md:text-6xl mb-2">2+</span>
+                    <span id="stat3_text" data-translate="stat3_text" class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Open-Source<br>Engines</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="stat4_num" class="text-brand-blue font-heading text-5xl md:text-6xl mb-2">1</span>
+                    <span id="stat4_text" data-translate="stat4_text" class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Vintage Media<br>Platform</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Highlights Section -->
+        <section id="experience" class="py-20">
+            <div class="flex justify-between items-end mb-10">
+                <h2 class="font-heading text-5xl md:text-6xl uppercase leading-none" data-translate="career_title">Career Highlights</h2>
+            </div>
+            
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                <p class="text-sm font-bold text-gray-400 animate-pulse col-span-3 text-center py-10" data-translate="loading_projects">Loading Projects...</p>
+            </div>
+        </section>
+
+        <!-- Expertise Section -->
+        <section id="expertise" class="border-t border-gray-200 py-20 flex flex-col lg:flex-row gap-10">
+            <div class="lg:w-1/3 bg-brand-blue text-brand-black p-12 flex flex-col justify-between min-h-[300px]">
+                <h2 id="expertise_title" data-translate="expertise_title" class="font-heading text-5xl md:text-6xl uppercase tracking-wide mt-auto">My<br>Expertise</h2>
+            </div>
+            <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                <div>
+                    <h4 id="exp1_title" data-translate="exp1_title" class="font-bold text-sm uppercase tracking-wider mb-2">Hardware Diagnostics</h4>
+                    <p id="exp1_desc" data-translate="exp1_desc" class="text-xs text-gray-500 leading-relaxed">...</p>
+                </div>
+                <div>
+                    <h4 id="exp2_title" data-translate="exp2_title" class="font-bold text-sm uppercase tracking-wider mb-2">Computer Operations</h4>
+                    <p id="exp2_desc" data-translate="exp2_desc" class="text-xs text-gray-500 leading-relaxed">...</p>
+                </div>
+                <div>
+                    <h4 id="exp3_title" data-translate="exp3_title" class="font-bold text-sm uppercase tracking-wider mb-2">Learning 2D Game Dev</h4>
+                    <p id="exp3_desc" data-translate="exp3_desc" class="text-xs text-gray-500 leading-relaxed">...</p>
+                </div>
+                <div>
+                    <h4 id="exp4_title" data-translate="exp4_title" class="font-bold text-sm uppercase tracking-wider mb-2">AI Image Generation</h4>
+                    <p id="exp4_desc" data-translate="exp4_desc" class="text-xs text-gray-500 leading-relaxed">...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 border-t border-gray-200">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <span id="about_tag" data-translate="about_tag" class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">About Me</span>
+                    <h2 id="about_title" data-translate="about_title" class="font-heading text-4xl uppercase leading-tight mb-6">Tech is about<br>solving problems<br>and building worlds.</h2>
+                    <p id="about_desc" data-translate="about_desc" class="text-xs text-gray-500 leading-relaxed mb-6">...</p>
+                    <div id="about_signature" data-translate="about_signature" class="font-signature text-3xl opacity-80">Mukid Hasan</div>
+                </div>
+                <!-- About Image (Auto-fit Canva Ratio applied here) -->
+                <div class="relative flex justify-center items-end">
+                    <div class="absolute inset-0 bg-brand-blue w-1/2 ml-auto h-[80%] bottom-0 z-0"></div>
+                    <div class="relative z-10 w-[80%] bg-gray-200 overflow-hidden">
+                        <img id="img-photo5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Mukid Hasan Portrait" class="w-full h-auto block object-cover" onerror="handleMissingImage(this, 'photo5')">
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center gap-6 pt-10">
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2"><span id="skill1_name" data-translate="skill1_name" class="text-gray-500">Tech Troubleshooting</span><span id="skill1_pct" class="text-brand-black">95%</span></div>
+                        <div class="h-[2px] w-full bg-gray-200 relative"><div id="skill1_pct_bar" class="absolute top-0 left-0 h-full bg-brand-blue w-[95%] transition-all duration-1000"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2"><span id="skill2_name" data-translate="skill2_name" class="text-gray-500">Computer Operations</span><span id="skill2_pct" class="text-brand-black">90%</span></div>
+                        <div class="h-[2px] w-full bg-gray-200 relative"><div id="skill2_pct_bar" class="absolute top-0 left-0 h-full bg-brand-blue w-[90%] transition-all duration-1000"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2"><span id="skill3_name" data-translate="skill3_name" class="text-gray-500">Learning Game Dev</span><span id="skill3_pct" class="text-brand-black">65%</span></div>
+                        <div class="h-[2px] w-full bg-gray-200 relative"><div id="skill3_pct_bar" class="absolute top-0 left-0 h-full bg-brand-blue w-[65%] transition-all duration-1000"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="flex flex-col lg:flex-row bg-brand-black pt-12 pb-2">
+            <div class="lg:w-2/3 bg-brand-blue text-white p-12 flex justify-between items-center">
+                <h2 id="footer_title" data-translate="footer_title" class="font-heading text-4xl md:text-5xl uppercase leading-none w-2/3">Let's Create<br>Something Great<br>Together.</h2>
+                <button onclick="openModal()" class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-brand-black hover:scale-110 transition duration-300"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M5 19L19 5M19 5v14M19 5H5"></path></svg></button>
+            </div>
+            <div class="lg:w-1/3 p-12 flex justify-between bg-brand-black text-white border-l border-gray-800">
+                <div>
+                    <h4 id="footer_contact_tag" data-translate="footer_contact_tag" class="text-[10px] font-bold uppercase tracking-widest text-brand-blue mb-4">Contact Info</h4>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li id="footer_location" data-translate="footer_location">Dhaka, Bangladesh</li>
+                        <li><a id="footer_email" href="mailto:seamrex@gmail.com" class="hover:text-white transition">seamrex@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </div>
 
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 hidden opacity-0 transition-opacity duration-300 px-4">
+        <div class="bg-white p-8 w-full max-w-md relative border-t-4 border-brand-blue shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-blue transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <h3 class="font-heading text-4xl uppercase tracking-wide mb-2 text-brand-black" data-translate="modal_title">Let's Connect</h3>
+            <p class="text-xs text-gray-500 mb-6" data-translate="modal_subtitle">Send me a message and I'll get back to you shortly.</p>
+            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="text" name="_honey" style="display:none">
+                <div><label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-translate="label_name">Name <span class="text-brand-blue">*</span></label><input type="text" name="name" required class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue"></div>
+                <div><label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-translate="label_address">Address <span class="text-brand-blue">*</span></label><input type="text" name="address" required class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue"></div>
+                <div><label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-translate="label_phone">Phone (BD) <span class="text-brand-blue">*</span></label><input type="tel" name="phone" pattern="^(?:\+?88)?01[3-9]\d{8}$" required class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue"></div>
+                <div><label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1" data-translate="label_subject">Subject <span class="text-brand-blue">*</span></label><input type="text" name="subject" required class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue"></div>
+                <button type="submit" id="submitBtn" class="w-full bg-brand-blue text-white font-bold uppercase tracking-widest text-sm py-4 mt-2 hover:bg-brand-black transition" data-translate="btn_send">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary & Heading Section (Books Modal Overlay) -->
+    <div id="booksModal" class="fixed inset-0 bg-[#fafafa] z-40 overflow-y-auto hidden flex flex-col p-6 md:p-12 lg:p-16">
+        <button onclick="closeBooksModal()" class="absolute top-6 right-6 text-gray-500 hover:text-brand-blue transition duration-300 z-50 p-2 focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        
+        <div class="max-w-4xl mb-12 mt-12 md:mt-0">
+            <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block" data-translate="books_subtitle">Publications & Writings</span>
+            <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8" data-translate="books_title">MY WRITTEN <span class="text-brand-blue">BOOKS</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-8">
+                <div class="md:col-span-8">
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6 font-medium" data-translate="books_desc_p1">বই মানুষের চিন্তার জানালা খুলে দেয়। প্রযুক্তির এই ব্যস্ত সময়ে কিছু সামাজিক অসঙ্গতি...</p>
+                    <p class="text-gray-500 text-xs md:text-sm leading-relaxed" data-translate="books_desc_p2">Each book is carefully structured to present deep, logical arguments...</p>
+                </div>
+                <div class="md:col-span-4 flex flex-col justify-center border-l-2 border-brand-blue pl-6 md:pl-8 py-2">
+                    <span class="text-3xl font-black text-brand-black" data-translate="stat_books_count">1</span>
+                    <span class="text-[10px] uppercase font-bold tracking-widest text-gray-500 mt-1" data-translate="stat_books_count_text">Book Published</span>
+                    <span class="text-xs text-gray-400 mt-2" data-translate="stat_books_desc">Available online and in PDF.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK 1: BENGALI EDITION -->
+        <div id="book-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-4 flex justify-center py-6">
+                <div class="book-container-3d">
+                    <div class="book-mockup">
+                        <div class="book-spine"></div>
+                        <div class="book-cover">
+                            <div class="book-cover-content">
+                                <div class="text-[10px] font-bold uppercase tracking-widest text-indigo-300">সমাজ ও বাস্তবতা</div>
+                                <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">এই সমাজ<br>ইসলামিক নাকি<br>ব্যাবসায়িক</h3>
+                                <div class="text-[9px] text-gray-400 font-semibold tracking-wider">মো. মুকিদ হাসান সিয়াম</div>
+                            </div>
+                        </div>
+                        <div class="book-pages"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 flex flex-col justify-center">
+                <span class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">বাংলা সংস্করণ</span>
+                <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">এই সমাজ ইসলামিক নাকি ব্যাবসায়িক</h2>
+                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4"><span>লেখক: মো. মুকিদ হাসান সিয়াম</span><span>•</span><span>বছর: ২০২৬</span></p>
+                <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
+                    <p>আমাদের সমাজে ধর্ম মানুষের অন্তরের অন্যতম সংবেদনশীল বিষয়। তবে বর্তমান সময়ে ধর্মের লেবাসে যে বাণিজ্যিকীকরণ...</p>
+                    <p>এই বইটি ফুটবল বিশ্বকাপের উন্মাদনা থেকে শুরু করে, আলেমদের মধ্যকার ইউটিউব ভিউয়ের প্রতিযোগিতা...</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a id="pdf-link-bn" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <span data-translate="btn_pdf">Read PDF Version</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
+                    </a>
+                    <button id="btn-3d-bn" onclick="open3DBook('#', 'BN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <span data-translate="btn_interactive">Read Interactive 3D</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK 2: ENGLISH EDITION -->
+        <div id="book-english-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden">
+            <div class="lg:col-span-4 flex justify-center py-6">
+                <div class="book-container-3d">
+                    <div class="book-mockup">
+                        <div class="book-spine"></div>
+                        <div class="book-cover">
+                            <div class="book-cover-content">
+                                <div class="text-[10px] font-bold uppercase tracking-widest text-indigo-300">Society & Reality</div>
+                                <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">Is This Society<br>Islamic or<br>Commercial?</h3>
+                                <div class="text-[9px] text-gray-400 font-semibold tracking-wider">Md. Mukid Hasan Seiam</div>
+                            </div>
+                        </div>
+                        <div class="book-pages"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-8 flex flex-col justify-center">
+                <span class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">English Edition</span>
+                <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">Is This Society Islamic or Commercial?</h2>
+                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4"><span>Author: Md. Mukid Hasan Seiam</span><span>•</span><span>Year: 2026</span></p>
+                <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
+                    <p>In our society, religion is one of the most sensitive aspects of the human heart. However, in modern times...</p>
+                    <p>This book analyzes contemporary issues such as the frenzy surrounding the football World Cups...</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a id="pdf-link-en" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <span data-translate="btn_pdf">Read PDF Version</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
+                    </a>
+                    <button id="btn-3d-en" onclick="open3DBook('#', 'EN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <span data-translate="btn_interactive">Read Interactive 3D</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Book Interactive Reader Modal -->
+    <div id="book3DModal" class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
+        <button onclick="close3DBook()" class="absolute top-6 right-6 text-gray-400 hover:text-white transition duration-300 z-50 p-2 focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <div id="book-loader" class="flex flex-col items-center justify-center text-white gap-4">
+            <div class="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-sm font-semibold tracking-wider uppercase text-gray-400" id="loader-text">Loading PDF pages...</p>
+        </div>
+
+        <div class="modal-book-container relative w-full h-[80vh] flex items-center justify-center overflow-visible">
+            <div class="modal-book" id="modal-book-element"></div>
+        </div>
+
+        <div class="flex gap-8 mt-6 text-white z-40 select-none" id="book-controls" style="display: none;">
+            <button onclick="flipModalPrev()" class="bg-brand-black hover:bg-brand-blue border border-gray-800 text-xs font-bold uppercase tracking-widest py-3 px-6 transition duration-300">Prev</button>
+            <button onclick="flipModalNext()" class="bg-brand-black hover:bg-brand-blue border border-gray-800 text-xs font-bold uppercase tracking-widest py-3 px-6 transition duration-300">Next</button>
+        </div>
+        <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-4" id="book-swipe-tip" style="display: none;">Tip: Tap the sides of the book or swipe to turn pages</p>
+    </div>
+
+    <!-- Language Toggle Floating Button -->
+    <div class="fixed bottom-6 left-6 z-40">
+        <button onclick="toggleLanguage()" class="bg-brand-black hover:bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest py-3.5 px-5 shadow-2xl border border-gray-800 transition duration-300 flex items-center gap-2 rounded-none">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse" id="lang-dot"></span>
+            <span id="lang-btn-text">Language: EN</span>
+        </button>
+    </div>
+
+    <script>
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
+        
+        let currentLang = localStorage.getItem('lang') || 'EN';
+        let cmsTexts = {};
+        let smartImages = {};
+
+        const translations = {
+            "nav_books": { "EN": "My Books", "BN": "আমার বইসমূহ" },
+            "books_subtitle": { "EN": "Publications & Writings", "BN": "প্রকাশনা এবং লেখালেখি" },
+            "books_title": { "EN": "MY WRITTEN <span class='text-brand-blue'>BOOKS</span>", "BN": "আমার লেখা <span class='text-brand-blue'>বইসমূহ</span>" },
+            "books_desc_p1": { "EN": "Books open the window of human thought...", "BN": "বই মানুষের চিন্তার জানালা খুলে দেয়..." },
+            "books_desc_p2": { "EN": "Each book is carefully structured to present deep, logical arguments...", "BN": "প্রতিটি বই বাস্তব জীবনের সাথে গভীর ও যৌক্তিক দৃষ্টিভঙ্গি তুলে ধরার জন্য যত্নসহকারে তৈরি করা হয়েছে..." },
+            "stat_books_count": { "EN": "1", "BN": "১" },
+            "stat_books_count_text": { "EN": "Book Published", "BN": "বই প্রকাশিত" },
+            "stat_books_desc": { "EN": "Available online and in PDF.", "BN": "অনলাইন এবং পিডিএফ-এ উপলব্ধ।" },
+            "btn_pdf": { "EN": "Read PDF Version", "BN": "PDF সংস্করণ পড়ুন" },
+            "btn_interactive": { "EN": "Read Interactive 3D", "BN": "3D ইন্টারঅ্যাক্টিভ পড়ুন" },
+            "nav_expertise": { "EN": "Expertise", "BN": "দক্ষতা" },
+            "nav_about": { "EN": "About", "BN": "আমার সম্পর্কে" },
+            "nav_experience": { "EN": "Experience", "BN": "অভিজ্ঞতা" },
+            "nav_contact": { "EN": "Contact", "BN": "যোগাযোগ" },
+            "let_talk": { "EN": "Let's Talk", "BN": "কথা বলি" },
+            "career_title": { "EN": "Career Highlights", "BN": "কর্মজীবনের হাইলাইটস" },
+            "loading_projects": { "EN": "Loading Projects...", "BN": "প্রজেক্ট লোড হচ্ছে..." },
+            "based_in": { "EN": "Based in<br>Dhaka, BD", "BN": "অবস্থান<br>ঢাকা, বাংলাদেশ" },
+            "ready_for": { "EN": "Ready For", "BN": "প্রস্তুত" },
+            "new_roles": { "EN": "New Roles", "BN": "নতুন কাজের জন্য" },
+            "circular_text": { "EN": "• IT SUPPORT • 2D GAME Dev • DATA Entry", "BN": "• আইটি সাপোর্ট • ২ডি গেম দেব • ডাটা এন্ট্রি" },
+            
+            "hero_title": { "EN": "TECH SPECIALIST", "BN": "টেক স্পেশালিস্ট" },
+            "hero_subtitle_1": { "EN": "Bridging hardware logic with", "BN": "হার্ডওয়্যার লজিকের সাথে" },
+            "hero_subtitle_2": { "EN": "creative digital experiences.", "BN": "ক্রিয়েটিভ ডিজিটাল অভিজ্ঞতার সংযোগ।" },
+            "hero_desc": { "EN": "I am M. Mukid Hasan Seiam. With over 8 years in tech diagnostics...", "BN": "আমি মো. মুকিদ হাসান সিয়াম। টেক ডায়াগনস্টিক্সে ৮ বছরেরও বেশি সময় ধরে..." },
+            "stat1_text": { "EN": "Years Tech<br>Experience", "BN": "প্রযুক্তিগত অভিজ্ঞতা" },
+            "stat2_text": { "EN": "Hardware Issues<br>Resolved", "BN": "হার্ডওয়্যার সমস্যার সমাধান" },
+            "stat3_text": { "EN": "Open-Source<br>Engines", "BN": "ওপেন-সোর্স ইঞ্জিন" },
+            "stat4_text": { "EN": "Vintage Media<br>Platform", "BN": "ভিন্টেজ মিডিয়া প্ল্যাটফর্ম" },
+            "expertise_title": { "EN": "My<br>Expertise", "BN": "আমার<br>দক্ষতা" },
+            "exp1_title": { "EN": "Hardware Diagnostics", "BN": "হার্ডওয়্যার ডায়াগনস্টিকস" },
+            "exp1_desc": { "EN": "8 years of hands-on experience in electronics repair...", "BN": "ইলেকট্রনিক্স মেরামত, টেকনিক্যাল ট্রাবলশুটিং এবং সিস্টেম রক্ষণাবেক্ষণে..." },
+            "exp2_title": { "EN": "Computer Operations", "BN": "কম্পিউটার অপারেশন" },
+            "exp2_desc": { "EN": "Proficient in data entry, document formatting...", "BN": "ডাটা এন্ট্রি, ডকুমেন্ট ফরম্যাটিং এবং দৈনিক কার্যক্রম পরিচালনা করতে..." },
+            "exp3_title": { "EN": "Learning 2D Game Dev", "BN": "২ডি গেম ডেভেলপমেন্ট" },
+            "exp3_desc": { "EN": "Actively exploring open-source software like OpenBOR...", "BN": "২ডি ক্যারেক্টার ডিজাইনের জন্য ওপেনবিওআর (OpenBOR)..." },
+            "exp4_title": { "EN": "AI Image Generation", "BN": "এআই ইমেজ জেনারেশন" },
+            "exp4_desc": { "EN": "Crafting highly detailed digital art with precise styling...", "BN": "সুনির্দিষ্ট স্টাইলিং, লাইটিং সেটআপ এবং ভিজ্যুয়াল কম্পোজিশন দিয়ে..." },
+            "about_tag": { "EN": "About Me", "BN": "আমার সম্পর্কে" },
+            "about_title": { "EN": "Tech is about<br>solving problems<br>and building worlds.", "BN": "প্রযুক্তি হলো সমস্যার সমাধান করা<br>এবং নতুন জগৎ তৈরি করা।" },
+            "about_desc": { "EN": "I am a versatile technical professional transitioning...", "BN": "আমি একজন বহুমুখী কারিগরি পেশাদার..." },
+            "about_signature": { "EN": "Mukid Hasan", "BN": "মুকিদ হাসান" },
+            "skill1_name": { "EN": "Tech Troubleshooting", "BN": "টেকনিক্যাল ট্রাবলশুটিং" },
+            "skill2_name": { "EN": "Computer Operations", "BN": "কম্পিউটার অপারেশন" },
+            "skill3_name": { "EN": "Learning Game Dev", "BN": "গেম ডেভেলপমেন্ট শিক্ষা" },
+            "footer_title": { "EN": "Let's Create<br>Something Great<br>Together.", "BN": "চলুন একসাথে দারুণ কিছু<br>তৈরি করি।" },
+            "footer_contact_tag": { "EN": "Contact Info", "BN": "যোগাযোগের তথ্য" },
+            "footer_location": { "EN": "Dhaka, Bangladesh", "BN": "ঢাকা, বাংলাদেশ" },
+            
+            "modal_title": { "EN": "Let's Connect", "BN": "যোগাযোগ করি" },
+            "modal_subtitle": { "EN": "Send me a message and I'll get back to you shortly.", "BN": "আমাকে একটি বার্তা পাঠান এবং আমি শীঘ্রই আপনার সাথে যোগাযোগ করব।" },
+            "label_name": { "EN": "Name", "BN": "নাম" },
+            "label_address": { "EN": "Address", "BN": "ঠিকানা" },
+            "label_phone": { "EN": "Phone (BD)", "BN": "ফোন (বাংলাদেশ)" },
+            "label_subject": { "EN": "Subject", "BN": "বিষয়" },
+            "btn_send": { "EN": "Send Message", "BN": "বার্তা পাঠান" }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'EN' ? 'BN' : 'EN';
+            localStorage.setItem('lang', currentLang);
+            updatePageContent();
+        }
+
+        function updatePageContent() {
+            document.getElementById('lang-btn-text').innerText = "Language: " + currentLang;
+            
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[key]) el.innerHTML = translations[key][currentLang];
+            });
+
+            for (let key in cmsTexts) {
+                let el = document.getElementById(key);
+                if (el) {
+                    let val = cmsTexts[key];
+                    if (currentLang === 'BN' && translations[key]) val = translations[key]['BN'];
+                    else if (currentLang === 'EN' && translations[key]) val = translations[key]['EN'];
+                    if (key === 'footer_email') { el.innerHTML = val; el.href = "mailto:" + val; } 
+                    else el.innerHTML = val;
+                }
+                if (key.includes('_pct')) {
+                    let bar = document.getElementById(key + '_bar');
+                    if (bar) bar.style.width = (cmsTexts[key] * 100) + '%';
+                }
+            }
+
+            renderProjects();
+
+            let bookBN = document.getElementById('book-bengali-edition');
+            let bookEN = document.getElementById('book-english-edition');
+            if (bookBN && bookEN) {
+                if (currentLang === 'BN') { bookBN.style.display = 'grid'; bookEN.style.display = 'none'; } 
+                else { bookBN.style.display = 'none'; bookEN.style.display = 'grid'; }
+            }
+        }
+
+        function renderProjects() {
+            const projectsContainer = document.getElementById('projects-container');
+            if (!projectsContainer) return;
+            projectsContainer.innerHTML = ''; 
+
+            let projectKeys = Object.keys(smartImages).filter(k => k.startsWith('photo') && k !== 'photo1' && k !== 'photo5').sort();
+
+            projectKeys.forEach(imgKey => {
+                let num = imgKey.replace('photo', ''); 
+                let titleKey = `project${num}_title`, descKey = `project${num}_desc`;
+                let title = (cmsTexts && cmsTexts[titleKey]) ? cmsTexts[titleKey] : `Project ${num}`;
+                let desc = (cmsTexts && cmsTexts[descKey]) ? cmsTexts[descKey] : `Details for Project ${num}`;
+                
+                if (currentLang === 'BN') {
+                    if (translations[titleKey]) title = translations[titleKey]['BN'];
+                    if (translations[descKey]) desc = translations[descKey]['BN'];
+                } else {
+                    if (translations[titleKey]) title = translations[titleKey]['EN'];
+                    if (translations[descKey]) desc = translations[descKey]['EN'];
+                }
+                
+                let imageId = smartImages[imgKey];
+                let imgUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
+                
+                // (Auto-fit Canva Ratio applied here in Project Cards)
+                let cardHTML = `
+                    <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800">
+                        <img src="${imgUrl}" alt="${title}" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, '${imgKey}')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
+                        <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
+                            <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg">${title}</h3>
+                            <div class="flex justify-between items-end text-[10px] uppercase tracking-widest font-semibold text-gray-300 drop-shadow-md"><span>${desc}</span></div>
+                        </div>
+                    </div>`;
+                projectsContainer.innerHTML += cardHTML;
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updatePageContent();
+
+            fetch(webAppUrl)
+                .then(response => response.json())
+                .then(data => {
+                    cmsTexts = data.texts || {};
+                    for (let key in data.images) {
+                        let cleanName = key.toLowerCase().replace(/\.(png|jpg|jpeg|gif|pdf)$/, "");
+                        smartImages[cleanName] = data.images[key];
+                    }
+
+                    if(smartImages['photo1']) {
+                        let img = document.getElementById('img-photo1'); img.src = `https://drive.google.com/thumbnail?id=${smartImages['photo1']}&sz=w1000`; img.style.display = 'block';
+                        let err = img.parentElement.querySelector('.error-box'); if(err) err.remove();
+                    }
+                    if(smartImages['photo5']) {
+                        let img = document.getElementById('img-photo5'); img.src = `https://drive.google.com/thumbnail?id=${smartImages['photo5']}&sz=w1000`; img.style.display = 'block';
+                        let err = img.parentElement.querySelector('.error-box'); if(err) err.remove();
+                    }
+
+                    let pdfUrlBn = "#", pdfUrlEn = "#";
+                    if (smartImages["ইসলামিক নাকি ব্যাবসায়িক 2026"]) {
+                        let fileId = smartImages["ইসলামিক নাকি ব্যাবসায়িক 2026"];
+                        pdfUrlBn = `https://drive.google.com/uc?export=download&id=${fileId}`;
+                        let pdfLinkBn = document.getElementById("pdf-link-bn");
+                        if (pdfLinkBn) pdfLinkBn.href = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
+                    }
+                    if (smartImages["is this society islamic or commercial 2026"]) {
+                        let fileId = smartImages["is this society islamic or commercial 2026"];
+                        pdfUrlEn = `https://drive.google.com/uc?export=download&id=${fileId}`;
+                        let pdfLinkEn = document.getElementById("pdf-link-en");
+                        if (pdfLinkEn) pdfLinkEn.href = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
+                    }
+
+                    let btn3dBn = document.getElementById("btn-3d-bn");
+                    if (btn3dBn) btn3dBn.setAttribute("onclick", `open3DBook('${pdfUrlBn}', 'BN')`);
+                    let btn3dEn = document.getElementById("btn-3d-en");
+                    if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
+
+                    updatePageContent();
+                })
+                .catch(error => {
+                    console.error("Error loading dynamic content:", error);
+                    document.getElementById('projects-container').innerHTML = `<p class="text-sm font-bold text-sky-500 col-span-3 text-center py-10">Failed to load projects. Please refresh the page.</p>`;
+                });
+        });
+
+        // 3D BOOK MODAL VIEW LOGIC & PDF.JS RENDERING
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+        let modalPages = [], modalCurrentPage = 0;
+
+        const fallbackBooks = {
+            "BN": {
+                pages: [
+                    { front: { type: "cover", title: "এই সমাজ<br>ইসলামিক নাকি ব্যাবসায়িক", context: "<strong>প্রেক্ষাপট:</strong> বর্তমানে ফুটবলের উন্মাদনা নিয়ে বিষয়বস্তু", author: "লেখক: মো. মুকিদ হাসান সিয়াম" }, back: { type: "content", title: "ভূমিকা", text: "ধর্ম মানুষের অন্তরের বিষয়...", verse: '"অতএব দুর্ভোগ সেসব নামাজীর জন্য..."', num: "১" } },
+                    { front: { type: "content", title: "অধ্যায় ১", text: 'ফুটবল একটি নিছক বিনোদন...', verse: '"তাদেরকে ছেড়ে দাও..."', num: "২" }, back: { type: "content", title: "অধ্যায় ২", text: "একসময় মানুষ খুতবা শুনতে...", verse: '"হে মুমিনগণ!..."', num: "৩" } },
+                    { front: { type: "content", title: "অধ্যায় ৩", text: "ধর্ম প্রচারের নামে এখন চলছে...", verse: '"তোমরা সত্যের সাথে..."', num: "৪" }, back: { type: "content", title: "অধ্যায় ৪", text: "যারা বড় বড় ফতোয়া দেন...", verse: '"তোমরা কি মানুষকে..."', num: "৫" } },
+                    { front: { type: "content", title: "উপসংহার", text: "আমি নিজেকে নিখুঁত কোনো ঈমানদার...", verse: '"যে বিষয়ে তোমার কোনো জ্ঞান নেই..."', num: "৬" }, back: { type: "cover-back", title: "সমাপ্ত" } }
+                ]
+            },
+            "EN": {
+                pages: [
+                    { front: { type: "cover", title: "Is This Society<br>Islamic or<br>Commercial?", context: "<strong>Context:</strong> Discussions on current football frenzy...", author: "Author: Md. Mukid Hasan Seiam" }, back: { type: "content", title: "Preface", text: "Religion is a matter of the heart...", verse: '"So woe to those who pray..."', num: "1" } },
+                    { front: { type: "content", title: "Chapter 1", text: "Football is merely a form of entertainment...", verse: '"And leave those who take..."', num: "2" }, back: { type: "content", title: "Chapter 2", text: "Once, people visited mosques...", verse: '"O you who have believed..."', num: "3" } },
+                    { front: { type: "content", title: "Chapter 3", text: "Under the banner of preaching...", verse: '"And do not mix the truth..."', num: "4" }, back: { type: "content", title: "Chapter 4", text: "Those who issue grand fatwas...", verse: '"Do you order righteousness..."', num: "5" } },
+                    { front: { type: "content", title: "Conclusion", text: "I do not claim to be a perfect believer...", verse: '"And do not pursue that of which..."', num: "6" }, back: { type: "cover-back", title: "The End" } }
+                ]
+            }
+        };
+
+        function open3DBook(pdfUrl, lang) {
+            document.getElementById('book3DModal').classList.remove('hidden');
+            document.getElementById('book-loader').style.display = 'flex';
+            document.getElementById('modal-book-element').style.display = 'none';
+            document.getElementById('book-controls').style.display = 'none';
+            document.getElementById('book-swipe-tip').style.display = 'none';
+            document.getElementById('loader-text').innerText = "Initialising viewer...";
+
+            const container = document.getElementById('modal-book-element');
+            container.innerHTML = '';
+            modalPages = [];
+            modalCurrentPage = 0;
+            container.style.transform = 'translateX(0)';
+
+            pdfjsLib.getDocument(pdfUrl).promise.then(async function(pdf) {
+                const numPages = pdf.numPages;
+                document.getElementById('loader-text').innerText = `Loading pages (1 of ${numPages})...`;
+
+                const numPhysicalPages = Math.ceil(numPages / 2);
+                for (let i = 0; i < numPhysicalPages; i++) {
+                    const pageDiv = document.createElement('div'); pageDiv.className = 'modal-page';
+                    const frontDiv = document.createElement('div'); frontDiv.className = 'modal-front'; frontDiv.appendChild(document.createElement('canvas')); pageDiv.appendChild(frontDiv);
+                    const backDiv = document.createElement('div'); backDiv.className = 'modal-back'; backDiv.appendChild(document.createElement('canvas')); pageDiv.appendChild(backDiv);
+                    container.appendChild(pageDiv); modalPages.push(pageDiv);
+                }
+
+                modalPages.forEach((page, index) => page.style.zIndex = modalPages.length - index);
+
+                for (let i = 1; i <= numPages; i++) {
+                    document.getElementById('loader-text').innerText = `Rendering page ${i} of ${numPages}...`;
+                    const pdfPage = await pdf.getPage(i);
+                    const viewport = pdfPage.getViewport({ scale: 2.0 });
+                    const isFront = (i % 2 !== 0), physicalPageIndex = Math.floor((i - 1) / 2);
+                    const targetCanvas = isFront ? modalPages[physicalPageIndex].querySelector('.modal-front canvas') : modalPages[physicalPageIndex].querySelector('.modal-back canvas');
+                    
+                    const context = targetCanvas.getContext('2d');
+                    targetCanvas.width = viewport.width; targetCanvas.height = viewport.height;
+                    await pdfPage.render({ canvasContext: context, viewport: viewport }).promise;
+                }
+
+                if (numPages % 2 !== 0) {
+                    const lastCanvas = modalPages[modalPages.length - 1].querySelector('.modal-back canvas');
+                    const context = lastCanvas.getContext('2d');
+                    lastCanvas.width = 380; lastCanvas.height = 540; context.fillStyle = "#ffffff"; context.fillRect(0, 0, 380, 540);
+                }
+
+                document.getElementById('book-loader').style.display = 'none';
+                document.getElementById('modal-book-element').style.display = 'block';
+                document.getElementById('book-controls').style.display = 'flex';
+                document.getElementById('book-swipe-tip').style.display = 'block';
+                setupModalSwipeHandlers();
+
+            }).catch(error => {
+                console.warn("CORS block or loading error, falling back to static 3D text viewer:", error);
+                document.getElementById('loader-text').innerText = "Loading local backup layout...";
+                setTimeout(() => renderBookFromData(lang), 400);
+            });
+        }
+
+        function renderBookFromData(lang) {
+            const data = fallbackBooks[lang];
+            const container = document.getElementById('modal-book-element');
+            container.innerHTML = ''; modalPages = []; modalCurrentPage = 0; container.style.transform = 'translateX(0)';
+
+            data.pages.forEach((pageGroup) => {
+                const pageDiv = document.createElement('div'); pageDiv.className = 'modal-page';
+                const frontDiv = document.createElement('div'); frontDiv.className = 'modal-front';
+                if (pageGroup.front.type === 'cover') {
+                    frontDiv.classList.add('modal-cover-front');
+                    frontDiv.innerHTML = `<div class="absolute inset-0 bg-gradient-to-br from-indigo-950 to-slate-950 opacity-90 z-0"></div><h1 class="relative z-10">${pageGroup.front.title}</h1><div class="modal-context relative z-10 text-gray-200 mt-6">${pageGroup.front.context}</div><div class="modal-author relative z-10 text-slate-400 mt-12">${pageGroup.front.author}</div>`;
+                } else {
+                    frontDiv.innerHTML = `<h2 class="text-lg font-bold border-b pb-2 mb-4 text-[#0f172a]">${pageGroup.front.title}</h2><p class="text-sm text-[#334155] leading-relaxed text-justify mb-4">${pageGroup.front.text}</p><div class="modal-book-verse">${pageGroup.front.verse}</div><span class="absolute bottom-4 right-6 font-bold text-xs text-[#94a3b8]">${pageGroup.front.num}</span>`;
+                }
+                pageDiv.appendChild(frontDiv);
+
+                const backDiv = document.createElement('div'); backDiv.className = 'modal-back';
+                if (pageGroup.back.type === 'cover-back') {
+                    backDiv.classList.add('modal-cover-back');
+                    backDiv.innerHTML = `<div class="absolute inset-0 bg-gradient-to-br from-indigo-950 to-slate-950 opacity-90 z-0"></div><h2 class="relative z-10 text-2xl border-none">${pageGroup.back.title}</h2>`;
+                } else {
+                    backDiv.innerHTML = `<h2 class="text-lg font-bold border-b pb-2 mb-4 text-[#0f172a]">${pageGroup.back.title}</h2><p class="text-sm text-[#334155] leading-relaxed text-justify mb-4">${pageGroup.back.text}</p><div class="modal-book-verse">${pageGroup.back.verse}</div><span class="absolute bottom-4 left-6 font-bold text-xs text-[#94a3b8]">${pageGroup.back.num}</span>`;
+                }
+                pageDiv.appendChild(backDiv);
+                container.appendChild(pageDiv); modalPages.push(pageDiv);
+            });
+
+            modalPages.forEach((page, index) => page.style.zIndex = modalPages.length - index);
+
+            document.getElementById('book-loader').style.display = 'none'; document.getElementById('modal-book-element').style.display = 'block';
+            document.getElementById('book-controls').style.display = 'flex'; document.getElementById('book-swipe-tip').style.display = 'block';
+            setupModalSwipeHandlers();
+        }
+
+        function updateBookPosition() {
+            const modalBook = document.getElementById('modal-book-element');
+            if (modalCurrentPage === 0) modalBook.style.transform = 'translateX(0)';
+            else if (modalCurrentPage === modalPages.length) modalBook.style.transform = 'translateX(100%)';
+            else modalBook.style.transform = 'translateX(50%)';
+        }
+
+        function close3DBook() { document.getElementById('book3DModal').classList.add('hidden'); document.getElementById('modal-book-element').innerHTML = ''; }
+
+        function flipModalNext() {
+            if (modalCurrentPage < modalPages.length) {
+                let current = modalCurrentPage; modalPages[current].classList.add('flipped');
+                setTimeout(() => { modalPages[current].style.zIndex = current + 1; }, 400);
+                modalCurrentPage++; updateBookPosition();
+            }
+        }
+
+        function flipModalPrev() {
+            if (modalCurrentPage > 0) {
+                modalCurrentPage--; let current = modalCurrentPage; modalPages[current].classList.remove('flipped');
+                setTimeout(() => { modalPages[current].style.zIndex = modalPages.length - current; }, 400);
+                updateBookPosition();
+            }
+        }
+
+        function setupModalSwipeHandlers() {
+            const modalBook = document.getElementById('modal-book-element');
+            let startX = 0, isDragging = false;
+
+            modalBook.onmousedown = (e) => { startX = e.clientX; isDragging = true; };
+            window.onmouseup = (e) => {
+                if (!isDragging) return; isDragging = false;
+                let difference = startX - e.clientX; const bookRect = modalBook.getBoundingClientRect();
+                if (Math.abs(difference) > 40) { difference > 0 ? flipModalNext() : flipModalPrev(); } 
+                else { let clickX = startX - bookRect.left; clickX > bookRect.width / 2 ? flipModalNext() : flipModalPrev(); }
+            };
+
+            modalBook.ontouchstart = (e) => { startX = e.touches[0].clientX; isDragging = true; };
+            modalBook.ontouchend = (e) => {
+                if (!isDragging) return; isDragging = false;
+                let difference = startX - e.changedTouches[0].clientX; const bookRect = modalBook.getBoundingClientRect();
+                if (Math.abs(difference) > 40) { difference > 0 ? flipModalNext() : flipModalPrev(); } 
+                else { let clickX = startX - bookRect.left; clickX > bookRect.width / 2 ? flipModalNext() : flipModalPrev(); }
+            };
+        }
+
+        function openBooksModal() { document.getElementById('booksModal').classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+        function closeBooksModal() { document.getElementById('booksModal').classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { !document.getElementById('book3DModal').classList.contains('hidden') ? close3DBook() : closeBooksModal(); } });
+    </script>
 </body>
 </html>
