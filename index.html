@@ -8,7 +8,7 @@
     <!-- Social Media Link Preview (Open Graph) -->
     <meta property="og:title" content="M. Mukid Hasan Seiam - Tech & Creative Portfolio">
     <meta property="og:description" content="Tech Specialist bridging hardware logic with creative digital experiences. Explore my career highlights, books, and interactive 3D projects.">
-    <!-- Updated OG Image Link for GitHub -->
+    <!-- Local GitHub Image for Preview -->
     <meta property="og:image" content="https://mukidhasan.github.io/cm/thumbnail.jpg">
     <meta property="og:url" content="https://mukidhasan.github.io/cm/">
     <meta property="og:type" content="website">
@@ -148,21 +148,22 @@
         <!-- Hero Section -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-16 pb-0 relative">
             <div class="lg:col-span-7 flex flex-col justify-center z-10 relative">
-                <h1 id="hero_title" data-translate="hero_title" class="font-heading text-[5.5rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] uppercase text-brand-black mb-6 relative">
+                <h1 data-translate="hero_title" class="font-heading text-[5.5rem] md:text-[8rem] lg:text-[10rem] leading-[0.85] uppercase text-brand-black mb-6 relative">
                     TECH <span class="text-brand-blue absolute top-0 text-[4rem] md:text-[6rem] lg:text-[8rem]">*</span><br>SPECIALIST
                 </h1>
                 <div class="max-w-md mt-4">
                     <h2 class="text-xl md:text-2xl font-bold uppercase leading-tight mb-4">
-                        <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Bridging hardware logic with</span><br>
-                        <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">creative digital experiences.</span>
+                        <span data-translate="hero_subtitle_1">Bridging hardware logic with</span><br>
+                        <span data-translate="hero_subtitle_2" class="text-brand-blue">creative digital experiences.</span>
                     </h2>
-                    <p id="hero_desc" data-translate="hero_desc" class="text-gray-500 text-sm mb-8 leading-relaxed">...</p>
+                    <p data-translate="hero_desc" class="text-gray-500 text-sm mb-8 leading-relaxed">Expert in hardware repair structures, automated management systems, and interactive logic.</p>
                 </div>
             </div>
             <div class="lg:col-span-5 relative min-h-[500px] flex items-start justify-end">
                 <div class="absolute top-0 right-0 w-[80%] h-full bg-brand-blue z-0"></div>
                 <div class="relative z-10 w-[90%] bg-gray-200 overflow-hidden border-b-8 border-brand-black">
-                    <img id="img-photo1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Tech Setup" class="w-full h-auto block object-cover" onerror="handleMissingImage(this, 'photo1')">
+                    <!-- Local Image loaded here -->
+                    <img src="photo1.jpg" alt="Tech Setup" class="w-full h-auto block object-cover" onerror="handleMissingImage(this, 'photo1.jpg')">
                 </div>
             </div>
         </section>
@@ -172,7 +173,40 @@
             <div class="flex justify-between items-end mb-10">
                 <h2 class="font-heading text-5xl md:text-6xl uppercase leading-none" data-translate="career_title">Career Highlights</h2>
             </div>
-            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start"></div>
+            <!-- Static Projects Container -->
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                
+                <!-- Project 1 -->
+                <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800 aspect-video rounded-lg">
+                    <img src="project1.jpg" alt="Project 1" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, 'project1.jpg')">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
+                        <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg" data-translate="proj1_title">Project 1</h3>
+                        <div class="flex justify-between items-end text-[10px] uppercase tracking-widest font-semibold text-gray-300 drop-shadow-md"><span data-translate="proj1_desc">Details for Project 1</span></div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800 aspect-video rounded-lg">
+                    <img src="project2.jpg" alt="Project 2" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, 'project2.jpg')">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
+                        <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg" data-translate="proj2_title">Project 2</h3>
+                        <div class="flex justify-between items-end text-[10px] uppercase tracking-widest font-semibold text-gray-300 drop-shadow-md"><span data-translate="proj2_desc">Details for Project 2</span></div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800 aspect-video rounded-lg">
+                    <img src="project3.jpg" alt="Project 3" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, 'project3.jpg')">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
+                    <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
+                        <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg" data-translate="proj3_title">Project 3</h3>
+                        <div class="flex justify-between items-end text-[10px] uppercase tracking-widest font-semibold text-gray-300 drop-shadow-md"><span data-translate="proj3_desc">Details for Project 3</span></div>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <!-- Summary & Heading Section (Books Modal Overlay) -->
@@ -204,11 +238,12 @@
                 <div class="lg:col-span-8 flex flex-col justify-center">
                     <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">এই সমাজ ইসলামিক নাকি ব্যাবসায়িক</h2>
                     <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                        <a id="pdf-link-bn" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <!-- Local Link for PDF -->
+                        <a href="book-bn.pdf" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
                             <span data-translate="btn_pdf">Read PDF Version</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
                         </a>
-                        <button id="btn-3d-bn" onclick="open3DBook('#', 'BN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <button onclick="open3DBook('book-bn.pdf', 'BN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                             <span data-translate="btn_interactive">Read Interactive 3D</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                         </button>
@@ -236,11 +271,12 @@
                 <div class="lg:col-span-8 flex flex-col justify-center">
                     <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">Is This Society Islamic or Commercial?</h2>
                     <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                        <a id="pdf-link-en" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <!-- Local Link for PDF -->
+                        <a href="book-en.pdf" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
                             <span data-translate="btn_pdf">Read PDF Version</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
                         </a>
-                        <button id="btn-3d-en" onclick="open3DBook('#', 'EN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <button onclick="open3DBook('book-en.pdf', 'EN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                             <span data-translate="btn_interactive">Read Interactive 3D</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                         </button>
@@ -258,7 +294,7 @@
 
         <div id="book-loader" class="flex flex-col items-center justify-center text-white gap-4">
             <div class="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-sm font-semibold tracking-wider uppercase text-gray-400" id="loader-text">Loading PDF pages via Proxy...</p>
+            <p class="text-sm font-semibold tracking-wider uppercase text-gray-400" id="loader-text">Loading PDF pages...</p>
         </div>
 
         <div class="modal-book-container relative w-full h-[80vh] flex items-center justify-center overflow-visible">
@@ -280,18 +316,31 @@
     </div>
 
     <script>
-        const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
-        
         let currentLang = localStorage.getItem('lang') || 'EN';
-        let cmsTexts = {};
-        let smartImages = {};
 
         const translations = {
             "nav_books": { "EN": "My Books", "BN": "আমার বইসমূহ" },
+            "nav_expertise": { "EN": "Expertise", "BN": "দক্ষতা" },
+            "nav_about": { "EN": "About", "BN": "সম্পর্কে" },
+            "nav_experience": { "EN": "Experience", "BN": "অভিজ্ঞতা" },
+            "nav_contact": { "EN": "Contact", "BN": "যোগাযোগ" },
+            "let_talk": { "EN": "Let's Talk <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='square' stroke-linejoin='miter' stroke-width='2' d='M5 19L19 5M19 5v14M19 5H5'></path></svg>", "BN": "কথা বলি <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='square' stroke-linejoin='miter' stroke-width='2' d='M5 19L19 5M19 5v14M19 5H5'></path></svg>" },
+            "hero_title": { "EN": "TECH <span class='text-brand-blue absolute top-0 text-[4rem] md:text-[6rem] lg:text-[8rem]'>*</span><br>SPECIALIST", "BN": "টেক <span class='text-brand-blue absolute top-0 text-[4rem] md:text-[6rem] lg:text-[8rem]'>*</span><br>স্পেশালিস্ট" },
+            "hero_subtitle_1": { "EN": "Bridging hardware logic with", "BN": "হার্ডওয়্যার লজিকের সাথে যুক্ত করছি" },
+            "hero_subtitle_2": { "EN": "creative digital experiences.", "BN": "সৃজনশীল ডিজিটাল এক্সপেরিয়েন্স।" },
+            "hero_desc": { "EN": "Expert in hardware repair structures, automated management systems, and interactive logic.", "BN": "হার্ডওয়্যার মেরামত, অটোমেটেড ম্যানেজমেন্ট সিস্টেম এবং ইন্টারেক্টিভ লজিকে দক্ষ।" },
             "books_title": { "EN": "MY WRITTEN <span class='text-brand-blue'>BOOKS</span>", "BN": "আমার লেখা <span class='text-brand-blue'>বইসমূহ</span>" },
             "btn_pdf": { "EN": "Read PDF Version", "BN": "PDF সংস্করণ পড়ুন" },
             "btn_interactive": { "EN": "Read Interactive 3D", "BN": "3D ইন্টারঅ্যাক্টিভ পড়ুন" },
-            "career_title": { "EN": "Career Highlights", "BN": "কর্মজীবনের হাইলাইটস" }
+            "career_title": { "EN": "Career Highlights", "BN": "কর্মজীবনের হাইলাইটস" },
+            
+            // Project Texts (Change these to match your actual projects)
+            "proj1_title": { "EN": "Automated RMA System", "BN": "অটোমেটেড আরএমএ সিস্টেম" },
+            "proj1_desc": { "EN": "AppSheet & Google Sheets Integration", "BN": "অ্যাপশিট এবং গুগল শিটস ইন্টিগ্রেশন" },
+            "proj2_title": { "EN": "Hardware Repair Tool", "BN": "হার্ডওয়্যার রিপেয়ার টুল" },
+            "proj2_desc": { "EN": "PCB Soldering & Micro-Components", "BN": "পিসিবি সোল্ডারিং এবং মাইক্রো-কম্পোনেন্টস" },
+            "proj3_title": { "EN": "2D Game Animation", "BN": "টুডি গেম অ্যানিমেশন" },
+            "proj3_desc": { "EN": "Arcade Style Character Sprites", "BN": "আর্কেড স্টাইল ক্যারেক্টার স্প্রাইটস" }
         };
 
         function toggleLanguage() {
@@ -308,18 +357,6 @@
                 if (translations[key]) el.innerHTML = translations[key][currentLang];
             });
 
-            for (let key in cmsTexts) {
-                let el = document.getElementById(key);
-                if (el) {
-                    let val = cmsTexts[key];
-                    if (currentLang === 'BN' && translations[key]) val = translations[key]['BN'];
-                    else if (currentLang === 'EN' && translations[key]) val = translations[key]['EN'];
-                    el.innerHTML = val;
-                }
-            }
-
-            renderProjects();
-
             let bookBN = document.getElementById('book-bengali-edition');
             let bookEN = document.getElementById('book-english-edition');
             if (bookBN && bookEN) {
@@ -328,76 +365,12 @@
             }
         }
 
-        function renderProjects() {
-            const projectsContainer = document.getElementById('projects-container');
-            if (!projectsContainer) return;
-            projectsContainer.innerHTML = ''; 
-
-            let projectKeys = Object.keys(smartImages).filter(k => k.startsWith('photo') && k !== 'photo1' && k !== 'photo5').sort();
-
-            projectKeys.forEach(imgKey => {
-                let num = imgKey.replace('photo', ''); 
-                let titleKey = `project${num}_title`, descKey = `project${num}_desc`;
-                let title = (cmsTexts && cmsTexts[titleKey]) ? cmsTexts[titleKey] : `Project ${num}`;
-                let desc = (cmsTexts && cmsTexts[descKey]) ? cmsTexts[descKey] : `Details for Project ${num}`;
-                
-                let imageId = smartImages[imgKey];
-                let imgUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
-                
-                let cardHTML = `
-                    <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800 aspect-video rounded-lg">
-                        <img src="${imgUrl}" alt="${title}" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, '${imgKey}')">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
-                        <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
-                            <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg">${title}</h3>
-                            <div class="flex justify-between items-end text-[10px] uppercase tracking-widest font-semibold text-gray-300 drop-shadow-md"><span>${desc}</span></div>
-                        </div>
-                    </div>`;
-                projectsContainer.innerHTML += cardHTML;
-            });
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             updatePageContent();
-
-            fetch(webAppUrl)
-                .then(response => response.json())
-                .then(data => {
-                    cmsTexts = data.texts || {};
-                    for (let key in data.images) {
-                        let cleanName = key.toLowerCase().replace(/\.(png|jpg|jpeg|gif|pdf)$/, "");
-                        smartImages[cleanName] = data.images[key];
-                    }
-
-                    if(smartImages['photo1']) {
-                        let img = document.getElementById('img-photo1'); img.src = `https://drive.google.com/thumbnail?id=${smartImages['photo1']}&sz=w1000`; img.style.display = 'block';
-                    }
-
-                    let pdfUrlBn = "#", pdfUrlEn = "#";
-                    if (smartImages["ইসলামিক নাকি ব্যাবসায়িক 2026"]) {
-                        let fileId = smartImages["ইসলামিক নাকি ব্যাবসায়িক 2026"];
-                        pdfUrlBn = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                        let pdfLinkBn = document.getElementById("pdf-link-bn");
-                        if (pdfLinkBn) pdfLinkBn.href = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-                    }
-                    if (smartImages["is this society islamic or commercial 2026"]) {
-                        let fileId = smartImages["is this society islamic or commercial 2026"];
-                        pdfUrlEn = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                        let pdfLinkEn = document.getElementById("pdf-link-en");
-                        if (pdfLinkEn) pdfLinkEn.href = `https://drive.google.com/file/d/${fileId}/view?usp=drivesdk`;
-                    }
-
-                    let btn3dBn = document.getElementById("btn-3d-bn");
-                    if (btn3dBn) btn3dBn.setAttribute("onclick", `open3DBook('${pdfUrlBn}', 'BN')`);
-                    let btn3dEn = document.getElementById("btn-3d-en");
-                    if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
-
-                    updatePageContent();
-                })
         });
 
         // ==============================================================
-        // 3D BOOK MODAL VIEW LOGIC & PDF.JS RENDERING (WITH CORS PROXY)
+        // 3D BOOK MODAL VIEW LOGIC & PDF.JS RENDERING (NO PROXY NEEDED)
         // ==============================================================
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
@@ -408,7 +381,7 @@
             document.getElementById('book-loader').style.display = 'flex';
             document.getElementById('modal-book-element').style.display = 'none';
             document.getElementById('book-controls').style.display = 'none';
-            document.getElementById('loader-text').innerText = "Bypassing Security with Proxy...";
+            document.getElementById('loader-text').innerText = "Loading PDF pages...";
 
             const container = document.getElementById('modal-book-element');
             container.innerHTML = '';
@@ -416,9 +389,8 @@
             modalCurrentPage = 0;
             container.style.transform = 'translateX(0)';
 
-            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(pdfUrl);
-
-            pdfjsLib.getDocument(proxyUrl).promise.then(async function(pdf) {
+            // Directly loading PDF from GitHub (No Proxy needed anymore!)
+            pdfjsLib.getDocument(pdfUrl).promise.then(async function(pdf) {
                 const numPages = pdf.numPages;
                 document.getElementById('loader-text').innerText = `Loading your actual PDF (${numPages} Pages)...`;
 
@@ -461,8 +433,8 @@
                 setupModalSwipeHandlers();
 
             }).catch(error => {
-                console.error("CORS Proxy Failed. The file might be too large or Drive blocked the proxy.", error);
-                document.getElementById('loader-text').innerText = "Error: PDF too large for proxy or restricted by Google Drive. Please use the 'Read PDF Version' button.";
+                console.error("PDF Load Failed. Make sure the PDF is uploaded to GitHub.", error);
+                document.getElementById('loader-text').innerText = "Error: Cannot load PDF. Make sure the file exists in your GitHub folder.";
             });
         }
 
