@@ -162,7 +162,7 @@
                 <div class="absolute top-0 right-0 w-[80%] h-full bg-brand-blue z-0"></div>
                 <div class="absolute top-8 right-8 text-white text-right text-[10px] font-bold uppercase tracking-widest z-20" data-translate="based_in">Based in<br>Dhaka, BD</div>
                 <div class="relative z-10 w-[90%] aspect-[4/5] bg-gray-200 overflow-hidden border-b-8 border-brand-black">
-                    <img id="img-photo1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Tech Setup" class="w-full h-full object-cover" onerror="handleMissingImage(this, 'photo1')">
+                    <img id="img-Photo1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Tech Setup" class="w-full h-full object-cover" onerror="handleMissingImage(this, 'Photo1')">
                 </div>
                 <div class="absolute bottom-10 -left-16 z-30 w-40 h-40 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-xl">
                     <svg class="w-full h-full circular-text absolute" viewBox="0 0 100 100">
@@ -251,7 +251,7 @@
                 <div class="relative flex justify-center items-end">
                     <div class="absolute inset-0 bg-brand-blue w-1/2 ml-auto h-[80%] bottom-0 z-0"></div>
                     <div class="relative z-10 w-[80%] aspect-[4/5] bg-gray-200 overflow-hidden">
-                        <img id="img-photo5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Mukid Hasan Portrait" class="w-full h-full object-cover" onerror="handleMissingImage(this, 'photo5')">
+                        <img id="img-Photo5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Mukid Hasan Portrait" class="w-full h-full object-cover" onerror="handleMissingImage(this, 'Photo5')">
                     </div>
                 </div>
 
@@ -684,10 +684,10 @@
             if (!projectsContainer) return;
             projectsContainer.innerHTML = ''; 
 
-            let projectKeys = ['photo2', 'photo3', 'photo4'];
+            let projectKeys = ['Photo2', 'Photo3', 'Photo4'];
 
             projectKeys.forEach(imgKey => {
-                let num = imgKey.replace('photo', ''); 
+                let num = imgKey.replace('Photo', ''); 
                 
                 let titleKey = `project${num}_title`;
                 let descKey = `project${num}_desc`;
@@ -726,11 +726,11 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             // Immediately initialize local images and PDF paths
-            const imgPhoto1 = document.getElementById('img-photo1');
-            const imgPhoto5 = document.getElementById('img-photo5');
+            const imgPhoto1 = document.getElementById('img-Photo1');
+            const imgPhoto5 = document.getElementById('img-Photo5');
             
-            if (imgPhoto1) getLocalImagePath('photo1', imgPhoto1);
-            if (imgPhoto5) getLocalImagePath('photo5', imgPhoto5);
+            if (imgPhoto1) getLocalImagePath('Photo1', imgPhoto1);
+            if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
 
             const pdfUrlBn = "ইসলামিক নাকি ব্যাবসায়িক 2026.pdf";
             const pdfUrlEn = "Is This Society Islamic or Commercial 2026.pdf";
