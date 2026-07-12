@@ -162,7 +162,7 @@
             <div class="lg:col-span-5 relative min-h-[500px] flex items-start justify-end">
                 <div class="absolute top-0 right-0 w-[80%] h-full bg-brand-blue z-0"></div>
                 <div class="relative z-10 w-[90%] bg-gray-200 overflow-hidden border-b-8 border-brand-black">
-                    <!-- Local Hero Image with Error Fallback -->
+                    <!-- Local Image loaded here directly -->
                     <img id="img-photo1" src="photo1.jpg" alt="Tech Setup" class="w-full h-auto block object-cover" onerror="handleMissingImage(this, 'photo1.jpg')">
                 </div>
             </div>
@@ -173,7 +173,6 @@
             <div class="flex justify-between items-end mb-10">
                 <h2 class="font-heading text-5xl md:text-6xl uppercase leading-none" data-translate="career_title">Career Highlights</h2>
             </div>
-            <!-- Projects Container (Will be filled by JavaScript dynamically) -->
             <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start"></div>
         </section>
 
@@ -206,11 +205,11 @@
                 <div class="lg:col-span-8 flex flex-col justify-center">
                     <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">এই সমাজ ইসলামিক নাকি ব্যাবসায়িক</h2>
                     <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                        <a id="pdf-link-bn" href="book-bn.pdf" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <a id="pdf-link-bn" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
                             <span data-translate="btn_pdf">Read PDF Version</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
                         </a>
-                        <button id="btn-3d-bn" onclick="open3DBook('book-bn.pdf', 'BN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <button id="btn-3d-bn" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                             <span data-translate="btn_interactive">Read Interactive 3D</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                         </button>
@@ -238,11 +237,11 @@
                 <div class="lg:col-span-8 flex flex-col justify-center">
                     <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">Is This Society Islamic or Commercial?</h2>
                     <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                        <a id="pdf-link-en" href="book-en.pdf" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                        <a id="pdf-link-en" href="#" target="_blank" class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
                             <span data-translate="btn_pdf">Read PDF Version</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
                         </a>
-                        <button id="btn-3d-en" onclick="open3DBook('book-en.pdf', 'EN')" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <button id="btn-3d-en" class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                             <span data-translate="btn_interactive">Read Interactive 3D</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                         </button>
@@ -282,12 +281,11 @@
     </div>
 
     <script>
-        // আপনার গুগল শিটের অ্যাপস স্ক্রিপ্ট লিংক (এখান থেকেই টেক্সট আসবে)
+        // আপনার অরিজিনাল গুগল শিট লিংক, যেখান থেকে সব টেক্সট আসবে
         const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
         
         let currentLang = localStorage.getItem('lang') || 'EN';
         let cmsTexts = {};
-        let smartImages = {};
 
         const translations = {
             "nav_books": { "EN": "My Books", "BN": "আমার বইসমূহ" },
@@ -311,7 +309,7 @@
                 if (translations[key]) el.innerHTML = translations[key][currentLang];
             });
 
-            // গুগল শিট থেকে টেক্সট বসানো
+            // গুগল শিট থেকে পাওয়া টেক্সটগুলো সাইটে বসানো
             for (let key in cmsTexts) {
                 let el = document.getElementById(key);
                 if (el) {
@@ -337,32 +335,29 @@
             if (!projectsContainer) return;
             projectsContainer.innerHTML = ''; 
 
-            // গুগল শিটে থাকা ছবির লিস্ট চেক করা
-            let projectKeys = Object.keys(smartImages).filter(k => k.startsWith('photo') && k !== 'photo1' && k !== 'photo5').sort();
-
-            // যদি আপনি গুগল শিট থেকে ছবির কলাম ডিলিট করে দেন, তাহলে টেক্সট থেকে প্রজেক্ট সংখ্যা বের করবে
-            if (projectKeys.length === 0) {
-                let nums = new Set();
-                for (let key in cmsTexts) {
-                    let match = key.match(/^project(\d+)_/);
-                    if (match && match[1] !== '1' && match[1] !== '5') nums.add(match[1]);
+            // আপনার গুগল শিটে কতগুলো প্রজেক্ট আছে তা খুঁজে বের করা হচ্ছে
+            let projectNums = [];
+            for (let key in cmsTexts) {
+                let match = key.match(/^project(\d+)_title/);
+                if (match) {
+                    projectNums.push(parseInt(match[1]));
                 }
-                projectKeys = Array.from(nums).sort((a, b) => a - b).map(n => 'photo' + n);
             }
+            
+            projectNums = [...new Set(projectNums)].sort((a, b) => a - b);
 
-            // প্রজেক্ট রেন্ডার করা
-            projectKeys.forEach(imgKey => {
-                let num = imgKey.replace('photo', ''); 
-                let titleKey = `project${num}_title`, descKey = `project${num}_desc`;
+            projectNums.forEach(num => {
+                let titleKey = `project${num}_title`;
+                let descKey = `project${num}_desc`;
                 let title = (cmsTexts && cmsTexts[titleKey]) ? cmsTexts[titleKey] : `Project ${num}`;
                 let desc = (cmsTexts && cmsTexts[descKey]) ? cmsTexts[descKey] : `Details for Project ${num}`;
                 
-                // গিটহাব থেকে লোকাল ফাইল লোড করার লজিক
-                let imgUrl = `${imgKey}.jpg`; 
+                // গিটহাব থেকে সরাসরি ইমেজের নাম কল করা হচ্ছে (যেমন: photo2.jpg)
+                let imgName = `photo${num}.jpg`;
                 
                 let cardHTML = `
                     <div class="group cursor-pointer bg-brand-black text-white relative overflow-hidden flex flex-col shadow-md border border-gray-800 aspect-video rounded-lg">
-                        <img src="${imgUrl}" alt="${title}" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, '${imgKey}.jpg')">
+                        <img src="${imgName}" alt="${title}" class="w-full h-auto block object-cover opacity-60 group-hover:scale-105 transition duration-500 z-0 relative" onerror="handleMissingImage(this, '${imgName}')">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
                         <div class="absolute inset-0 p-6 z-20 flex flex-col justify-end">
                             <h3 class="font-heading text-3xl md:text-4xl uppercase w-full leading-none mb-3 drop-shadow-lg">${title}</h3>
@@ -374,25 +369,42 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // ডাটা আসার আগেই যাতে পেজ খালি না থাকে
             updatePageContent();
 
+            // গুগল শিট থেকে ডাটা ফেচ করা হচ্ছে
             fetch(webAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     cmsTexts = data.texts || {};
-                    for (let key in data.images) {
-                        let cleanName = key.toLowerCase().replace(/\.(png|jpg|jpeg|gif|pdf)$/, "");
-                        smartImages[cleanName] = data.images[key];
-                    }
                     
-                    // আপডেট ফাংশনটি আবার কল করা হলো যাতে শিটের টেক্সটগুলো সাইটে বসে যায়
+                    // প্রথম ছবিটি গিটহাব থেকে লোড হচ্ছে
+                    let img1 = document.getElementById('img-photo1');
+                    img1.src = `photo1.jpg`;
+                    img1.style.display = 'block';
+
+                    // অরিজিনাল বইয়ের নাম অনুযায়ী পিডিএফগুলো গিটহাব থেকে সেট করা হচ্ছে
+                    let pdfUrlBn = "ইসলামিক নাকি ব্যাবসায়িক 2026.pdf";
+                    let pdfLinkBn = document.getElementById("pdf-link-bn");
+                    if (pdfLinkBn) pdfLinkBn.href = pdfUrlBn;
+
+                    let pdfUrlEn = "is this society islamic or commercial 2026.pdf";
+                    let pdfLinkEn = document.getElementById("pdf-link-en");
+                    if (pdfLinkEn) pdfLinkEn.href = pdfUrlEn;
+
+                    let btn3dBn = document.getElementById("btn-3d-bn");
+                    if (btn3dBn) btn3dBn.setAttribute("onclick", `open3DBook('${pdfUrlBn}', 'BN')`);
+                    
+                    let btn3dEn = document.getElementById("btn-3d-en");
+                    if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
+
+                    // শিটের টেক্সট আসার পর পেজ আপডেট করা হচ্ছে
                     updatePageContent();
                 })
+                .catch(error => console.error("Error fetching Google Sheet data:", error));
         });
 
         // ==============================================================
-        // 3D BOOK MODAL VIEW LOGIC & PDF.JS RENDERING (NO PROXY NEEDED)
+        // 3D BOOK MODAL VIEW LOGIC (NO CORS PROXY NEEDED)
         // ==============================================================
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
@@ -411,6 +423,7 @@
             modalCurrentPage = 0;
             container.style.transform = 'translateX(0)';
 
+            // ডিরেক্ট লোকাল পিডিএফ লোড (প্রক্সির ঝামেলা ছাড়া)
             pdfjsLib.getDocument(pdfUrl).promise.then(async function(pdf) {
                 const numPages = pdf.numPages;
                 document.getElementById('loader-text').innerText = `Loading your actual PDF (${numPages} Pages)...`;
@@ -454,8 +467,8 @@
                 setupModalSwipeHandlers();
 
             }).catch(error => {
-                console.error("PDF Load Failed. Make sure the PDF is uploaded to GitHub.", error);
-                document.getElementById('loader-text').innerText = "Error: Cannot load PDF. Make sure book-bn.pdf or book-en.pdf is in your GitHub folder.";
+                console.error("PDF Load Failed:", error);
+                document.getElementById('loader-text').innerText = `Error: Cannot load ${pdfUrl}. Make sure it is in your GitHub folder.`;
             });
         }
 
