@@ -34,8 +34,32 @@
             }
         }
 
+        // SMART IMAGE HANDLER: Automatically checks Capital/Small letter variations
         function handleMissingImage(img, filename) {
             if (img.src.includes('data:image/gif')) return; 
+            
+            let lastDot = filename.lastIndexOf('.');
+            let name = filename.substring(0, lastDot);
+            let ext = filename.substring(lastDot + 1);
+            
+            let attempts = parseInt(img.getAttribute('data-attempts') || '0');
+            
+            // All possible Capital/Small letter variations
+            let variations = [
+                name + '.' + ext.toUpperCase(),                               // example.JPG
+                name.charAt(0).toUpperCase() + name.slice(1) + '.' + ext,     // Example.jpg
+                name.charAt(0).toUpperCase() + name.slice(1) + '.' + ext.toUpperCase(), // Example.JPG
+                name.toUpperCase() + '.' + ext,                               // EXAMPLE.jpg
+                name.toUpperCase() + '.' + ext.toUpperCase()                  // EXAMPLE.JPG
+            ];
+
+            if (attempts < variations.length) {
+                img.setAttribute('data-attempts', attempts + 1);
+                img.src = variations[attempts]; // Try next combination silently
+                return;
+            }
+
+            // If ALL variations fail, show the error box
             const parent = img.parentElement;
             parent.classList.add('min-h-[250px]'); 
             img.style.display = 'none';
@@ -281,7 +305,7 @@
     </div>
 
     <script>
-        // আপনার অরিজিনাল গুগল শিট লিংক, যেখান থেকে সব টেক্সট আসবে
+        // আপনার গুগল শিট লিংক
         const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
         
         let currentLang = localStorage.getItem('lang') || 'EN';
@@ -309,7 +333,6 @@
                 if (translations[key]) el.innerHTML = translations[key][currentLang];
             });
 
-            // গুগল শিট থেকে পাওয়া টেক্সটগুলো সাইটে বসানো
             for (let key in cmsTexts) {
                 let el = document.getElementById(key);
                 if (el) {
@@ -335,7 +358,6 @@
             if (!projectsContainer) return;
             projectsContainer.innerHTML = ''; 
 
-            // আপনার গুগল শিটে কতগুলো প্রজেক্ট আছে তা খুঁজে বের করা হচ্ছে
             let projectNums = [];
             for (let key in cmsTexts) {
                 let match = key.match(/^project(\d+)_title/);
@@ -352,7 +374,6 @@
                 let title = (cmsTexts && cmsTexts[titleKey]) ? cmsTexts[titleKey] : `Project ${num}`;
                 let desc = (cmsTexts && cmsTexts[descKey]) ? cmsTexts[descKey] : `Details for Project ${num}`;
                 
-                // গিটহাব থেকে সরাসরি ইমেজের নাম কল করা হচ্ছে (যেমন: photo2.jpg)
                 let imgName = `photo${num}.jpg`;
                 
                 let cardHTML = `
@@ -368,43 +389,66 @@
             });
         }
 
+        // SMART PDF HANDLER: Auto-detects Capital/Small letter variations for PDFs
+        async function getValidUrl(filename) {
+            let lastDot = filename.lastIndexOf('.');
+            let name = filename.substring(0, lastDot);
+            let ext = filename.substring(lastDot + 1);
+            
+            let variations = [
+                filename,
+                name + '.' + ext.toUpperCase(),
+                name.charAt(0).toUpperCase() + name.slice(1) + '.' + ext,
+                name.charAt(0).toUpperCase() + name.slice(1) + '.' + ext.toUpperCase(),
+                name.toUpperCase() + '.' + ext,
+                name.toUpperCase() + '.' + ext.toUpperCase()
+            ];
+            
+            for (let url of variations) {
+                try {
+                    let response = await fetch(url, { method: 'HEAD' });
+                    if (response.ok) return url;
+                } catch(e) {}
+            }
+            return filename; // Fallback
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             updatePageContent();
 
-            // গুগল শিট থেকে ডাটা ফেচ করা হচ্ছে
             fetch(webAppUrl)
                 .then(response => response.json())
                 .then(data => {
                     cmsTexts = data.texts || {};
                     
-                    // প্রথম ছবিটি গিটহাব থেকে লোড হচ্ছে
                     let img1 = document.getElementById('img-photo1');
                     img1.src = `photo1.jpg`;
                     img1.style.display = 'block';
 
-                    // অরিজিনাল বইয়ের নাম অনুযায়ী পিডিএফগুলো গিটহাব থেকে সেট করা হচ্ছে
-                    let pdfUrlBn = "ইসলামিক নাকি ব্যাবসায়িক 2026.pdf";
-                    let pdfLinkBn = document.getElementById("pdf-link-bn");
-                    if (pdfLinkBn) pdfLinkBn.href = pdfUrlBn;
+                    // Fetch and Assign Valid PDF URLs automatically
+                    let pdfNameBn = "ইসলামিক নাকি ব্যাবসায়িক 2026.pdf";
+                    getValidUrl(pdfNameBn).then(validUrl => {
+                        let pdfLinkBn = document.getElementById("pdf-link-bn");
+                        if (pdfLinkBn) pdfLinkBn.href = validUrl;
+                        let btn3dBn = document.getElementById("btn-3d-bn");
+                        if (btn3dBn) btn3dBn.setAttribute("onclick", `open3DBook('${validUrl}', 'BN')`);
+                    });
 
-                    let pdfUrlEn = "is this society islamic or commercial 2026.pdf";
-                    let pdfLinkEn = document.getElementById("pdf-link-en");
-                    if (pdfLinkEn) pdfLinkEn.href = pdfUrlEn;
+                    let pdfNameEn = "is this society islamic or commercial 2026.pdf";
+                    getValidUrl(pdfNameEn).then(validUrl => {
+                        let pdfLinkEn = document.getElementById("pdf-link-en");
+                        if (pdfLinkEn) pdfLinkEn.href = validUrl;
+                        let btn3dEn = document.getElementById("btn-3d-en");
+                        if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${validUrl}', 'EN')`);
+                    });
 
-                    let btn3dBn = document.getElementById("btn-3d-bn");
-                    if (btn3dBn) btn3dBn.setAttribute("onclick", `open3DBook('${pdfUrlBn}', 'BN')`);
-                    
-                    let btn3dEn = document.getElementById("btn-3d-en");
-                    if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
-
-                    // শিটের টেক্সট আসার পর পেজ আপডেট করা হচ্ছে
                     updatePageContent();
                 })
                 .catch(error => console.error("Error fetching Google Sheet data:", error));
         });
 
         // ==============================================================
-        // 3D BOOK MODAL VIEW LOGIC (NO CORS PROXY NEEDED)
+        // 3D BOOK MODAL VIEW LOGIC
         // ==============================================================
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
@@ -423,7 +467,6 @@
             modalCurrentPage = 0;
             container.style.transform = 'translateX(0)';
 
-            // ডিরেক্ট লোকাল পিডিএফ লোড (প্রক্সির ঝামেলা ছাড়া)
             pdfjsLib.getDocument(pdfUrl).promise.then(async function(pdf) {
                 const numPages = pdf.numPages;
                 document.getElementById('loader-text').innerText = `Loading your actual PDF (${numPages} Pages)...`;
