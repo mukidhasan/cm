@@ -819,7 +819,7 @@
                 <span onclick="switchTab('books'); toggleMobileMenu()" data-translate="nav_books"
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
                     Books</span>
-                <span id="mobile-nav-content" onclick="switchTab('content'); toggleMobileMenu()"
+                <span id="mobile-nav-content" onclick="switchTab('content'); toggleMobileMenu()" data-translate="nav_content"
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
                     Content</span>
                 <span onclick="switchTab('expertise'); toggleMobileMenu()" data-translate="nav_expertise"
@@ -1621,25 +1621,13 @@
         <!-- ========================================== -->
         <!-- Smart CMS System: 100% Dynamic               -->
         <!-- ========================================== -->
+        <script src="translations.js"></script>
         <script>
             const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
 
             let currentLang = localStorage.getItem('lang') || 'EN';
             let cmsTexts = {};
             let smartImages = {};
-
-            let translations = {};
-
-            async function loadTranslations() {
-                try {
-                    const response = await fetch('translations.json');
-                    translations = await response.json();
-                    updatePageContent();
-                } catch (error) {
-                    console.error("Failed to load translations:", error);
-                    updatePageContent();
-                }
-            }
 
             function toggleLanguage() {
                 currentLang = currentLang === 'EN' ? 'BN' : 'EN';
@@ -1802,7 +1790,7 @@
                 if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
 
                 // Perform initial content update
-                loadTranslations();
+                updatePageContent();
 
                 // Fetch dynamic text content if online
                 fetch(webAppUrl)

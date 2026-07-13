@@ -1,4 +1,4 @@
-{
+const translations = {
     "nav_home": { "EN": "Home", "BN": "হোম" },
     "nav_books": { "EN": "My Books", "BN": "আমার বইসমূহ" },
     "nav_content": { "EN": "My Content", "BN": "আমার কনটেন্ট" },
@@ -112,4 +112,4 @@
     "content_c4_title": { "EN": "AI Visual Compositions", "BN": "এআই ভিজ্যুয়াল কম্পোজিশন" },
     "content_c4_desc": { "EN": "Working with high-detail digital art and image prompt patterns using specific styling and lighting setups.", "BN": "সুনির্দিষ্ট স্টাইলিং ও লাইটিং সেটআপ ব্যবহার করে হাই-ডিটেইল ডিজিটাল আর্ট এবং ইমেজ প্রম্পট প্যাটার্ন নিয়ে কাজ।" },
     "btn_view_concept": { "EN": "View Concept", "BN": "কনসেপ্ট দেখুন" }
-}
+};
