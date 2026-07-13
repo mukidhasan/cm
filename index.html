@@ -411,9 +411,9 @@
                 
                 leafletMap = L.map('interactive-picker-map').setView([lat, lon], 12);
                 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap'
+                L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    attribution: '© Google Maps'
                 }).addTo(leafletMap);
 
                 leafletMarker = L.marker([lat, lon], { draggable: true }).addTo(leafletMap);
