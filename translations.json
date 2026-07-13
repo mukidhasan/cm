@@ -95,5 +95,21 @@
     "map_subtitle": { "EN": "Geographic Pointer", "BN": "ভৌগলিক মানচিত্র" },
     "map_title": { "EN": "Live Location Map", "BN": "লাইভ লোকেশন ম্যাপ" },
     "map_desc": { "EN": "Type an address on the left to pin and verify the location.", "BN": "লোকেশন পিন ও যাচাই করতে বাম পাশে একটি ঠিকানা লিখুন।" },
-    "map_pending": { "EN": "Pending Address Verification", "BN": "ঠিকানা যাচাই করার অপেক্ষায়" }
+    "map_pending": { "EN": "Pending Address Verification", "BN": "ঠিকানা যাচাই করার অপেক্ষায়" },
+    "creative_portfolio_tag": { "EN": "Creative Portfolio", "BN": "ক্রিয়েটিভ পোর্টফোলিও" },
+    "creative_content_title": { "EN": "MY CREATIVE <span class=\"text-brand-blue\">CONTENT</span>", "BN": "আমার ক্রিয়েটিভ <span class=\"text-brand-blue\">কনটেন্ট</span>" },
+    "creative_content_desc": { "EN": "Here are my experiments and hobbies involving custom crafts, 2D game modifications, and vintage media archiving beyond technical boundaries.", "BN": "প্রযুক্তির সীমানা ছাড়িয়ে বিভিন্ন কাস্টম ক্রাফট, ২ডি গেম মডিফিকেশন এবং ভিন্টেজ মিডিয়া আর্কাইভ নিয়ে আমার নানা এক্সপেরিমেন্ট ও শখের কাজগুলো এখানে তুলে ধরা হলো।" },
+    "content_c1_tag": { "EN": "2D Game Development", "BN": "২ডি গেম ডেভেলপমেন্ট" },
+    "content_c1_title": { "EN": "OpenBOR & MUGEN Mods", "BN": "OpenBOR এবং MUGEN মডস" },
+    "content_c1_desc": { "EN": "Custom sprite sheet designing, 2D animation frame alignment, and character mechanics modification using open-source engines.", "BN": "কাস্টম স্প্রাইট শিট ডিজাইনিং, টু-ডি অ্যানিমেশন ফ্রেম অ্যালাইনমেন্ট এবং ওপেন-সোর্স ইঞ্জিনগুলোর মাধ্যমে ক্যারেক্টার মেকানিক্স মডিফিকেশন।" },
+    "content_c2_tag": { "EN": "Hardware & DIY", "BN": "হার্ডওয়্যার এবং ডিআইওয়াই" },
+    "content_c2_title": { "EN": "DIY Concept Crafts", "BN": "ডিআইওয়াই কনসেপ্ট ক্রাফটস" },
+    "content_c2_desc": { "EN": "Custom hardware modifications, testing tools, and electronics design projects to simplify daily life and workplace tasks.", "BN": "দৈনন্দিন জীবন ও কর্মক্ষেত্রের কাজকে সহজ করতে বিভিন্ন কাস্টম হার্ডওয়্যার মডিফিকেশন, টেস্টিং টুলস এবং ইলেকট্রনিক্স ডিজাইন প্রজেক্ট।" },
+    "content_c3_tag": { "EN": "Media Archiving", "BN": "মিডিয়া আর্কাইভ" },
+    "content_c3_title": { "EN": "Vintage Media Digitization", "BN": "ভিন্টেজ মিডিয়া ডিজিটালাইজেশন" },
+    "content_c3_desc": { "EN": "Analog media (cassette, VHS) preservation, digital format conversion, and vintage audio-visual device restoration.", "BN": "অ্যানালগ মিডিয়া (ক্যাসেট, ভিএইচএস) সংরক্ষণ, ডিজিটাল ফরমেটে রূপান্তর এবং ভিন্টেজ অডিও-ভিজ্যুয়াল ডিভাইস পুনরুদ্ধার কার্যক্রম।" },
+    "content_c4_tag": { "EN": "Generative Art", "BN": "জেনারেটিভ আর্ট" },
+    "content_c4_title": { "EN": "AI Visual Compositions", "BN": "এআই ভিজ্যুয়াল কম্পোজিশন" },
+    "content_c4_desc": { "EN": "Working with high-detail digital art and image prompt patterns using specific styling and lighting setups.", "BN": "সুনির্দিষ্ট স্টাইলিং ও লাইটিং সেটআপ ব্যবহার করে হাই-ডিটেইল ডিজিটাল আর্ট এবং ইমেজ প্রম্পট প্যাটার্ন নিয়ে কাজ।" },
+    "btn_view_concept": { "EN": "View Concept", "BN": "কনসেপ্ট দেখুন" }
 }
