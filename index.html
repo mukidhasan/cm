@@ -1344,11 +1344,11 @@
 
             <!-- Page: Contact -->
             <div id="page-contact"
-                class="tab-page py-12 flex justify-center items-stretch gap-8 max-w-6xl mx-auto w-full flex-col lg:flex-row">
+                class="tab-page py-12 flex justify-center items-stretch gap-8 max-w-2xl mx-auto w-full flex-col">
 
                 <!-- Left: Contact Form -->
                 <div
-                    class="bg-white p-8 lg:w-1/2 border-t-4 border-brand-blue shadow-xl rounded-lg flex flex-col justify-between">
+                    class="bg-white p-8 border-t-4 border-brand-blue shadow-xl rounded-lg flex flex-col justify-between w-full">
                     <div>
                         <h3 class="font-heading text-4xl uppercase tracking-wide mb-2 text-brand-black"
                             data-translate="modal_title">Let's Connect</h3>
@@ -1498,40 +1498,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Map Box Card -->
-                <div
-                    class="lg:w-1/2 bg-white border border-gray-200 shadow-xl rounded-lg p-6 flex flex-col justify-between min-h-[400px]">
-                    <div class="flex flex-col h-full">
-                        <div class="mb-4">
-                            <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-1 block"
-                                data-translate="map_subtitle">Geographic Pointer</span>
-                            <h4 class="font-heading text-2xl uppercase text-brand-black" data-translate="map_title">Live
-                                Location Map</h4>
-                            <p class="text-xs text-gray-500 mt-1" data-translate="map_desc">Type an address on the left
-                                to pin and verify the location.</p>
-                        </div>
 
-                        <!-- Map Frame -->
-                        <div id="map-container"
-                            class="flex-grow w-full border border-gray-100 bg-gray-50 relative overflow-hidden rounded min-h-[300px] flex items-center justify-center">
-                            <!-- Placeholder when no address verified -->
-                            <div id="map-placeholder" class="text-center p-8 z-10 flex flex-col items-center gap-3">
-                                <svg class="w-12 h-12 text-gray-300 animate-bounce" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                    </path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest"
-                                    data-translate="map_pending">Pending Address Verification</p>
-                            </div>
-                            <iframe id="map-iframe" class="w-full h-full border-0 absolute inset-0 hidden"
-                                loading="lazy" allowfullscreen src=""></iframe>
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
