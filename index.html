@@ -1089,6 +1089,29 @@
                     </div>
                 </div>
 
+                <!-- PDF Upload Zone -->
+                <div class="border-2 border-dashed border-gray-300 hover:border-brand-blue bg-white p-8 text-center rounded-lg transition duration-300 relative cursor-pointer group max-w-4xl w-full mb-8 shadow-sm hover:shadow-md" id="pdf-upload-zone">
+                    <input type="file" id="pdf-file-input" accept="application/pdf" class="hidden">
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue group-hover:scale-110 transition duration-300">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                        </div>
+                        <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-brand-black" data-translate="upload_title">Upload PDF to Shelf</span>
+                        <span class="text-[11px] text-gray-500 font-medium" data-translate="upload_desc">Drag & drop a PDF file here, or click to browse</span>
+                        <span class="text-[10px] text-red-500 font-bold uppercase tracking-wider hidden mt-2" id="upload-error-msg"></span>
+                    </div>
+                </div>
+
+                <!-- Custom Uploaded Books Container -->
+                <div id="custom-books-section" class="hidden flex flex-col gap-12 w-full">
+                    <div class="border-t border-gray-200 my-4"></div>
+                    <h3 class="font-heading text-3xl uppercase text-brand-black" data-translate="custom_books_header">My Uploaded Books</h3>
+                    <div id="custom-books-container" class="flex flex-col gap-12"></div>
+                    <div class="border-t border-gray-200 my-4"></div>
+                </div>
+
                 <!-- BOOK 1: BENGALI EDITION -->
                 <div id="book-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-4 flex justify-center py-6">
@@ -1275,14 +1298,14 @@
                                     </path>
                                 </svg>
                             </a>
-                            <a href="Corporate jogot.html" target="_blank"
+                            <button onclick="open3DBook('book2', 'BN')"
                                 class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                                 <span data-translate="btn_interactive">Read Interactive 3D</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
                                         d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
                                 </svg>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1338,14 +1361,14 @@
                                     </path>
                                 </svg>
                             </a>
-                            <a href="Corporate jogot.html" target="_blank"
+                            <button onclick="open3DBook('book2', 'EN')"
                                 class="border-2 border-brand-black text-brand-black text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
                                 <span data-translate="btn_interactive">Read Interactive 3D</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
                                         d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
                                 </svg>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1871,7 +1894,315 @@
                 });
             }
 
+            // ==============================================
+            // INDEXEDDB FOR PDF FILE PERSISTENCE
+            // ==============================================
+            const dbName = "custom_books_db";
+            const storeName = "books";
+            let db = null;
+
+            function initDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(dbName, 1);
+                    request.onupgradeneeded = (e) => {
+                        const database = e.target.result;
+                        if (!database.objectStoreNames.contains(storeName)) {
+                            database.createObjectStore(storeName, { keyPath: "id" });
+                        }
+                    };
+                    request.onsuccess = (e) => {
+                        db = e.target.result;
+                        resolve(db);
+                    };
+                    request.onerror = (e) => {
+                        console.error("IndexedDB open error:", e.target.error);
+                        reject(e.target.error);
+                    };
+                });
+            }
+
+            function saveBookToDB(book) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject("Database not initialized");
+                    const transaction = db.transaction([storeName], "readwrite");
+                    const store = transaction.objectStore(storeName);
+                    const request = store.put(book);
+                    request.onsuccess = () => resolve();
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function getBookFromDB(id) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject("Database not initialized");
+                    const transaction = db.transaction([storeName], "readonly");
+                    const store = transaction.objectStore(storeName);
+                    const request = store.get(id);
+                    request.onsuccess = (e) => resolve(e.target.result);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function getAllBooksFromDB() {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject("Database not initialized");
+                    const transaction = db.transaction([storeName], "readonly");
+                    const store = transaction.objectStore(storeName);
+                    const request = store.getAll();
+                    request.onsuccess = (e) => resolve(e.target.result || []);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function deleteBookFromDB(id) {
+                return new Promise((resolve, reject) => {
+                    if (!db) return reject("Database not initialized");
+                    const transaction = db.transaction([storeName], "readwrite");
+                    const store = transaction.objectStore(storeName);
+                    const request = store.delete(id);
+                    request.onsuccess = () => resolve();
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            // Memory cache of PDF data/blobs to avoid re-reading from IndexedDB
+            let uploadedBooksCache = {};
+
+            async function loadCustomBooks() {
+                try {
+                    await initDB();
+                    const books = await getAllBooksFromDB();
+                    const container = document.getElementById("custom-books-container");
+                    const section = document.getElementById("custom-books-section");
+                    
+                    if (!container) return;
+                    container.innerHTML = "";
+                    
+                    if (books.length === 0) {
+                        section.classList.add("hidden");
+                        return;
+                    }
+                    
+                    section.classList.remove("hidden");
+                    
+                    for (const book of books) {
+                        const blob = new Blob([book.data], { type: "application/pdf" });
+                        const blobUrl = URL.createObjectURL(blob);
+                        uploadedBooksCache[book.id] = {
+                            arrayBuffer: book.data,
+                            blobUrl: blobUrl,
+                            title: book.title
+                        };
+                        
+                        const cardHTML = createBookCardHTML(book.id, book.title, blobUrl, book.addedAt, book.size);
+                        container.insertAdjacentHTML("beforeend", cardHTML);
+                        
+                        const canvas = document.getElementById(`cover-${book.id}`);
+                        if (canvas) {
+                            renderPDFCover(book.data, canvas);
+                        }
+                    }
+                    
+                    updatePageContent();
+                    
+                } catch (err) {
+                    console.error("Error loading custom books:", err);
+                }
+            }
+
+            function createBookCardHTML(id, title, pdfBlobUrl, date, size) {
+                const formattedDate = new Date(date).toLocaleDateString(undefined, {
+                    year: 'numeric', month: 'short', day: 'numeric'
+                });
+                
+                const sizeKb = (size / 1024).toFixed(1);
+                const formattedSize = `${sizeKb} KB`;
+
+                return `
+                <div id="book-card-${id}" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-4 flex justify-center py-6">
+                        <div class="book-container-3d">
+                            <div class="book-mockup">
+                                <div class="book-spine"></div>
+                                <div class="book-cover flex flex-col justify-between p-6 overflow-hidden relative" style="background: linear-gradient(135deg, #0f172a, #0b1121);">
+                                    <canvas id="cover-${id}" class="absolute inset-0 w-full h-full object-cover z-0 opacity-70"></canvas>
+                                    <div class="book-cover-content relative z-10 flex flex-col justify-between h-full text-center">
+                                        <div class="text-[10px] font-bold uppercase tracking-widest text-sky-300" data-translate="custom_badge">Uploaded Book</div>
+                                        <h3 class="text-white text-base font-bold leading-tight my-auto px-2 break-all">${title}</h3>
+                                        <div class="text-[9px] text-gray-400 font-semibold tracking-wider" data-translate="custom_author">External PDF</div>
+                                    </div>
+                                </div>
+                                <div class="book-pages"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-8 flex flex-col justify-center">
+                        <span class="bg-blue-50 text-brand-blue text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4" data-translate="custom_badge">Uploaded Book</span>
+                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4 break-words">
+                            ${title}
+                        </h2>
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex flex-wrap gap-x-4 gap-y-2">
+                            <span><span data-translate="custom_author">Author: External PDF</span></span>
+                            <span>•</span>
+                            <span><span data-translate="custom_year">Uploaded: </span>${formattedDate}</span>
+                            <span>•</span>
+                            <span>${formattedSize}</span>
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                            <a href="${pdfBlobUrl}" target="_blank"
+                                class="bg-brand-black text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-blue transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                                <span data-translate="btn_pdf">Read PDF Version</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+                                        d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <button onclick="open3DBook('${id}', 'BN')"
+                                class="bg-brand-blue text-white text-xs font-bold uppercase tracking-widest py-4 px-8 hover:bg-brand-black transition duration-300 flex items-center justify-center gap-3 shadow-md">
+                                <span data-translate="btn_interactive">Read Interactive 3D</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+                                        d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <button onclick="deleteCustomBook('${id}')"
+                                class="border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white text-xs font-bold uppercase tracking-widest py-4 px-8 transition duration-300 flex items-center justify-center gap-3 w-full sm:w-auto">
+                                <span data-translate="delete_btn">Remove Book</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            function renderPDFCover(pdfData, canvas) {
+                const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+                loadingTask.promise.then(pdf => {
+                    pdf.getPage(1).then(page => {
+                        const viewport = page.getViewport({ scale: 0.8 });
+                        const context = canvas.getContext('2d');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+                        page.render(renderContext).promise.catch(err => console.error("Cover render error:", err));
+                    });
+                }).catch(err => {
+                    console.error("Error reading PDF for cover:", err);
+                });
+            }
+
+            function setupUploadListeners() {
+                const zone = document.getElementById("pdf-upload-zone");
+                const fileInput = document.getElementById("pdf-file-input");
+                const errorMsg = document.getElementById("upload-error-msg");
+                
+                if (!zone || !fileInput) return;
+                
+                zone.onclick = () => fileInput.click();
+                
+                zone.ondragover = (e) => {
+                    e.preventDefault();
+                    zone.classList.add("border-brand-blue", "bg-blue-50/20");
+                };
+                
+                zone.ondragleave = () => {
+                    zone.classList.remove("border-brand-blue", "bg-blue-50/20");
+                };
+                
+                zone.ondrop = (e) => {
+                    e.preventDefault();
+                    zone.classList.remove("border-brand-blue", "bg-blue-50/20");
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        handlePDFFile(files[0]);
+                    }
+                };
+                
+                fileInput.onchange = (e) => {
+                    const files = e.target.files;
+                    if (files.length > 0) {
+                        handlePDFFile(files[0]);
+                    }
+                };
+                
+                function showError(msg) {
+                    errorMsg.innerText = msg;
+                    errorMsg.classList.remove("hidden");
+                }
+                
+                function clearError() {
+                    errorMsg.classList.add("hidden");
+                }
+                
+                function handlePDFFile(file) {
+                    if (file.type !== "application/pdf") {
+                        showError(currentLang === 'BN' ? "শুধুমাত্র PDF ফাইল আপলোড করা যাবে।" : "Only PDF files are supported.");
+                        return;
+                    }
+                    
+                    if (file.size > 20 * 1024 * 1024) {
+                        showError(currentLang === 'BN' ? "ফাইলের সাইজ ২০ এমবি এর চেয়ে কম হতে হবে।" : "File size must be under 20MB.");
+                        return;
+                    }
+                    
+                    clearError();
+                    
+                    const reader = new FileReader();
+                    reader.onload = async (event) => {
+                        try {
+                            const arrayBuffer = event.target.result;
+                            const bookId = "pdf-" + Date.now();
+                            const title = file.name.replace(/\.[^/.]+$/, "");
+                            
+                            const book = {
+                                id: bookId,
+                                title: title,
+                                data: arrayBuffer,
+                                size: file.size,
+                                addedAt: new Date().toISOString()
+                            };
+                            
+                            await saveBookToDB(book);
+                            await loadCustomBooks();
+                        } catch (err) {
+                            console.error("Error saving PDF:", err);
+                            showError(currentLang === 'BN' ? "পিডিএফ সেভ করতে সমস্যা হয়েছে।" : "Failed to save PDF to shelf.");
+                        }
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+            }
+
+            async function deleteCustomBook(id) {
+                if (confirm(currentLang === 'BN' ? "আপনি কি এই বইটি শেলফ থেকে মুছে ফেলতে চান?" : "Are you sure you want to remove this book from your shelf?")) {
+                    try {
+                        if (uploadedBooksCache[id] && uploadedBooksCache[id].blobUrl) {
+                            URL.revokeObjectURL(uploadedBooksCache[id].blobUrl);
+                            delete uploadedBooksCache[id];
+                        }
+                        await deleteBookFromDB(id);
+                        await loadCustomBooks();
+                    } catch (err) {
+                        console.error("Error deleting book:", err);
+                    }
+                }
+            }
+
             document.addEventListener("DOMContentLoaded", function () {
+                // Initialize custom books shelf & upload listeners
+                loadCustomBooks();
+                setupUploadListeners();
                 // Immediately initialize local images and PDF paths
                 const imgPhoto1 = document.getElementById('img-Photo1');
                 const imgPhoto5 = document.getElementById('img-Photo5');
@@ -1917,137 +2248,301 @@
             let modalCurrentPage = 0;
 
             const fallbackBooks = {
-                "BN": {
-                    pages: [
-                        {
-                            front: {
-                                type: "cover",
-                                title: "এই সমাজ<br>ইসলামিক নাকি ব্যাবসায়িক",
-                                context: "<strong>প্রেক্ষাপট:</strong> বর্তমানে ফুটবলের উন্মাদনা নিয়ে বিষয়বস্তু",
-                                author: "লেখক: মো. মুকিদ হাসান সিয়াম"
+                "book1": {
+                    "BN": {
+                        pages: [
+                            {
+                                front: {
+                                    type: "cover",
+                                    title: "এই সমাজ<br>ইসলামিক নাকি ব্যাবসায়িক",
+                                    context: "<strong>প্রেক্ষাপট:</strong> বর্তমানে ফুটবলের উন্মাদনা নিয়ে বিষয়বস্তু",
+                                    author: "লেখক: মো. মুকিদ হাসান সিয়াম"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "ভূমিকা",
+                                    text: "ধর্ম মানুষের অন্তরের বিষয়। কিন্তু যখন তা লোকদেখানো প্রতিযোগিতায় পরিণত হয়, তখনই সমাজে তৈরি হয় চরম অরাজকতা ও হিপোক্রিসি।",
+                                    verse: '"অতএব দুর্ভোগ সেসব নামাজীর জন্য, যারা তাদের নামাজ সম্বন্ধে বেখবর; যারা তা লোকদেখানোর জন্য করে।"<br>(সূরা আল-মাউন: ৪-৬)',
+                                    num: "১"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "ভূমিকা",
-                                text: "ধর্ম মানুষের অন্তরের বিষয়। কিন্তু যখন তা লোকদেখানো প্রতিযোগিতায় পরিণত হয়, তখনই সমাজে তৈরি হয় চরম অরাজকতা ও হিপোক্রিসি।",
-                                verse: '"অতএব দুর্ভোগ সেসব নামাজীর জন্য, যারা তাদের নামাজ সম্বন্ধে বেখবর; যারা তা লোকদেখানোর জন্য করে।"<br>(সূরা আল-মাউন: ৪-৬)',
-                                num: "১"
-                            }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "অধ্যায় ১: সস্তা আবেগ",
-                                text: 'ফুটবল একটি নিছক বিনোদন। কিন্তু এখানেও কিছু মানুষ ধর্মের কার্ড খেলে বলেন, "মুসলিম দেশ হিসেবে অমুক দলকে সাপোর্ট করতে হবে।"',
-                                verse: '"তাদেরকে ছেড়ে দাও, যারা নিজেদের ধর্মকে খেলা ও কৌতুক বানিয়ে নিয়েছে এবং পার্থিব জীবন যাদেরকে ধোঁকায় ফেলে রেখেছে।"<br>(সূরা আল-আনআম: ৭০)',
-                                num: "২"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "অধ্যায় ১: সস্তা আবেগ",
+                                    text: 'ফুটবল একটি নিছক বিনোদন। কিন্তু এখানেও কিছু মানুষ ধর্মের কার্ড খেলে বলেন, "মুসলিম দেশ হিসেবে অমুক দলকে সাপোর্ট করতে হবে।"',
+                                    verse: '"তাদেরকে ছেড়ে দাও, যারা নিজেদের ধর্মকে খেলা ও কৌতুক বানিয়ে নিয়েছে এবং পার্থিব জীবন যাদেরকে ধোঁকায় ফেলে রেখেছে।"<br>(সূরা আল-আনআম: ৭০)',
+                                    num: "২"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "অধ্যায় ২: আলেমদের প্রতিযোগিতা",
+                                    text: "একসময় মানুষ খুতবা শুনতে মসজিদে যেত আত্মশুদ্ধির জন্য। আর এখন? অনেকেই ইউটিউবে নেমেছেন ভিউ বাড়ানোর অসুস্থ প্রতিযোগিতায়।",
+                                    verse: '"হে মুমিনগণ! তোমরা যা করো না, তা তোমরা কেন বলো? আল্লাহর কাছে এটা অত্যন্ত ঘৃণাপূর্ণ কাজ যে, তোমরা যা করো না তা বলো।"<br>(সূরা আস-সাফ: ২-৩)',
+                                    num: "৩"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "অধ্যায় ২: আলেমদের প্রতিযোগিতা",
-                                text: "একসময় মানুষ খুতবা শুনতে মসজিদে যেত আত্মশুদ্ধির জন্য। আর এখন? অনেকেই ইউটিউবে নেমেছেন ভিউ বাড়ানোর অসুস্থ প্রতিযোগিতায়।",
-                                verse: '"হে মুমিনগণ! তোমরা যা করো না, তা তোমরা কেন বলো? আল্লাহর কাছে এটা অত্যন্ত ঘৃণাপূর্ণ কাজ যে, তোমরা যা করো না তা বলো।"<br>(সূরা আস-সাফ: ২-৩)',
-                                num: "৩"
-                            }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "অধ্যায় ৩: বাণিজ্যিকীকরণ",
-                                text: "ধর্ম প্রচারের নামে এখন চলছে জাঁকজমকপূর্ণ ব্যবসা। চমৎকার মিউজিক আর বলিউডি সুরের সাথে মিল রেখে তৈরি হচ্ছে ইসলামিক গজল।",
-                                verse: '"তোমরা সত্যের সাথে মিথ্যার মিশ্রণ ঘটিও না... এবং আমার আয়াতের বিনিময়ে সামান্য মূল্য (পার্থিব স্বার্থ) গ্রহণ করো না।"<br>(সূরা আল-বাকারাহ: ৪১-৪২)',
-                                num: "৪"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "অধ্যায় ৩: বাণিজ্যিকীকরণ",
+                                    text: "ধর্ম প্রচারের নামে এখন চলছে জাঁকজমকপূর্ণ ব্যবসা। চমৎকার মিউজিক আর বলিউডি সুরের সাথে মিল রেখে তৈরি হচ্ছে ইসলামিক গজল।",
+                                    verse: '"তোমরা সত্যের সাথে মিথ্যার মিশ্রণ ঘটিও না... এবং আমার আয়াতের বিনিময়ে সামান্য মূল্য (পার্থিব স্বার্থ) গ্রহণ করো না।"<br>(সূরা আল-বাকারাহ: ৪১-৪২)',
+                                    num: "৪"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "অধ্যায় ৪: ১৪০০ বছরের ইতিহাস",
+                                    text: "যারা বড় বড় ফতোয়া দেন, তারা অমুসলিমদের তৈরি করা ফেসবুক আর ইউটিউব ব্যবহার করেই ইসলাম রক্ষার বড়াই করেন।",
+                                    verse: '"তোমরা কি মানুষকে সৎকর্মের নির্দেশ দাও আর নিজেদের কথা ভুলে যাও, অথচ তোমরা কিতাব অধ্যয়ন করো? তোমরা কি বোঝো না?"<br>(সূরা আল-বাকারাহ: ৪৪)',
+                                    num: "৫"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "অধ্যায় ৪: ১৪০০ বছরের ইতিহাস",
-                                text: "যারা বড় বড় ফতোয়া দেন, তারা অমুসলিমদের তৈরি করা ফেসবুক আর ইউটিউব ব্যবহার করেই ইসলাম রক্ষার বড়াই করেন।",
-                                verse: '"তোমরা কি মানুষকে সৎকর্মের নির্দেশ দাও আর নিজেদের কথা ভুলে যাও, অথচ তোমরা কিতাব অধ্যয়ন করো? তোমরা কি বোঝো না?"<br>(সূরা আল-বাকারাহ: ৪৪)',
-                                num: "৫"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "উপসংহার",
+                                    text: "আমি নিজেকে নিখুঁত কোনো ঈমানদার দাবি করি না। কিন্তু আমি এই ধর্মের একজন অংশ। তাই যখন দেখি ধর্মের নামে ব্যবসা ও ক্ষমতার অপব্যবহার চলছে, তখন তা চরম বিরক্তির কারণ হয়ে দাঁড়ায়।",
+                                    verse: '"যে বিষয়ে তোমার কোনো জ্ঞান নেই, তার অনুসরণ করো না। নিশ্চয়ই কান, চোখ ও অন্তঃকরণ—এর প্রত্যেকটি সম্পর্কে জিজ্ঞাসা করা হবে।"<br>(সূরা বনী ইসরাঈল: ৩৬)',
+                                    num: "৬"
+                                },
+                                back: {
+                                    type: "cover-back",
+                                    title: "সমাপ্ত"
+                                }
                             }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "উপসংহার",
-                                text: "আমি নিজেকে নিখুঁত কোনো ঈমানদার দাবি করি না। কিন্তু আমি এই ধর্মের একজন অংশ। তাই যখন দেখি ধর্মের নামে ব্যবসা ও ক্ষমতার অপব্যবহার চলছে, তখন তা চরম বিরক্তির কারণ হয়ে দাঁড়ায়।",
-                                verse: '"যে বিষয়ে তোমার কোনো জ্ঞান নেই, তার অনুসরণ করো না। নিশ্চয়ই কান, চোখ ও অন্তঃকরণ—এর প্রত্যেকটি সম্পর্কে জিজ্ঞাসা করা হবে।"<br>(সূরা বনী ইসরাঈল: ৩৬)',
-                                num: "৬"
+                        ]
+                    },
+                    "EN": {
+                        pages: [
+                            {
+                                front: {
+                                    type: "cover",
+                                    title: "Is This Society<br>Islamic or<br>Commercial?",
+                                    context: "<strong>Context:</strong> Discussions on current football frenzy and commercialization of religion.",
+                                    author: "Author: Md. Mukid Hasan Seiam"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Preface",
+                                    text: "Religion is a matter of the heart. However, when it transforms into a showy competition, it breeds chaos and hypocrisy within society.",
+                                    verse: '"So woe to those who pray - [but] who are heedless of their prayer - those who make show [of their deeds]"<br>(Surah Al-Ma\'un: 4-6)',
+                                    num: "1"
+                                }
                             },
-                            back: {
-                                type: "cover-back",
-                                title: "সমাপ্ত"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Chapter 1: Cheap Emotions",
+                                    text: "Football is merely a form of entertainment. Yet, even here, some people play the religious card, insisting, \"As a Muslim country, we must support such-and-such team.\"",
+                                    verse: '"And leave those who take their religion as amusement and play and whom the worldly life has deluded."<br>(Surah Al-An\'am: 70)',
+                                    num: "2"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Chapter 2: The Clerics' Race",
+                                    text: "Once, people visited mosques to listen to sermons for spiritual purification. Today, many have entered an unhealthy online race to boost YouTube views.",
+                                    verse: '"O you who have believed, why do you say what you do not do? Most hateful it is in the sight of Allah that you say what you do not do."<br>(Surah As-Saff: 2-3)',
+                                    num: "3"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Chapter 3: Commercialization",
+                                    text: "Under the banner of preaching, a glamorous business is thriving. Islamic ghazals are now composed in tune with Bollywood beats and melodies.",
+                                    verse: '"And do not mix the truth with falsehood... and do not exchange My verses for a small price [i.e., worldly gain]."<br>(Surah Al-Baqarah: 41-42)',
+                                    num: "4"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Chapter 4: 1400 Years of History",
+                                    text: "Those who issue grand fatwas boast of defending Islam while utilizing Facebook and YouTube—platforms created by non-Muslims—to spread their message.",
+                                    verse: '"Do you order righteousness of the people and forget yourselves while you recite the Scripture? Then will you not reason?"<br>(Surah Al-Baqarah: 44)',
+                                    num: "5"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Conclusion",
+                                    text: "I do not claim to be a perfect believer, but I am a part of this faith. Thus, when I witness business and abuse of power running rampant in the name of religion, it becomes a source of extreme frustration.",
+                                    verse: '"And do not pursue that of which you have no knowledge. Indeed, the hearing, the sight and the heart - about all those you will be questioned."<br>(Surah Al-Isra: 36)',
+                                    num: "6"
+                                },
+                                back: {
+                                    type: "cover-back",
+                                    title: "The End"
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 },
-                "EN": {
-                    pages: [
-                        {
-                            front: {
-                                type: "cover",
-                                title: "Is This Society<br>Islamic or<br>Commercial?",
-                                context: "<strong>Context:</strong> Discussions on current football frenzy and commercialization of religion.",
-                                author: "Author: Md. Mukid Hasan Seiam"
+                "book2": {
+                    "BN": {
+                        pages: [
+                            {
+                                front: {
+                                    type: "cover",
+                                    title: "কর্পোরেট জগৎ",
+                                    context: "<strong>প্রেক্ষাপট:</strong> ব্যক্তিগত অভিজ্ঞতা ও রূঢ় বাস্তবতা",
+                                    author: "লেখক: মো. মুকিদ হাসান সিয়াম"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "ভূমিকা",
+                                    text: "বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য মনে হলেও, এটি অনেক সময়ই একটি সুকৌশলী ফাঁদ। আমরা আসলে স্বাধীন মানুষ, নাকি আধুনিক মজুরি-দাসের প্রথায় জড়িয়ে পড়েছি?",
+                                    verse: '"পরিবার হলো সমাজ ও রাষ্ট্রের সবচেয়ে মৌলিক একক। এর স্থায়িত্বের ওপরই রাষ্ট্রের স্থায়িত্ব নির্ভর করে।"<br>— অ্যারিস্টটল',
+                                    num: "১"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "Preface",
-                                text: "Religion is a matter of the heart. However, when it transforms into a showy competition, it breeds chaos and hypocrisy within society.",
-                                verse: '"So woe to those who pray - [but] who are heedless of their prayer - those who make show [of their deeds]"<br>(Surah Al-Ma\'un: 4-6)',
-                                num: "1"
-                            }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "Chapter 1: Cheap Emotions",
-                                text: "Football is merely a form of entertainment. Yet, even here, some people play the religious card, insisting, \"As a Muslim country, we must support such-and-such team.\"",
-                                verse: '"And leave those who take their religion as amusement and play and whom the worldly life has deluded."<br>(Surah Al-An\'am: 70)',
-                                num: "2"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "১. আধুনিক মজুরি-দাসত্ব",
+                                    text: "কর্পোরেট দুনিয়া শুধু সার্ভিস কেনে না; তারা আপনার পুরো 'সময়', মানসিকতা এবং শর্তহীন আনুগত্য কিনে নিতে চায়। যখনই স্কিল বিক্রির সীমা পেরিয়ে দাসত্ব আশা করা হয়, তখনই এটি খাঁচা মনে হতে শুরু করে।",
+                                    verse: '"আমাদের জীবন আসলে ছোট নয়, বরং আমরা নিজেরাই অন্যের দাসত্বে এবং অপ্রয়োজনীয় কাজে সময় ব্যয় করে একে ছোট করে ফেলি।"<br>— সেনেকা',
+                                    num: "২"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "২. পদবির মোহ ও স্কিলের মৃত্যু",
+                                    text: "প্রমোশন দিতে দিতে এমন একটি পদে নিয়ে যাওয়া হয়, যে কাজের জন্য সে সম্পূর্ণ অযোগ্য। পদবির পেছনে ছুটতে গিয়ে কোর স্কিলগুলো চর্চার অভাবে জঞ্জালে পরিণত হয়।",
+                                    verse: '"কর্পোরেট কাঠামোতে মানুষকে প্রমোশন দিতে দিতে এমন একটি পদে নিয়ে যাওয়া হয়, যে কাজের জন্য সে সম্পূর্ণ অযোগ্য।"<br>— দ্য পিটার প্রিন্সিপল',
+                                    num: "৩"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "Chapter 2: The Clerics' Race",
-                                text: "Once, people visited mosques to listen to sermons for spiritual purification. Today, many have entered an unhealthy online race to boost YouTube views.",
-                                verse: '"O you who have believed, why do you say what you do not do? Most hateful it is in the sight of Allah that you say what you do not do."<br>(Surah As-Saff: 2-3)',
-                                num: "3"
-                            }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "Chapter 3: Commercialization",
-                                text: "Under the banner of preaching, a glamorous business is thriving. Islamic ghazals are now composed in tune with Bollywood beats and melodies.",
-                                verse: '"And do not mix the truth with falsehood... and do not exchange My verses for a small price [i.e., worldly gain]."<br>(Surah Al-Baqarah: 41-42)',
-                                num: "4"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "৩. সেরা ট্রেনিং গ্রাউন্ড",
+                                    text: "এত ফাঁদ জেনেও চাকরি করার প্রেরণা কী? স্বাধীন উদ্যোগ গড়ার আগে এই ফাঁদে পা দেওয়াটাই বড় বুদ্ধিমত্তার কাজ: বাবার অঢেল টাকা থাকলেও অন্যের অধীনে কাজ করলে টাকার প্রকৃত মূল্য এবং ভেতরের ইগো ভেঙে ফেলা শেখা যায়।",
+                                    verse: '"যে চাকরির চাপ নিতে পারে না, সে ব্যবসার ২৪ ঘণ্টার চাপ কখনোই নিতে পারবে না।"',
+                                    num: "৪"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "৪. কর্পোরেট কাদের জন্য?",
+                                    text: "এই সিস্টেমটিতে মূলত দুধরনের মানুষ লাভবান হয়: ১. দ্য ট্রিকস্টারস বা ধূর্ত মানুষ, এবং ২. টাইম-টার্গেট লার্নার যারা শুধু কাজ ও অভিজ্ঞতা শিখতে আসে।",
+                                    verse: '"ক্ষমতার খেলায় টিকে থাকতে হলে কখনো সিংহের মতো বলশালী, আবার কখনো শেয়ালের মতো ধূর্ত হতে হয়।"<br>— ম্যাকিয়াভেলি',
+                                    num: "৫"
+                                }
                             },
-                            back: {
-                                type: "content",
-                                title: "Chapter 4: 1400 Years of History",
-                                text: "Those who issue grand fatwas boast of defending Islam while utilizing Facebook and YouTube—platforms created by non-Muslims—to spread their message.",
-                                verse: '"Do you order righteousness of the people and forget yourselves while you recite the Scripture? Then will you not reason?"<br>(Surah Al-Baqarah: 44)',
-                                num: "5"
-                            }
-                        },
-                        {
-                            front: {
-                                type: "content",
-                                title: "Conclusion",
-                                text: "I do not claim to be a perfect believer, but I am a part of this faith. Thus, when I witness business and abuse of power running rampant in the name of religion, it becomes a source of extreme frustration.",
-                                verse: '"And do not pursue that of which you have no knowledge. Indeed, the hearing, the sight and the heart - about all those you will be questioned."<br>(Surah Al-Isra: 36)',
-                                num: "6"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "৫. ইসলাম কেন টার্গেট হয়?",
+                                    text: "কর্পোরেট চায় শ্রমবাজারে কর্মীর সংখ্যা দ্বিগুণ করতে। ইসলাম পরিবারকে হেডকোয়ার্টার্স ধরে চমৎকার দায়িত্ব ভাগ করেছে—পুরুষ ফিল্ড এজেন্ট, নারী ইনডোর এক্সিকিউটিভ।",
+                                    verse: '"পরিবার হলো সমাজ ও রাষ্ট্রের সবচেয়ে মৌলিক একক। এর স্থায়িত্বের ওপরই রাষ্ট্রের স্থায়িত্ব নির্ভর করে।"<br>— অ্যারিস্টটল',
+                                    num: "৬"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "৬. ভোগবাদ ও ঋণের ফাঁদ",
+                                    text: "কর্পোরেট পুঁজিবাদের বড় হাতিয়ার মানুষকে ঋণের (লোন, ক্রেডিট কার্ড) জালে আটকে ফেলা। ইসলামে সুদ হারাম এবং অপচয় কঠোরভাবে নিষিদ্ধ।",
+                                    verse: '"যে সবচেয়ে কম জিনিসে সন্তুষ্ট, সে-ই সবচেয়ে ধনী।"<br>— সক্রেটিস',
+                                    num: "৭"
+                                }
                             },
-                            back: {
-                                type: "cover-back",
-                                title: "The End"
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "শেষ কথা",
+                                    text: "কর্পোরেট জগৎ কাজের অভিজ্ঞতা নেওয়ার জন্য দারুণ জায়গা, কিন্তু এটি কখনোই স্বাধীন জীবনের চূড়ান্ত গন্তব্য হতে পারে না। যে এই সত্যটা বুঝতে পারে, সে ফাঁদ এড়িয়ে নিজের রাস্তা নিজেই তৈরি করে নেয়।",
+                                    verse: '"চাকরি ছাড়া ব্যবসা করতে চাওয়া, আর চাকরি দিয়ে এস্টাবলিশড হতে চাওয়া ব্যক্তি হলো সবচেয়ে বড় মূর্খ।"<br><br>— মো. মুকিদ হাসান সিয়াম',
+                                    num: "৮"
+                                },
+                                back: {
+                                    type: "cover-back",
+                                    title: "সমাপ্ত"
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    },
+                    "EN": {
+                        pages: [
+                            {
+                                front: {
+                                    type: "cover",
+                                    title: "Corporate World",
+                                    context: "<strong>Context:</strong> Personal experiences and harsh realities of the corporate ecosystem.",
+                                    author: "Author: Md. Mukid Hasan Seiam"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Preface",
+                                    text: "While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. Are we working as free individuals or getting entangled in modern wage-slavery?",
+                                    verse: '"Family is the most fundamental unit of society and state."<br>— Aristotle',
+                                    num: "1"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Chapter 1: Modern Wage-Slavery",
+                                    text: "The corporate world does not just buy a service; it wants to buy your entire time, mindset, and unconditional loyalty. When it demands slavery beyond services, it feels like a cage.",
+                                    verse: '"Our life is not actually short, but we make it short by spending it on others\' slavery and unnecessary work."<br>— Seneca',
+                                    num: "2"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Chapter 2: Job Titles & Skill Death",
+                                    text: "People are promoted until they reach a level of incompetence. In the pursuit of titles, core skills decay into garbage information due to a lack of practice.",
+                                    verse: '"In a hierarchy, every employee tends to rise to his level of incompetence."<br>— The Peter Principle',
+                                    num: "3"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Chapter 3: Best Training Ground",
+                                    text: "Why work a job despite these traps? Working under others teaches you the real value of money and breaks your ego. It provides networking and builds tolerance.",
+                                    verse: '"He who cannot take the pressure of a job can never handle the 24-hour pressure of a business."',
+                                    num: "4"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Chapter 4: Who is Corporate For?",
+                                    text: "Two types of people benefit in this system: 1. The Tricksters who navigate the system cunningly, and 2. Time-Target Learners who only come to learn and gain experience.",
+                                    verse: '"To survive in the power play, one must be strong like a lion and cunning like a fox."<br>— Machiavelli',
+                                    num: "5"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Chapter 5: Why is Islam Targeted?",
+                                    text: "Corporates want to double the labor market. Islam defines the family as society's headquarters, delegating the male as the field agent and the female as the indoor manager.",
+                                    verse: '"Family is the fundamental unit of society and state."<br>— Aristotle',
+                                    num: "6"
+                                },
+                                back: {
+                                    type: "content",
+                                    title: "Chapter 6: Consumerism & Debt",
+                                    text: "The biggest weapon of corporate capitalism is trapping people in debt. Islam strictly forbids interest (usury) and wastefulness, which makes it a target.",
+                                    verse: '"He who is contented with the least is the richest."<br>— Socrates',
+                                    num: "7"
+                                }
+                            },
+                            {
+                                front: {
+                                    type: "content",
+                                    title: "Conclusion",
+                                    text: "The corporate world is a great place to gain experience, but it can never be the ultimate destination of a free life. He who understands this truth escapes the trap and carves his own path.",
+                                    verse: '"A person who wants to do business without a job, and a person who wants to be established through a job, is the biggest fool."<br><br>— Md. Mukid Hasan Seiam',
+                                    num: "8"
+                                },
+                                back: {
+                                    type: "cover-back",
+                                    title: "The End"
+                                }
+                            }
+                        ]
+                    }
                 }
             };
 
-            function open3DBook(pdfUrl, lang) {
+            function open3DBook(bookId, lang) {
                 document.getElementById('book3DModal').classList.remove('hidden');
                 document.getElementById('book-loader').style.display = 'flex';
                 document.getElementById('modal-book-element').style.display = 'none';
@@ -2055,13 +2550,168 @@
                 document.getElementById('book-swipe-tip').style.display = 'none';
                 document.getElementById('loader-text').innerText = "Loading Book Content...";
 
+                // Case 1: Custom uploaded book
+                if (bookId && bookId.startsWith('pdf-')) {
+                    const cachedBook = uploadedBooksCache[bookId];
+                    if (cachedBook && cachedBook.arrayBuffer) {
+                        setTimeout(() => {
+                            renderPDFBook(cachedBook.arrayBuffer);
+                        }, 200);
+                    } else {
+                        getBookFromDB(bookId).then(book => {
+                            if (book) {
+                                renderPDFBook(book.data);
+                            } else {
+                                document.getElementById('loader-text').innerText = "Book not found.";
+                            }
+                        }).catch(err => {
+                            console.error("DB retrieve error:", err);
+                            document.getElementById('loader-text').innerText = "Error loading book.";
+                        });
+                    }
+                    return;
+                }
+
+                // Case 2: Default books passed as PDF URLs
+                const isPdfUrl = bookId && bookId.toLowerCase().endsWith('.pdf');
+                if (isPdfUrl) {
+                    fetch(bookId)
+                        .then(response => {
+                            if (!response.ok) throw new Error("Network response not ok");
+                            return response.arrayBuffer();
+                        })
+                        .then(arrayBuffer => {
+                            renderPDFBook(arrayBuffer);
+                        })
+                        .catch(error => {
+                            console.warn("Failed to fetch PDF directly (possibly local CORS). Falling back to static book slides.", error);
+                            let fallbackId = "book1";
+                            if (bookId.includes("Corporate") || bookId.includes("book2")) {
+                                fallbackId = "book2";
+                            }
+                            renderBookFromData(fallbackId, lang);
+                        });
+                    return;
+                }
+
+                // Case 3: Standard target bookId key
+                let targetBookId = bookId;
+                if (!bookId || bookId === '#') {
+                    targetBookId = 'book1';
+                }
+
                 setTimeout(() => {
-                    renderBookFromData(lang);
-                }, 600); // Quick dummy load effect
+                    renderBookFromData(targetBookId, lang);
+                }, 600);
             }
 
-            function renderBookFromData(lang) {
-                const data = fallbackBooks[lang];
+            async function renderPDFBook(pdfData) {
+                const container = document.getElementById('modal-book-element');
+                container.innerHTML = '';
+                modalPages = [];
+                modalCurrentPage = 0;
+                container.style.transform = 'translateX(0)';
+
+                document.getElementById('loader-text').innerText = "Processing PDF pages...";
+
+                try {
+                    const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                    const numPages = pdf.numPages;
+                    const totalLeaves = Math.ceil(numPages / 2);
+
+                    for (let i = 0; i < totalLeaves; i++) {
+                        const pageDiv = document.createElement('div');
+                        pageDiv.className = 'modal-page';
+
+                        // Front page: 2 * i + 1
+                        const frontDiv = document.createElement('div');
+                        frontDiv.className = 'modal-front p-0 bg-white relative';
+                        const pageNumFront = 2 * i + 1;
+                        if (pageNumFront === 1) {
+                            frontDiv.classList.add('modal-cover-front');
+                        }
+                        
+                        const canvasFront = document.createElement('canvas');
+                        canvasFront.className = "w-full h-full object-contain";
+                        frontDiv.appendChild(canvasFront);
+                        
+                        const numSpanFront = document.createElement('span');
+                        numSpanFront.className = "absolute bottom-2 right-4 text-[10px] font-bold text-gray-400 z-10 bg-white/80 px-1.5 py-0.5 rounded";
+                        numSpanFront.innerText = pageNumFront;
+                        frontDiv.appendChild(numSpanFront);
+                        pageDiv.appendChild(frontDiv);
+
+                        // Back page: 2 * i + 2
+                        const backDiv = document.createElement('div');
+                        backDiv.className = 'modal-back p-0 bg-slate-50 relative';
+                        const pageNumBack = 2 * i + 2;
+                        
+                        if (pageNumBack <= numPages) {
+                            const canvasBack = document.createElement('canvas');
+                            canvasBack.className = "w-full h-full object-contain";
+                            backDiv.appendChild(canvasBack);
+
+                            const numSpanBack = document.createElement('span');
+                            numSpanBack.className = "absolute bottom-2 left-4 text-[10px] font-bold text-gray-400 z-10 bg-white/80 px-1.5 py-0.5 rounded";
+                            numSpanBack.innerText = pageNumBack;
+                            backDiv.appendChild(numSpanBack);
+                        } else {
+                            backDiv.classList.add('modal-cover-back');
+                            backDiv.innerHTML = `
+                                <div class="absolute inset-0 bg-gradient-to-br from-indigo-950 to-slate-950 opacity-90 z-0"></div>
+                                <h2 class="relative z-10 text-2xl border-none text-white">The End</h2>
+                            `;
+                        }
+                        pageDiv.appendChild(backDiv);
+                        container.appendChild(pageDiv);
+                        modalPages.push(pageDiv);
+
+                        // Render PDF pages asynchronously
+                        renderPageOnCanvas(pdf, pageNumFront, canvasFront);
+                        if (pageNumBack <= numPages) {
+                            renderPageOnCanvas(pdf, pageNumBack, canvasBack);
+                        }
+                    }
+
+                    modalPages.forEach((page, index) => {
+                        page.style.zIndex = modalPages.length - index;
+                    });
+
+                    document.getElementById('book-loader').style.display = 'none';
+                    document.getElementById('modal-book-element').style.display = 'block';
+                    document.getElementById('book-controls').style.display = 'flex';
+                    document.getElementById('book-swipe-tip').style.display = 'block';
+
+                    adjustBookScaleAndPosition();
+                    setupModalSwipeHandlers();
+
+                } catch (err) {
+                    console.error("Error parsing PDF document:", err);
+                    document.getElementById('loader-text').innerText = "Failed to load PDF pages.";
+                }
+            }
+
+            async function renderPageOnCanvas(pdf, pageNum, canvas) {
+                try {
+                    const page = await pdf.getPage(pageNum);
+                    const ctx = canvas.getContext('2d');
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+                    await page.render(renderContext).promise;
+                } catch (err) {
+                    console.error(`Error rendering page ${pageNum}:`, err);
+                }
+            }
+
+            function renderBookFromData(bookId, lang) {
+                const bookData = fallbackBooks[bookId] || fallbackBooks['book1'];
+                const data = bookData[lang] || bookData['BN'];
                 const container = document.getElementById('modal-book-element');
                 container.innerHTML = '';
                 modalPages = [];

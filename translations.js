@@ -124,5 +124,12 @@ const translations = {
         "EN": "Issues like the illusion of job titles, erosion of core skills, the consumer debt trap, and modern wage-slavery are highlighted in this book with an extremely engaging and realistic perspective.",
         "BN": "পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই বইটিতে অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।"
     },
-    "btn_read_book": { "EN": "Read Online (3D Book)", "BN": "অনলাইনে পড়ুন (3D বুক)" }
+    "btn_read_book": { "EN": "Read Online (3D Book)", "BN": "অনলাইনে পড়ুন (3D বুক)" },
+    "upload_title": { "EN": "Upload PDF to Shelf", "BN": "শেলফে পিডিএফ আপলোড করুন" },
+    "upload_desc": { "EN": "Drag & drop a PDF file here, or click to browse", "BN": "একটি PDF ফাইল এখানে ড্র্যাগ ও ড্রপ করুন, বা ব্রাউজ করতে ক্লিক করুন" },
+    "custom_badge": { "EN": "Uploaded Book", "BN": "আপলোডকৃত বই" },
+    "custom_author": { "EN": "Author: External PDF", "BN": "লেখক: এক্সটার্নাল পিডিএফ" },
+    "custom_year": { "EN": "Uploaded: ", "BN": "আপলোডকৃত: " },
+    "delete_btn": { "EN": "Remove Book", "BN": "বইটি মুছে ফেলুন" },
+    "custom_books_header": { "EN": "My Uploaded Books", "BN": "আমার আপলোডকৃত বইসমূহ" }
 };
