@@ -12,8 +12,8 @@ const translations = {
         "EN": "Each book is carefully structured to present deep, logical arguments with real-life connections, offering readers a critical perspective on modern-day events and cultural shifts.",
         "BN": "প্রতিটি বই বাস্তব জীবনের সাথে গভীর ও যৌক্তিক দৃষ্টিভঙ্গি তুলে ধরার জন্য যত্নসহকারে তৈরি করা হয়েছে, যা পাঠকদের আধুনিক ঘটনা এবং সাংস্কৃতিক পরিবর্তনগুলো সম্পর্কে নতুনভাবে ভাবতে সাহায্য করবে।"
     },
-    "stat_books_count": { "EN": "1", "BN": "১" },
-    "stat_books_count_text": { "EN": "Book Published", "BN": "বই প্রকাশিত" },
+    "stat_books_count": { "EN": "2", "BN": "২" },
+    "stat_books_count_text": { "EN": "Books Published", "BN": "বই প্রকাশিত" },
     "stat_books_desc": { "EN": "Available online and in PDF.", "BN": "অনলাইন এবং পিডিএফ-এ উপলব্ধ।" },
     "btn_pdf": { "EN": "Read PDF Version", "BN": "PDF সংস্করণ পড়ুন" },
     "btn_interactive": { "EN": "Read Interactive 3D", "BN": "3D ইন্টারঅ্যাক্টিভ পড়ুন" },
@@ -111,5 +111,18 @@ const translations = {
     "content_c4_tag": { "EN": "Generative Art", "BN": "জেনারেটিভ আর্ট" },
     "content_c4_title": { "EN": "AI Visual Compositions", "BN": "এআই ভিজ্যুয়াল কম্পোজিশন" },
     "content_c4_desc": { "EN": "Working with high-detail digital art and image prompt patterns using specific styling and lighting setups.", "BN": "সুনির্দিষ্ট স্টাইলিং ও লাইটিং সেটআপ ব্যবহার করে হাই-ডিটেইল ডিজিটাল আর্ট এবং ইমেজ প্রম্পট প্যাটার্ন নিয়ে কাজ।" },
-    "btn_view_concept": { "EN": "View Concept", "BN": "কনসেপ্ট দেখুন" }
+    "btn_view_concept": { "EN": "View Concept", "BN": "কনসেপ্ট দেখুন" },
+    "book2_badge": { "EN": "Bengali Edition", "BN": "বাংলা সংস্করণ" },
+    "book2_title": { "EN": "Corporate World - Career or Trap?", "BN": "কর্পোরেট জগৎ - ক্যারিয়ার নাকি ফাঁদ?" },
+    "book2_author": { "EN": "Author: Md. Mukid Hasan Seiam", "BN": "লেখক: মো. মুকিদ হাসান সিয়াম" },
+    "book2_year": { "EN": "Year: 2026", "BN": "বছর: ২০২৬" },
+    "book2_desc1": {
+        "EN": "While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. This book explores whether we are working as free individuals or getting entangled in modern wage-slavery.",
+        "BN": "বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য বলে মনে হলেও, ভেতর থেকে এটি অনেক সময়ই একটি সুকৌশলী ফাঁদ। একটা সময় পর মনে হতে বাধ্য যে, আমরা আসলে স্বাধীন মানুষ হিসেবে কাজ করছি, নাকি আধুনিক কোনো ক্রীতদাস প্রথায় জড়িয়ে পড়েছি?"
+    },
+    "book2_desc2": {
+        "EN": "Issues like the illusion of job titles, erosion of core skills, the consumer debt trap, and modern wage-slavery are highlighted in this book with an extremely engaging and realistic perspective.",
+        "BN": "পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই বইটিতে অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।"
+    },
+    "btn_read_book": { "EN": "Read Online (3D Book)", "BN": "অনলাইনে পড়ুন (3D বুক)" }
 };
