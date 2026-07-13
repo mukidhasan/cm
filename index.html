@@ -2584,21 +2584,40 @@
                 // Case 2: Default books passed as PDF URLs
                 const isPdfUrl = bookId && bookId.toLowerCase().endsWith('.pdf');
                 if (isPdfUrl) {
-                    fetch(bookId)
+                    // Determine static fallback (in case fetch fails or hangs)
+                    let fallbackId = "book1";
+                    if (bookId.includes("Corporate") || bookId.includes("book2")) {
+                        fallbackId = "book2";
+                    }
+
+                    // Use encodeURI so Bengali/Unicode filenames and spaces are handled properly
+                    const encodedUrl = encodeURI(bookId);
+
+                    // Set a safety timeout: if fetch hasn't resolved in 6s, fall back to static slides
+                    let fetchTimedOut = false;
+                    const timeoutHandle = setTimeout(() => {
+                        fetchTimedOut = true;
+                        console.warn("PDF fetch timed out. Falling back to static slides.");
+                        renderBookFromData(fallbackId, lang);
+                    }, 6000);
+
+                    fetch(encodedUrl)
                         .then(response => {
-                            if (!response.ok) throw new Error("Network response not ok");
+                            if (!response.ok) throw new Error("Network response not ok: " + response.status);
                             return response.arrayBuffer();
                         })
                         .then(arrayBuffer => {
-                            renderPDFBook(arrayBuffer);
+                            clearTimeout(timeoutHandle);
+                            if (!fetchTimedOut) {
+                                renderPDFBook(arrayBuffer);
+                            }
                         })
                         .catch(error => {
-                            console.warn("Failed to fetch PDF directly (possibly local CORS). Falling back to static book slides.", error);
-                            let fallbackId = "book1";
-                            if (bookId.includes("Corporate") || bookId.includes("book2")) {
-                                fallbackId = "book2";
+                            clearTimeout(timeoutHandle);
+                            if (!fetchTimedOut) {
+                                console.warn("Failed to fetch PDF (possibly local CORS or missing file). Falling back to static book slides.", error);
+                                renderBookFromData(fallbackId, lang);
                             }
-                            renderBookFromData(fallbackId, lang);
                         });
                     return;
                 }
