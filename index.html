@@ -5,6 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M. Mukid Hasan Seiam - Tech & Creative Portfolio</title>
+    <!-- Open Graph / Facebook Social Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="M. Mukid Hasan Seiam - Tech & Creative Portfolio">
+    <meta property="og:description" content="Personal portfolio showcasing technology and creative projects.">
+    <meta property="og:image" content="thumbnail.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+
+    <!-- Twitter Social Preview -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="M. Mukid Hasan Seiam - Tech & Creative Portfolio">
+    <meta name="twitter:description" content="Personal portfolio showcasing technology and creative projects.">
+    <meta name="twitter:image" content="thumbnail.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -134,7 +147,7 @@
             const formData = new FormData(form);
             const submitBtn = document.getElementById('submitBtn');
             const btnOriginalText = submitBtn.innerHTML;
-            const name = formData.get('name'), companyWeb = formData.get('company_web') || '', address = formData.get('address'), houseHolding = formData.get('house_holding') || '', phone = formData.get('phone'), subject = formData.get('subject');
+            const name = formData.get('name'), companyWeb = formData.get('company_web') || '', address = formData.get('address'), houseHolding = formData.get('house_holding') || '', phone = formData.get('phone'), subject = formData.get('subject'), helpSector = formData.get('help_sector') || '';
             const sendMethod = document.getElementById('sendMethod').value;
 
             const currentLang = localStorage.getItem('lang') || 'EN';
@@ -160,7 +173,7 @@
                 })
                 .catch(error => {
                     const mailtoSubject = encodeURIComponent(subject);
-                    const mailtoBody = encodeURIComponent(`Name: ${name}\nCompany Website: ${companyWeb}\nAddress: ${address}\nHouse/Holding: ${houseHolding}\nPhone Number: ${phone}\n\n(Write your additional message here...)`);
+                    const mailtoBody = encodeURIComponent(`Name: ${name}\nCompany Website: ${companyWeb}\nAddress: ${address}\nHouse/Holding: ${houseHolding}\nPhone Number: ${phone}\nHelp Sector: ${helpSector}\n\n(Write your additional message here...)`);
                     window.location.href = `mailto:seamrex@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
                     form.reset(); closeModal();
                 })
@@ -175,11 +188,12 @@
             const houseHolding = document.querySelector('input[name="house_holding"]').value || '';
             const phone = document.querySelector('input[name="phone"]').value;
             const subject = document.querySelector('input[name="subject"]').value;
+            const helpSector = document.querySelector('select[name="help_sector"]').value || '';
 
             const currentLang = localStorage.getItem('lang') || 'EN';
             const emailTo = "seamrex@gmail.com";
             const emailSubject = encodeURIComponent(subject || (currentLang === 'BN' ? "যোগাযোগ" : "Contact"));
-            const emailBody = encodeURIComponent(`Name: ${name}\nCompany Website: ${companyWeb}\nAddress: ${address}\nHouse/Holding: ${houseHolding}\nPhone: ${phone}\n\n(Write your additional message here...)`);
+            const emailBody = encodeURIComponent(`Name: ${name}\nCompany Website: ${companyWeb}\nAddress: ${address}\nHouse/Holding: ${houseHolding}\nPhone: ${phone}\nHelp Sector: ${helpSector}\n\n(Write your additional message here...)`);
 
             let url = "";
             if (provider === "gmail") {
@@ -1438,6 +1452,23 @@
 
                             <div>
                                 <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1"
+                                    data-translate="label_sector">How can I help you? (Choose Sector) <span
+                                        class="text-brand-blue">*</span></label>
+                                <select name="help_sector" required
+                                    class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue bg-white">
+                                    <option value="" disabled selected data-translate="opt_select_sector">Select a sector...</option>
+                                    <option value="Computer Fixing" data-translate="opt_comp_fixing">Computer & Electronics Repair</option>
+                                    <option value="Data Entry" data-translate="opt_data_entry">Data Entry & Book Formatting</option>
+                                    <option value="CCTV" data-translate="opt_cctv">CCTV Camera Installation & Maintenance</option>
+                                    <option value="Label Printing" data-translate="opt_label_printing">Label Printing & Barcode Solutions</option>
+                                    <option value="Photoshop" data-translate="opt_photoshop">Photoshop & Graphic Design</option>
+                                    <option value="Illustrator" data-translate="opt_illustrator">Adobe Illustrator Vector Work</option>
+                                    <option value="Other Support" data-translate="opt_other_support">Other Technical Support</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1"
                                     data-translate="label_subject">Subject <span
                                         class="text-brand-blue">*</span></label>
                                 <input type="text" name="subject" required
@@ -1681,6 +1712,15 @@
                 "label_house_holding": { "EN": "House / Holding Number", "BN": "বাসার হোল্ডিং নাম্বার" },
                 "label_phone": { "EN": "Phone (BD)", "BN": "ফোন (বাংলাদেশ)" },
                 "label_subject": { "EN": "Subject", "BN": "বিষয়" },
+                "label_sector": { "EN": "How can I help you? (Choose Sector)", "BN": "আমি কীভাবে সাহায্য করতে পারি? (সেক্টর নির্বাচন করুন)" },
+                "opt_select_sector": { "EN": "Select a sector...", "BN": "একটি সেক্টর নির্বাচন করুন..." },
+                "opt_comp_fixing": { "EN": "Computer & Electronics Repair", "BN": "কম্পিউটার ও ইলেকট্রনিক্স মেরামত" },
+                "opt_data_entry": { "EN": "Data Entry & Book Formatting", "BN": "ডাটা এন্ট্রি এবং বুক ফরম্যাটিং" },
+                "opt_cctv": { "EN": "CCTV Camera Installation & Maintenance", "BN": "সিসিটিভি ক্যামেরা ইনস্টলেশন ও রক্ষণাবেক্ষণ" },
+                "opt_label_printing": { "EN": "Label Printing & Barcode Solutions", "BN": "লেবেল প্রিন্টিং এবং বারকোড সলিউশন" },
+                "opt_photoshop": { "EN": "Photoshop & Graphic Design", "BN": "ফটোশপ ও গ্রাফিক ডিজাইন" },
+                "opt_illustrator": { "EN": "Adobe Illustrator Vector Work", "BN": "ইলাস্ট্রেটর ভেক্টর কাজ" },
+                "opt_other_support": { "EN": "Other Technical Support", "BN": "অন্যান্য টেকনিক্যাল সাপোর্ট" },
                 "btn_send": { "EN": "Send Message", "BN": "বার্তা পাঠান" },
                 "label_send_method": { "EN": "Choose Sending Method", "BN": "বার্তা পাঠানোর মাধ্যম নির্ধারণ করুন" },
                 "opt_server": { "EN": "Send via Server (Automatic)", "BN": "সার্ভার এর মাধ্যমে পাঠান (অটোমেটিক)" },
