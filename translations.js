@@ -1,6 +1,6 @@
 const translations = {
     "nav_home": { "EN": "Home", "BN": "হোম" },
-    "nav_books": { "EN": "My Books", "BN": "আমার বইসমূহ" },
+    "nav_books": { "EN": "My Diary", "BN": "আমার ডায়েরি" },
     "nav_content": { "EN": "My Content", "BN": "আমার কনটেন্ট" },
     "books_subtitle": { "EN": "Publications & Writings", "BN": "প্রকাশনা এবং লেখালেখি" },
     "books_title": { "EN": "MY WRITTEN <span class=\"text-brand-blue\">BOOKS</span>", "BN": "আমার লেখা <span class=\"text-brand-blue\">বইসমূহ</span>" },
