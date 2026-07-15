@@ -618,7 +618,7 @@
 
         .modal-book {
             width: 380px;
-            height: 540px;
+            height: 538px;
             position: relative;
             transform-style: preserve-3d;
             -webkit-transform-style: preserve-3d;
@@ -2764,10 +2764,11 @@
                         <div class="modal-author relative z-10 text-slate-400 mt-12">${pageGroup.front.author}</div>
                     `;
                     } else {
+                        const verseHTML = pageGroup.front.verse ? `<div class="mt-auto border-t border-gray-200 pt-2 text-[10px] italic text-[#475569] leading-snug">${pageGroup.front.verse}</div>` : '';
                         frontDiv.innerHTML = `
                         <h2 class="text-base md:text-lg font-bold border-b pb-1.5 mb-3 text-[#0f172a]">${pageGroup.front.title}</h2>
                         <p class="text-xs md:text-sm text-[#334155] leading-relaxed text-justify mb-3">${pageGroup.front.text}</p>
-                        <div class="bg-[#f1f5f9] border-l-4 border-[#3b82f6] p-3 text-[11px] md:text-xs italic text-[#475569] rounded-r-md my-2.5">${pageGroup.front.verse}</div>
+                        ${verseHTML}
                         <span class="absolute bottom-3 right-5 font-bold text-xs text-[#94a3b8]">${pageGroup.front.num}</span>
                     `;
                     }
@@ -2782,10 +2783,11 @@
                         <h2 class="relative z-10 text-2xl border-none">${pageGroup.back.title}</h2>
                     `;
                     } else {
+                        const verseHTML = pageGroup.back.verse ? `<div class="mt-auto border-t border-gray-200 pt-2 text-[10px] italic text-[#475569] leading-snug">${pageGroup.back.verse}</div>` : '';
                         backDiv.innerHTML = `
                         <h2 class="text-base md:text-lg font-bold border-b pb-1.5 mb-3 text-[#0f172a]">${pageGroup.back.title}</h2>
                         <p class="text-xs md:text-sm text-[#334155] leading-relaxed text-justify mb-3">${pageGroup.back.text}</p>
-                        <div class="bg-[#f1f5f9] border-l-4 border-[#3b82f6] p-3 text-[11px] md:text-xs italic text-[#475569] rounded-r-md my-2.5">${pageGroup.back.verse}</div>
+                        ${verseHTML}
                         <span class="absolute bottom-3 left-5 font-bold text-xs text-[#94a3b8]">${pageGroup.back.num}</span>
                     `;
                     }
@@ -2846,7 +2848,7 @@
                 const H = window.innerHeight;
 
                 const basePageWidth = 380;
-                const basePageHeight = 540;
+                const basePageHeight = 538;
 
                 const maxW = W - 32;
                 const maxH = H - 160;
