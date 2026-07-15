@@ -1744,6 +1744,7 @@
         <!-- Smart CMS System: 100% Dynamic               -->
         <!-- ========================================== -->
         <script src="translations.js"></script>
+        <script src="pdf_data.js"></script>
         <script>
             const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
 
@@ -2587,6 +2588,23 @@
                     let fallbackId = "book1";
                     if (bookId.includes("Corporate") || bookId.includes("book2")) {
                         fallbackId = "book2";
+                    }
+
+                    // Check if PDF data is embedded locally in pdf_data.js to bypass CORS
+                    if (typeof pdfData !== 'undefined' && pdfData[bookId]) {
+                        try {
+                            const b64Data = pdfData[bookId];
+                            const binaryString = atob(b64Data);
+                            const len = binaryString.length;
+                            const bytes = new Uint8Array(len);
+                            for (let i = 0; i < len; i++) {
+                                bytes[i] = binaryString.charCodeAt(i);
+                            }
+                            renderPDFBook(bytes.buffer, fallbackId, lang);
+                            return;
+                        } catch (e) {
+                            console.error("Error decoding embedded PDF data:", e);
+                        }
                     }
 
                     // Use encodeURI so Bengali/Unicode filenames and spaces are handled properly
