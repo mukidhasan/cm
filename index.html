@@ -28,8 +28,8 @@
     <!-- Leaflet Map CSS & JS for Interactive Map Picker -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- PDFJS CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- PDFJS Local -->
+    <script src="pdf.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -2218,8 +2218,8 @@
                 if (imgPhoto1) getLocalImagePath('admin', imgPhoto1);
                 if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
 
-                const pdfUrlBn = "ইসলামিক নাকি ব্যাবসায়িক 2026.pdf";
-                const pdfUrlEn = "Is This Society Islamic or Commercial 2026.pdf";
+                const pdfUrlBn = "islamic_or_commercial_2026.pdf";
+                const pdfUrlEn = "is_society_islamic_or_commercial_2026.pdf";
 
                 const pdfLinkBn = document.getElementById("pdf-link-bn");
                 if (pdfLinkBn) pdfLinkBn.href = pdfUrlBn;
@@ -2250,7 +2250,7 @@
             // ==============================================
             // 3D BOOK MODAL VIEW LOGIC & PDF.JS RENDERING
             // ==============================================
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
             let modalPages = [];
             let modalCurrentPage = 0;
@@ -2608,7 +2608,7 @@
                         .then(arrayBuffer => {
                             clearTimeout(timeoutHandle);
                             if (!fetchTimedOut) {
-                                renderPDFBook(arrayBuffer);
+                                renderPDFBook(arrayBuffer, fallbackId, lang);
                             }
                         })
                         .catch(error => {
@@ -2632,7 +2632,7 @@
                 }, 600);
             }
 
-            async function renderPDFBook(pdfData) {
+            async function renderPDFBook(pdfData, fallbackId, lang) {
                 const container = document.getElementById('modal-book-element');
                 container.innerHTML = '';
                 modalPages = [];
@@ -2713,8 +2713,12 @@
                     setupModalSwipeHandlers();
 
                 } catch (err) {
-                    console.error("Error parsing PDF document:", err);
-                    document.getElementById('loader-text').innerText = "Failed to load PDF pages.";
+                    console.error("Error parsing PDF document, falling back to static slides:", err);
+                    if (fallbackId && lang) {
+                        renderBookFromData(fallbackId, lang);
+                    } else {
+                        document.getElementById('loader-text').innerText = "Failed to load PDF pages.";
+                    }
                 }
             }
 
