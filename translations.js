@@ -3,17 +3,17 @@ const translations = {
     "nav_books": { "EN": "My Diary", "BN": "আমার ডায়েরি" },
     "nav_content": { "EN": "My Content", "BN": "আমার কনটেন্ট" },
     "books_subtitle": { "EN": "Publications & Writings", "BN": "প্রকাশনা এবং লেখালেখি" },
-    "books_title": { "EN": "MY WRITTEN <span class=\"text-brand-blue\">BOOKS</span>", "BN": "আমার লেখা <span class=\"text-brand-blue\">বইসমূহ</span>" },
+    "books_title": { "EN": "MY WRITTEN <span class=\"text-brand-blue\">DIARIES</span>", "BN": "আমার লেখা <span class=\"text-brand-blue\">ডায়েরিসমূহ</span>" },
     "books_desc_p1": {
-        "EN": "Books open the window of human thought. In this busy era of technology, these books are an attempt to capture social anomalies, religious commercialization, and the realities around us in a frame of words. I hope every page helps you think anew.",
-        "BN": "বই মানুষের চিন্তার জানালা খুলে দেয়। প্রযুক্তির এই ব্যস্ত সময়ে কিছু সামাজিক অসঙ্গতি, ধর্মীয় বাণিজ্যিকীকরণ এবং আমাদের চারপাশের বাস্তবতাকে শব্দের ফ্রেমে বন্দি করার একটি প্রচেষ্টা আমার এই বইগুলো। আশা করি প্রতিটি পাতা আপনাকে নতুন করে ভাবতে সাহায্য করবে।"
+        "EN": "Diaries open the window of human thought. In this busy era of technology, these diaries are an attempt to capture social anomalies, religious commercialization, and the realities around us in a frame of words. I hope every page helps you think anew.",
+        "BN": "ডায়েরি মানুষের চিন্তার জানালা খুলে দেয়। প্রযুক্তির এই ব্যস্ত সময়ে কিছু সামাজিক অসঙ্গতি, ধর্মীয় বাণিজ্যিকীকরণ এবং আমাদের চারপাশের বাস্তবতাকে শব্দের ফ্রেমে বন্দি করার একটি প্রচেষ্টা আমার এই ডায়েরিগুলো। আশা করি প্রতিটি পাতা আপনাকে নতুন করে ভাবতে সাহায্য করবে।"
     },
     "books_desc_p2": {
-        "EN": "Each book is carefully structured to present deep, logical arguments with real-life connections, offering readers a critical perspective on modern-day events and cultural shifts.",
-        "BN": "প্রতিটি বই বাস্তব জীবনের সাথে গভীর ও যৌক্তিক দৃষ্টিভঙ্গি তুলে ধরার জন্য যত্নসহকারে তৈরি করা হয়েছে, যা পাঠকদের আধুনিক ঘটনা এবং সাংস্কৃতিক পরিবর্তনগুলো সম্পর্কে নতুনভাবে ভাবতে সাহায্য করবে।"
+        "EN": "Each diary is carefully structured to present deep, logical arguments with real-life connections, offering readers a critical perspective on modern-day events and cultural shifts.",
+        "BN": "প্রতিটি ডায়েরি বাস্তব জীবনের সাথে গভীর ও যৌক্তিক দৃষ্টিভঙ্গি তুলে ধরার জন্য যত্নসহকারে তৈরি করা হয়েছে, যা পাঠকদের আধুনিক ঘটনা এবং সাংস্কৃতিক পরিবর্তনগুলো সম্পর্কে নতুনভাবে ভাবতে সাহায্য করবে।"
     },
     "stat_books_count": { "EN": "2", "BN": "২" },
-    "stat_books_count_text": { "EN": "Books Published", "BN": "বই প্রকাশিত" },
+    "stat_books_count_text": { "EN": "Diaries Published", "BN": "ডায়েরি প্রকাশিত" },
     "stat_books_desc": { "EN": "Available online and in PDF.", "BN": "অনলাইন এবং পিডিএফ-এ উপলব্ধ।" },
     "btn_pdf": { "EN": "Read PDF Version", "BN": "PDF সংস্করণ পড়ুন" },
     "btn_interactive": { "EN": "Read Interactive 3D", "BN": "3D ইন্টারঅ্যাক্টিভ পড়ুন" },
@@ -38,11 +38,11 @@ const translations = {
     "stat1_text": { "EN": "Years Tech<br>Experience", "BN": "প্রযুক্তিগত অভিজ্ঞতা" },
     "stat2_text": { "EN": "Hardware Issues<br>Resolved", "BN": "হার্ডওয়্যার সমস্যার সমাধান" },
     "stat3_text": { "EN": "Open-Source<br>Tools & Engines", "BN": "ওপেন-সোর্স টুলস ও ইঞ্জিন" },
-    "stat4_text": { "EN": "Media Content<br>(Incl. Books)", "BN": "মিডিয়া কন্টেন্ট (বই সহ)" },
+    "stat4_text": { "EN": "Media Content<br>(Incl. Diaries)", "BN": "মিডিয়া কন্টেন্ট (ডায়েরি সহ)" },
     "project2_title": { "EN": "Inovace Technologies", "BN": "ইনোভেসি টেকনোলজিস" },
     "project2_desc": { "EN": "RMA Manager, Hardware Diagnostics<br>2018 - 2026", "BN": "আরএমএ ম্যানেজার, হার্ডওয়্যার ডায়াগনস্টিকস<br>২০১৮ - ২০২৬" },
     "project3_title": { "EN": "Sunan Prokashoni", "BN": "সুনান প্রকাশনী" },
-    "project3_desc": { "EN": "Composing Typist<br>Data Entry, Photoshop, Illustrator & Book Formatting <br> 2016-2017", "BN": "কম্পোজিং টাইপিস্ট<br>ডাটা এন্ট্রি, ফটোশপ, ইলাস্ট্রেটর এবং বুক ফরম্যাটিং <br> ২০১৬-২০১৭" },
+    "project3_desc": { "EN": "Composing Typist<br>Data Entry, Photoshop, Illustrator & Diary Formatting <br> 2016-2017", "BN": "কম্পোজিং টাইপিস্ট<br>ডাটা এন্ট্রি, ফটোশপ, ইলাস্ট্রেটর এবং ডায়েরি ফরম্যাটিং <br> ২০১৬-২০১৭" },
     "project4_title": { "EN": "Electronics & PC Services ", "BN": "ইলেকট্রনিক্স এবং পিসি সার্ভিস" },
     "project4_desc": { "EN": "DIY concept craft <br> ideas to simplify life", "BN": "ডিআইওয়াই কন্টেন্ট ক্রাফট <br> জীবনকে সহজ করার আইডিয়া" },
     "expertise_title": { "EN": "My<br>Expertise", "BN": "আমার<br>দক্ষতা" },
@@ -117,19 +117,19 @@ const translations = {
     "book2_author": { "EN": "Author: Md. Mukid Hasan Seiam", "BN": "লেখক: মো. মুকিদ হাসান সিয়াম" },
     "book2_year": { "EN": "Year: 2026", "BN": "বছর: ২০২৬" },
     "book2_desc1": {
-        "EN": "While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. This book explores whether we are working as free individuals or getting entangled in modern wage-slavery.",
+        "EN": "While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. This diary explores whether we are working as free individuals or getting entangled in modern wage-slavery.",
         "BN": "বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য বলে মনে হলেও, ভেতর থেকে এটি অনেক সময়ই একটি সুকৌশলী ফাঁদ। একটা সময় পর মনে হতে বাধ্য যে, আমরা আসলে স্বাধীন মানুষ হিসেবে কাজ করছি, নাকি আধুনিক কোনো ক্রীতদাস প্রথায় জড়িয়ে পড়েছি?"
     },
     "book2_desc2": {
-        "EN": "Issues like the illusion of job titles, erosion of core skills, the consumer debt trap, and modern wage-slavery are highlighted in this book with an extremely engaging and realistic perspective.",
-        "BN": "পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই বইটিতে অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।"
+        "EN": "Issues like the illusion of job titles, erosion of core skills, the consumer debt trap, and modern wage-slavery are highlighted in this diary with an extremely engaging and realistic perspective.",
+        "BN": "পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই ডায়েরিটিতে অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।"
     },
-    "btn_read_book": { "EN": "Read Online (3D Book)", "BN": "অনলাইনে পড়ুন (3D বুক)" },
+    "btn_read_book": { "EN": "Read Online (3D Diary)", "BN": "অনলাইনে পড়ুন (3D ডায়েরি)" },
     "upload_title": { "EN": "Upload PDF to Shelf", "BN": "শেলফে পিডিএফ আপলোড করুন" },
     "upload_desc": { "EN": "Drag & drop a PDF file here, or click to browse", "BN": "একটি PDF ফাইল এখানে ড্র্যাগ ও ড্রপ করুন, বা ব্রাউজ করতে ক্লিক করুন" },
-    "custom_badge": { "EN": "Uploaded Book", "BN": "আপলোডকৃত বই" },
+    "custom_badge": { "EN": "Uploaded Diary", "BN": "আপলোডকৃত ডায়েরি" },
     "custom_author": { "EN": "Author: External PDF", "BN": "লেখক: এক্সটার্নাল পিডিএফ" },
     "custom_year": { "EN": "Uploaded: ", "BN": "আপলোডকৃত: " },
-    "delete_btn": { "EN": "Remove Book", "BN": "বইটি মুছে ফেলুন" },
-    "custom_books_header": { "EN": "My Uploaded Books", "BN": "আমার আপলোডকৃত বইসমূহ" }
+    "delete_btn": { "EN": "Remove Diary", "BN": "ডায়েরিটি মুছে ফেলুন" },
+    "custom_books_header": { "EN": "My Uploaded Diaries", "BN": "আমার আপলোডকৃত ডায়েরিসমূহ" }
 };
