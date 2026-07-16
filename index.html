@@ -2570,8 +2570,9 @@
                         backDiv.className = 'modal-back p-0 bg-slate-50 relative';
                         const pageNumBack = 2 * i + 2;
                         
+                        let canvasBack = null;
                         if (pageNumBack <= numPages) {
-                            const canvasBack = document.createElement('canvas');
+                            canvasBack = document.createElement('canvas');
                             canvasBack.className = "w-full h-full object-contain";
                             backDiv.appendChild(canvasBack);
 
