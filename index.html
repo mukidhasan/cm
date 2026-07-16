@@ -28,8 +28,9 @@
     <!-- Leaflet Map CSS & JS for Interactive Map Picker -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- PDFJS Local -->
+    <!-- Local Libraries -->
     <script src="pdf.min.js"></script>
+    <script src="xlsx.mini.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -1136,27 +1137,17 @@
                         <span
                             class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">বাংলা
                             সংস্করণ</span>
-                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
-                            এই সমাজ ইসলামিক নাকি ব্যাবসায়িক
+                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4" data-translate="book1_title">
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
-                            <span>লেখক: মো. মুকিদ হাসান সিয়াম</span>
+                            <span data-translate="book1_author"></span>
                             <span>•</span>
-                            <span>বছর: ২০২৬</span>
+                            <span data-translate="book1_year"></span>
                         </p>
 
                         <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
-                            <p>
-                                আমাদের সমাজে ধর্ম মানুষের অন্তরের অন্যতম সংবেদনশীল বিষয়। তবে বর্তমান সময়ে ধর্মের লেবাসে
-                                যে বাণিজ্যিকীকরণ এবং লোকদেখানো প্রতিযোগিতার সংস্কৃতি তৈরি হচ্ছে, তা সমাজকে গভীরভাবে
-                                প্রভাবিত করছে।
-                            </p>
-                            <p>
-                                এই ডায়েরিটি ফুটবল বিশ্বকাপের উন্মাদনা থেকে শুরু করে, আলেমদের মধ্যকার ইউটিউব ভিউয়ের
-                                প্রতিযোগিতা এবং ইসলামিক গজলের বাণিজ্যিকীকরণের মতো আধুনিক বিষয়গুলোকে অত্যন্ত যৌক্তিক এবং
-                                বাস্তবসম্মত দৃষ্টিভঙ্গিতে বিশ্লেষণ করেছে। ধর্ম প্রচারের আড়ালে লুকিয়ে থাকা ব্যবসার স্বরূপ
-                                উন্মোচন করা এবং সত্য ও হিপোক্রিসির মাঝে পার্থক্য বোঝাই এই ডায়েরিটির মূল উদ্দেশ্য।
-                            </p>
+                            <p data-translate="book1_desc1"></p>
+                            <p data-translate="book1_desc2"></p>
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4">
@@ -1204,30 +1195,18 @@
 
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <span
-                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">English
-                            Edition</span>
-                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
-                            Is This Society Islamic or Commercial?
+                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4" data-translate="book1_badge"></span>
+                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4" data-translate="book1_title">
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
-                            <span>Author: Md. Mukid Hasan Seiam</span>
+                            <span data-translate="book1_author"></span>
                             <span>•</span>
-                            <span>Year: 2026</span>
+                            <span data-translate="book1_year"></span>
                         </p>
 
                         <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
-                            <p>
-                                In our society, religion is one of the most sensitive aspects of the human heart.
-                                However, in modern times, the culture of commercialization and showy competition hidden
-                                under the garb of religion is profoundly affecting our social fabrics.
-                            </p>
-                            <p>
-                                This diary analyzes contemporary issues such as the frenzy surrounding the football World
-                                Cups, the unhealthy online competition among clerics to boost YouTube views, and the
-                                commercialization of Islamic media from a highly logical and realistic perspective. The
-                                main objective of this diary is to expose the business side of religious preaching and to
-                                differentiate between genuine faith and hypocrisy.
-                            </p>
+                            <p data-translate="book1_desc1"></p>
+                            <p data-translate="book1_desc2"></p>
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4">
@@ -1743,7 +1722,6 @@
         <!-- ========================================== -->
         <!-- Smart CMS System: 100% Dynamic               -->
         <!-- ========================================== -->
-        <script src="translations.js"></script>
         <script src="pdf_data.js"></script>
         <script>
             const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
@@ -1751,6 +1729,112 @@
             let currentLang = localStorage.getItem('lang') || 'EN';
             let cmsTexts = {};
             let smartImages = {};
+            let translations = {};
+            let fallbackBooks = {};
+            let localImagesMap = {};
+
+            async function initExcelAndImages() {
+                try {
+                    // 1. Fetch and Parse data.xlsx
+                    const excelResponse = await fetch('data.xlsx');
+                    if (!excelResponse.ok) throw new Error("Failed to fetch data.xlsx: " + excelResponse.status);
+                    const excelBuffer = await excelResponse.arrayBuffer();
+                    const workbook = XLSX.read(excelBuffer, { type: 'array' });
+                    
+                    // Parse Translations
+                    const transSheet = workbook.Sheets['Translations'];
+                    if (transSheet) {
+                        const transRows = XLSX.utils.sheet_to_json(transSheet);
+                        transRows.forEach(row => {
+                            translations[row.Key] = {
+                                "EN": row.EN || "",
+                                "BN": row.BN || ""
+                            };
+                        });
+                    }
+                    
+                    // Parse FallbackBooks
+                    const booksSheet = workbook.Sheets['FallbackBooks'];
+                    if (booksSheet) {
+                        const booksRows = XLSX.utils.sheet_to_json(booksSheet);
+                        booksRows.forEach(row => {
+                            const { BookId, Lang, PageIdx, Side, Type, Title, Context, Author, Text, Verse, Num } = row;
+                            if (!fallbackBooks[BookId]) fallbackBooks[BookId] = {};
+                            if (!fallbackBooks[BookId][Lang]) fallbackBooks[BookId][Lang] = { pages: [] };
+                            
+                            const pagesArray = fallbackBooks[BookId][Lang].pages;
+                            const idx = parseInt(PageIdx);
+                            while (pagesArray.length <= idx) {
+                                pagesArray.push({ front: {}, back: {} });
+                            }
+                            
+                            pagesArray[idx][Side] = {
+                                type: Type || "",
+                                title: Title || "",
+                                context: Context || "",
+                                author: Author || "",
+                                text: Text || "",
+                                verse: Verse || "",
+                                num: Num || ""
+                            };
+                        });
+                    }
+
+                    // 2. Fetch and Parse images.bin
+                    const binResponse = await fetch('images.bin');
+                    if (!binResponse.ok) throw new Error("Failed to fetch images.bin: " + binResponse.status);
+                    const binBuffer = await binResponse.arrayBuffer();
+                    const view = new DataView(binBuffer);
+                    
+                    let offset = 0;
+                    const fileCount = view.getUint32(offset, true);
+                    offset += 4;
+                    
+                    const files = [];
+                    for (let i = 0; i < fileCount; i++) {
+                        const nameLen = view.getUint8(offset);
+                        offset += 1;
+                        
+                        const nameBytes = new Uint8Array(binBuffer, offset, nameLen);
+                        const filename = new TextDecoder().decode(nameBytes);
+                        offset += nameLen;
+                        
+                        const fileSize = view.getUint32(offset, true);
+                        offset += 4;
+                        
+                        files.push({ filename, size: fileSize });
+                    }
+                    
+                    for (const file of files) {
+                        const dataBytes = new Uint8Array(binBuffer, offset, file.size);
+                        offset += file.size;
+                        
+                        let mimeType = 'image/png';
+                        if (file.filename.endsWith('.jpg') || file.filename.endsWith('.jpeg')) {
+                            mimeType = 'image/jpeg';
+                        } else if (file.filename.endsWith('.webp')) {
+                            mimeType = 'image/webp';
+                        }
+                        
+                        const blob = new Blob([dataBytes], { type: mimeType });
+                        localImagesMap[file.filename] = URL.createObjectURL(blob);
+                    }
+                    
+                    console.log("data.xlsx and images.bin successfully loaded.");
+                } catch (e) {
+                    console.error("Local data load error (CORS or missing files):", e);
+                }
+
+                updatePageContent();
+                triggerInitialImages();
+            }
+
+            function triggerInitialImages() {
+                const imgPhoto1 = document.getElementById('img-Photo1');
+                const imgPhoto5 = document.getElementById('img-Photo5');
+                if (imgPhoto1) getLocalImagePath('admin', imgPhoto1);
+                if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
+            }
 
             function toggleLanguage() {
                 currentLang = currentLang === 'EN' ? 'BN' : 'EN';
@@ -1829,8 +1913,27 @@
             function getLocalImagePath(baseName, imgElement) {
                 if (!imgElement) return;
                 const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
-                let attemptIndex = 0;
+                
+                // Try to find image in loaded binary images first
+                let found = false;
+                for (const ext of extensions) {
+                    const key = baseName + ext;
+                    if (localImagesMap[key]) {
+                        imgElement.src = localImagesMap[key];
+                        found = true;
+                        break;
+                    }
+                }
+                
+                if (found) {
+                    imgElement.style.display = 'block';
+                    const err = imgElement.parentElement.querySelector('.error-box');
+                    if (err) err.remove();
+                    return;
+                }
 
+                // Direct file system fallback
+                let attemptIndex = 0;
                 function tryNext() {
                     if (attemptIndex < extensions.length) {
                         const ext = extensions[attemptIndex++];
@@ -2212,13 +2315,8 @@
                 // Initialize custom books shelf & upload listeners
                 loadCustomBooks();
                 setupUploadListeners();
-                // Immediately initialize local images and PDF paths
-                const imgPhoto1 = document.getElementById('img-Photo1');
-                const imgPhoto5 = document.getElementById('img-Photo5');
 
-                if (imgPhoto1) getLocalImagePath('admin', imgPhoto1);
-                if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
-
+                // Setup local PDF links
                 const pdfUrlBn = "islamic_or_commercial_2026.pdf";
                 const pdfUrlEn = "is_society_islamic_or_commercial_2026.pdf";
 
@@ -2232,20 +2330,18 @@
                 const btn3dEn = document.getElementById("btn-3d-en");
                 if (btn3dEn) btn3dEn.setAttribute("onclick", `open3DBook('${pdfUrlEn}', 'EN')`);
 
-                // Perform initial content update
-                updatePageContent();
-
-                // Fetch dynamic text content if online
-                fetch(webAppUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        cmsTexts = data.texts || {};
-                        // Update content with fetched texts
-                        updatePageContent();
-                    })
-                    .catch(error => {
-                        console.error("Error loading dynamic text content:", error);
-                    });
+                // Initialize Excel data & Packed Images first, then fetch CMS texts
+                initExcelAndImages().then(() => {
+                    fetch(webAppUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            cmsTexts = data.texts || {};
+                            updatePageContent();
+                        })
+                        .catch(error => {
+                            console.error("Error loading dynamic text content:", error);
+                        });
+                });
             });
 
             // ==============================================
