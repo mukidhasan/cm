@@ -1750,8 +1750,8 @@
 
             async function initExcelAndImages() {
                 try {
-                    // 1. Fetch and Parse data.xlsx
-                    const excelResponse = await fetch('data.xlsx');
+                    // 1. Fetch and Parse data.xlsx with cache buster query parameter
+                    const excelResponse = await fetch('data.xlsx?t=' + Date.now());
                     if (!excelResponse.ok) throw new Error("Failed to fetch data.xlsx: " + excelResponse.status);
                     const excelBuffer = await excelResponse.arrayBuffer();
                     const workbook = XLSX.read(excelBuffer, { type: 'array' });
@@ -1760,6 +1760,7 @@
                     const transSheet = workbook.Sheets['Translations'];
                     if (transSheet) {
                         const transRows = XLSX.utils.sheet_to_json(transSheet);
+                        translations = {}; // reset
                         transRows.forEach(row => {
                             translations[row.Key] = {
                                 "EN": row.EN || "",
@@ -1772,6 +1773,7 @@
                     const booksSheet = workbook.Sheets['FallbackBooks'];
                     if (booksSheet) {
                         const booksRows = XLSX.utils.sheet_to_json(booksSheet);
+                        fallbackBooks = {}; // reset
                         booksRows.forEach(row => {
                             const { BookId, Lang, PageIdx, Side, Type, Title, Context, Author, Text, Verse, Num } = row;
                             if (!fallbackBooks[BookId]) fallbackBooks[BookId] = {};
@@ -1795,46 +1797,52 @@
                         });
                     }
 
-                    // 2. Fetch and Parse images.bin
-                    const binResponse = await fetch('images.bin');
+                    // 2. Fetch and Parse images.bin with cache buster query parameter
+                    const binResponse = await fetch('images.bin?t=' + Date.now());
                     if (!binResponse.ok) throw new Error("Failed to fetch images.bin: " + binResponse.status);
                     const binBuffer = await binResponse.arrayBuffer();
                     const view = new DataView(binBuffer);
                     
                     let offset = 0;
-                    const fileCount = view.getUint32(offset, true);
-                    offset += 4;
-                    
-                    const files = [];
-                    for (let i = 0; i < fileCount; i++) {
-                        const nameLen = view.getUint8(offset);
-                        offset += 1;
-                        
-                        const nameBytes = new Uint8Array(binBuffer, offset, nameLen);
-                        const filename = new TextDecoder().decode(nameBytes);
-                        offset += nameLen;
-                        
-                        const fileSize = view.getUint32(offset, true);
+                    if (binBuffer.byteLength >= 4) {
+                        const fileCount = view.getUint32(offset, true);
                         offset += 4;
                         
-                        files.push({ filename, size: fileSize });
-                    }
-                    
-                    for (const file of files) {
-                        const dataBytes = new Uint8Array(binBuffer, offset, file.size);
-                        offset += file.size;
-                        
-                        let mimeType = 'image/png';
-                        if (file.filename.endsWith('.jpg') || file.filename.endsWith('.jpeg')) {
-                            mimeType = 'image/jpeg';
-                        } else if (file.filename.endsWith('.webp')) {
-                            mimeType = 'image/webp';
+                        const files = [];
+                        for (let i = 0; i < fileCount; i++) {
+                            if (offset + 1 > binBuffer.byteLength) break;
+                            const nameLen = view.getUint8(offset);
+                            offset += 1;
+                            
+                            if (offset + nameLen > binBuffer.byteLength) break;
+                            const nameBytes = new Uint8Array(binBuffer, offset, nameLen);
+                            const filename = new TextDecoder().decode(nameBytes);
+                            offset += nameLen;
+                            
+                            if (offset + 4 > binBuffer.byteLength) break;
+                            const fileSize = view.getUint32(offset, true);
+                            offset += 4;
+                            
+                            files.push({ filename, size: fileSize });
                         }
                         
-                        const blob = new Blob([dataBytes], { type: mimeType });
-                        localImagesMap[file.filename] = URL.createObjectURL(blob);
+                        for (const file of files) {
+                            if (offset + file.size <= binBuffer.byteLength) {
+                                const dataBytes = new Uint8Array(binBuffer, offset, file.size);
+                                offset += file.size;
+                                
+                                let mimeType = 'image/png';
+                                if (file.filename.endsWith('.jpg') || file.filename.endsWith('.jpeg')) {
+                                    mimeType = 'image/jpeg';
+                                } else if (file.filename.endsWith('.webp')) {
+                                    mimeType = 'image/webp';
+                                }
+                                
+                                const blob = new Blob([dataBytes], { type: mimeType });
+                                localImagesMap[file.filename] = URL.createObjectURL(blob);
+                            }
+                        }
                     }
-                    
                     console.log("data.xlsx and images.bin successfully loaded.");
                 } catch (e) {
                     console.error("Local data load error (CORS or missing files):", e);
@@ -2406,6 +2414,8 @@
                         })
                         .catch(error => {
                             console.error("Error loading dynamic text content:", error);
+                            // Ensure translations apply even if the live CMS fetch fails (offline/CORS blocked)
+                            updatePageContent();
                         });
                 });
             });
@@ -2418,300 +2428,7 @@
             let modalPages = [];
             let modalCurrentPage = 0;
 
-            const fallbackBooks = {
-                "book1": {
-                    "BN": {
-                        pages: [
-                            {
-                                front: {
-                                    type: "cover",
-                                    title: "এই সমাজ<br>ইসলামিক নাকি ব্যাবসায়িক",
-                                    context: "<strong>প্রেক্ষাপট:</strong> বর্তমানে ফুটবলের উন্মাদনা নিয়ে বিষয়বস্তু",
-                                    author: "লেখক: মো. মুকিদ হাসান সিয়াম"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "ভূমিকা",
-                                    text: "ধর্ম মানুষের অন্তরের বিষয়। কিন্তু যখন তা লোকদেখানো প্রতিযোগিতায় পরিণত হয়, তখনই সমাজে তৈরি হয় চরম অরাজকতা ও হিপোক্রিসি।",
-                                    verse: '"অতএব দুর্ভোগ সেসব নামাজীর জন্য, যারা তাদের নামাজ সম্বন্ধে বেখবর; যারা তা লোকদেখানোর জন্য করে।"<br>(সূরা আল-মাউন: ৪-৬)',
-                                    num: "১"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "অধ্যায় ১: সস্তা আবেগ",
-                                    text: 'ফুটবল একটি নিছক বিনোদন। কিন্তু এখানেও কিছু মানুষ ধর্মের কার্ড খেলে বলেন, "মুসলিম দেশ হিসেবে অমুক দলকে সাপোর্ট করতে হবে।"',
-                                    verse: '"তাদেরকে ছেড়ে দাও, যারা নিজেদের ধর্মকে খেলা ও কৌতুক বানিয়ে নিয়েছে এবং পার্থিব জীবন যাদেরকে ধোঁকায় ফেলে রেখেছে।"<br>(সূরা আল-আনআম: ৭০)',
-                                    num: "২"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "অধ্যায় ২: আলেমদের প্রতিযোগিতা",
-                                    text: "একসময় মানুষ খুতবা শুনতে মসজিদে যেত আত্মশুদ্ধির জন্য। আর এখন? অনেকেই ইউটিউবে নেমেছেন ভিউ বাড়ানোর অসুস্থ প্রতিযোগিতায়।",
-                                    verse: '"হে মুমিনগণ! তোমরা যা করো না, তা তোমরা কেন বলো? আল্লাহর কাছে এটা অত্যন্ত ঘৃণাপূর্ণ কাজ যে, তোমরা যা করো না তা বলো।"<br>(সূরা আস-সাফ: ২-৩)',
-                                    num: "৩"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "অধ্যায় ৩: বাণিজ্যিকীকরণ",
-                                    text: "ধর্ম প্রচারের নামে এখন চলছে জাঁকজমকপূর্ণ ব্যবসা। চমৎকার মিউজিক আর বলিউডি সুরের সাথে মিল রেখে তৈরি হচ্ছে ইসলামিক গজল।",
-                                    verse: '"তোমরা সত্যের সাথে মিথ্যার মিশ্রণ ঘটিও না... এবং আমার আয়াতের বিনিময়ে সামান্য মূল্য (পার্থিব স্বার্থ) গ্রহণ করো না।"<br>(সূরা আল-বাকারাহ: ৪১-৪২)',
-                                    num: "৪"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "অধ্যায় ৪: ১৪০০ বছরের ইতিহাস",
-                                    text: "যারা বড় বড় ফতোয়া দেন, তারা অমুসলিমদের তৈরি করা ফেসবুক আর ইউটিউব ব্যবহার করেই ইসলাম রক্ষার বড়াই করেন।",
-                                    verse: '"তোমরা কি মানুষকে সৎকর্মের নির্দেশ দাও আর নিজেদের কথা ভুলে যাও, অথচ তোমরা কিতাব অধ্যয়ন করো? তোমরা কি বোঝো না?"<br>(সূরা আল-বাকারাহ: ৪৪)',
-                                    num: "৫"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "উপসংহার",
-                                    text: "আমি নিজেকে নিখুঁত কোনো ঈমানদার দাবি করি না। কিন্তু আমি এই ধর্মের একজন অংশ। তাই যখন দেখি ধর্মের নামে ব্যবসা ও ক্ষমতার অপব্যবহার চলছে, তখন তা চরম বিরক্তির কারণ হয়ে দাঁড়ায়।",
-                                    verse: '"যে বিষয়ে তোমার কোনো জ্ঞান নেই, তার অনুসরণ করো না। নিশ্চয়ই কান, চোখ ও অন্তঃকরণ—এর প্রত্যেকটি সম্পর্কে জিজ্ঞাসা করা হবে।"<br>(সূরা বনী ইসরাঈল: ৩৬)',
-                                    num: "৬"
-                                },
-                                back: {
-                                    type: "cover-back",
-                                    title: "সমাপ্ত"
-                                }
-                            }
-                        ]
-                    },
-                    "EN": {
-                        pages: [
-                            {
-                                front: {
-                                    type: "cover",
-                                    title: "Is This Society<br>Islamic or<br>Commercial?",
-                                    context: "<strong>Context:</strong> Discussions on current football frenzy and commercialization of religion.",
-                                    author: "Author: Md. Mukid Hasan Seiam"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Preface",
-                                    text: "Religion is a matter of the heart. However, when it transforms into a showy competition, it breeds chaos and hypocrisy within society.",
-                                    verse: '"So woe to those who pray - [but] who are heedless of their prayer - those who make show [of their deeds]"<br>(Surah Al-Ma\'un: 4-6)',
-                                    num: "1"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Chapter 1: Cheap Emotions",
-                                    text: "Football is merely a form of entertainment. Yet, even here, some people play the religious card, insisting, \"As a Muslim country, we must support such-and-such team.\"",
-                                    verse: '"And leave those who take their religion as amusement and play and whom the worldly life has deluded."<br>(Surah Al-An\'am: 70)',
-                                    num: "2"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Chapter 2: The Clerics' Race",
-                                    text: "Once, people visited mosques to listen to sermons for spiritual purification. Today, many have entered an unhealthy online race to boost YouTube views.",
-                                    verse: '"O you who have believed, why do you say what you do not do? Most hateful it is in the sight of Allah that you say what you do not do."<br>(Surah As-Saff: 2-3)',
-                                    num: "3"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Chapter 3: Commercialization",
-                                    text: "Under the banner of preaching, a glamorous business is thriving. Islamic ghazals are now composed in tune with Bollywood beats and melodies.",
-                                    verse: '"And do not mix the truth with falsehood... and do not exchange My verses for a small price [i.e., worldly gain]."<br>(Surah Al-Baqarah: 41-42)',
-                                    num: "4"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Chapter 4: 1400 Years of History",
-                                    text: "Those who issue grand fatwas boast of defending Islam while utilizing Facebook and YouTube—platforms created by non-Muslims—to spread their message.",
-                                    verse: '"Do you order righteousness of the people and forget yourselves while you recite the Scripture? Then will you not reason?"<br>(Surah Al-Baqarah: 44)',
-                                    num: "5"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Conclusion",
-                                    text: "I do not claim to be a perfect believer, but I am a part of this faith. Thus, when I witness business and abuse of power running rampant in the name of religion, it becomes a source of extreme frustration.",
-                                    verse: '"And do not pursue that of which you have no knowledge. Indeed, the hearing, the sight and the heart - about all those you will be questioned."<br>(Surah Al-Isra: 36)',
-                                    num: "6"
-                                },
-                                back: {
-                                    type: "cover-back",
-                                    title: "The End"
-                                }
-                            }
-                        ]
-                    }
-                },
-                "book2": {
-                    "BN": {
-                        pages: [
-                            {
-                                front: {
-                                    type: "cover",
-                                    title: "কর্পোরেট জগৎ",
-                                    context: "<strong>প্রেক্ষাপট:</strong> ব্যক্তিগত অভিজ্ঞতা ও রূঢ় বাস্তবতা",
-                                    author: "লেখক: মো. মুকিদ হাসান সিয়াম"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "ভূমিকা",
-                                    text: "বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য মনে হলেও, এটি অনেক সময়ই একটি সুকৌশলী ফাঁদ। আমরা আসলে স্বাধীন মানুষ, নাকি আধুনিক মজুরি-দাসের প্রথায় জড়িয়ে পড়েছি?",
-                                    verse: '"পরিবার হলো সমাজ ও রাষ্ট্রের সবচেয়ে মৌলিক একক। এর স্থায়িত্বের ওপরই রাষ্ট্রের স্থায়িত্ব নির্ভর করে।"<br>— অ্যারিস্টটল',
-                                    num: "১"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "১. আধুনিক মজুরি-দাসত্ব",
-                                    text: "কর্পোরেট দুনিয়া শুধু সার্ভিস কেনে না; তারা আপনার পুরো 'সময়', মানসিকতা এবং শর্তহীন আনুগত্য কিনে নিতে চায়। যখনই স্কিল বিক্রির সীমা পেরিয়ে দাসত্ব আশা করা হয়, তখনই এটি খাঁচা মনে হতে শুরু করে।",
-                                    verse: '"আমাদের জীবন আসলে ছোট নয়, বরং আমরা নিজেরাই অন্যের দাসত্বে এবং অপ্রয়োজনীয় কাজে সময় ব্যয় করে একে ছোট করে ফেলি।"<br>— সেনেকা',
-                                    num: "২"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "২. পদবির মোহ ও স্কিলের মৃত্যু",
-                                    text: "প্রমোশন দিতে দিতে এমন একটি পদে নিয়ে যাওয়া হয়, যে কাজের জন্য সে সম্পূর্ণ অযোগ্য। পদবির পেছনে ছুটতে গিয়ে কোর স্কিলগুলো চর্চার অভাবে জঞ্জালে পরিণত হয়।",
-                                    verse: '"কর্পোরেট কাঠামোতে মানুষকে প্রমোশন দিতে দিতে এমন একটি পদে নিয়ে যাওয়া হয়, যে কাজের জন্য সে সম্পূর্ণ অযোগ্য।"<br>— দ্য পিটার প্রিন্সিপল',
-                                    num: "৩"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "৩. সেরা ট্রেনিং গ্রাউন্ড",
-                                    text: "এত ফাঁদ জেনেও চাকরি করার প্রেরণা কী? স্বাধীন উদ্যোগ গড়ার আগে এই ফাঁদে পা দেওয়াটাই বড় বুদ্ধিমত্তার কাজ: বাবার অঢেল টাকা থাকলেও অন্যের অধীনে কাজ করলে টাকার প্রকৃত মূল্য এবং ভেতরের ইগো ভেঙে ফেলা শেখা যায়।",
-                                    verse: '"যে চাকরির চাপ নিতে পারে না, সে ব্যবসার ২৪ ঘণ্টার চাপ কখনোই নিতে পারবে না।"',
-                                    num: "৪"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "৪. কর্পোরেট কাদের জন্য?",
-                                    text: "এই সিস্টেমটিতে মূলত দুধরনের মানুষ লাভবান হয়: ১. দ্য ট্রিকস্টারস বা ধূর্ত মানুষ, এবং ২. টাইম-টার্গেট লার্নার যারা শুধু কাজ ও অভিজ্ঞতা শিখতে আসে।",
-                                    verse: '"ক্ষমতার খেলায় টিকে থাকতে হলে কখনো সিংহের মতো বলশালী, আবার কখনো শেয়ালের মতো ধূর্ত হতে হয়।"<br>— ম্যাকিয়াভেলি',
-                                    num: "৫"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "৫. ইসলাম কেন টার্গেট হয়?",
-                                    text: "কর্পোরেট চায় শ্রমবাজারে কর্মীর সংখ্যা দ্বিগুণ করতে। ইসলাম পরিবারকে হেডকোয়ার্টার্স ধরে চমৎকার দায়িত্ব ভাগ করেছে—পুরুষ ফিল্ড এজেন্ট, নারী ইনডোর এক্সিকিউটিভ।",
-                                    verse: '"পরিবার হলো সমাজ ও রাষ্ট্রের সবচেয়ে মৌলিক একক। এর স্থায়িত্বের ওপরই রাষ্ট্রের স্থায়িত্ব নির্ভর করে।"<br>— অ্যারিস্টটল',
-                                    num: "৬"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "৬. ভোগবাদ ও ঋণের ফাঁদ",
-                                    text: "কর্পোরেট পুঁজিবাদের বড় হাতিয়ার মানুষকে ঋণের (লোন, ক্রেডিট কার্ড) জালে আটকে ফেলা। ইসলামে সুদ হারাম এবং অপচয় কঠোরভাবে নিষিদ্ধ।",
-                                    verse: '"যে সবচেয়ে কম জিনিসে সন্তুষ্ট, সে-ই সবচেয়ে ধনী।"<br>— সক্রেটিস',
-                                    num: "৭"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "শেষ কথা",
-                                    text: "কর্পোরেট জগৎ কাজের অভিজ্ঞতা নেওয়ার জন্য দারুণ জায়গা, কিন্তু এটি কখনোই স্বাধীন জীবনের চূড়ান্ত গন্তব্য হতে পারে না। যে এই সত্যটা বুঝতে পারে, সে ফাঁদ এড়িয়ে নিজের রাস্তা নিজেই তৈরি করে নেয়।",
-                                    verse: '"চাকরি ছাড়া ব্যবসা করতে চাওয়া, আর চাকরি দিয়ে এস্টাবলিশড হতে চাওয়া ব্যক্তি হলো সবচেয়ে বড় মূর্খ।"<br><br>— মো. মুকিদ হাসান সিয়াম',
-                                    num: "৮"
-                                },
-                                back: {
-                                    type: "cover-back",
-                                    title: "সমাপ্ত"
-                                }
-                            }
-                        ]
-                    },
-                    "EN": {
-                        pages: [
-                            {
-                                front: {
-                                    type: "cover",
-                                    title: "Corporate World",
-                                    context: "<strong>Context:</strong> Personal experiences and harsh realities of the corporate ecosystem.",
-                                    author: "Author: Md. Mukid Hasan Seiam"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Preface",
-                                    text: "While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. Are we working as free individuals or getting entangled in modern wage-slavery?",
-                                    verse: '"Family is the most fundamental unit of society and state."<br>— Aristotle',
-                                    num: "1"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Chapter 1: Modern Wage-Slavery",
-                                    text: "The corporate world does not just buy a service; it wants to buy your entire time, mindset, and unconditional loyalty. When it demands slavery beyond services, it feels like a cage.",
-                                    verse: '"Our life is not actually short, but we make it short by spending it on others\' slavery and unnecessary work."<br>— Seneca',
-                                    num: "2"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Chapter 2: Job Titles & Skill Death",
-                                    text: "People are promoted until they reach a level of incompetence. In the pursuit of titles, core skills decay into garbage information due to a lack of practice.",
-                                    verse: '"In a hierarchy, every employee tends to rise to his level of incompetence."<br>— The Peter Principle',
-                                    num: "3"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Chapter 3: Best Training Ground",
-                                    text: "Why work a job despite these traps? Working under others teaches you the real value of money and breaks your ego. It provides networking and builds tolerance.",
-                                    verse: '"He who cannot take the pressure of a job can never handle the 24-hour pressure of a business."',
-                                    num: "4"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Chapter 4: Who is Corporate For?",
-                                    text: "Two types of people benefit in this system: 1. The Tricksters who navigate the system cunningly, and 2. Time-Target Learners who only come to learn and gain experience.",
-                                    verse: '"To survive in the power play, one must be strong like a lion and cunning like a fox."<br>— Machiavelli',
-                                    num: "5"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Chapter 5: Why is Islam Targeted?",
-                                    text: "Corporates want to double the labor market. Islam defines the family as society's headquarters, delegating the male as the field agent and the female as the indoor manager.",
-                                    verse: '"Family is the fundamental unit of society and state."<br>— Aristotle',
-                                    num: "6"
-                                },
-                                back: {
-                                    type: "content",
-                                    title: "Chapter 6: Consumerism & Debt",
-                                    text: "The biggest weapon of corporate capitalism is trapping people in debt. Islam strictly forbids interest (usury) and wastefulness, which makes it a target.",
-                                    verse: '"He who is contented with the least is the richest."<br>— Socrates',
-                                    num: "7"
-                                }
-                            },
-                            {
-                                front: {
-                                    type: "content",
-                                    title: "Conclusion",
-                                    text: "The corporate world is a great place to gain experience, but it can never be the ultimate destination of a free life. He who understands this truth escapes the trap and carves his own path.",
-                                    verse: '"A person who wants to do business without a job, and a person who wants to be established through a job, is the biggest fool."<br><br>— Md. Mukid Hasan Seiam',
-                                    num: "8"
-                                },
-                                back: {
-                                    type: "cover-back",
-                                    title: "The End"
-                                }
-                            }
-                        ]
-                    }
-                }
-            };
+            // fallbackBooks is loaded dynamically from data.xlsx (no hardcoded fallback data here)
 
             function open3DBook(bookId, lang) {
                 document.getElementById('book3DModal').classList.remove('hidden');
