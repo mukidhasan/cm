@@ -1113,7 +1113,7 @@
                 </div>
 
                 <!-- BOOK 1: BENGALI EDITION -->
-                <div id="book-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div id="book-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden">
                     <div class="lg:col-span-4 flex justify-center py-6">
                         <div class="book-container-3d">
                             <div class="book-mockup">
@@ -1173,7 +1173,7 @@
                 </div>
 
                 <!-- BOOK 2: ENGLISH EDITION -->
-                <div id="book-english-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden">
+                <div id="book-english-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-4 flex justify-center py-6">
                         <div class="book-container-3d">
                             <div class="book-mockup">
@@ -1235,7 +1235,7 @@
                 <div class="border-t border-gray-200 my-12"></div>
 
                 <!-- BOOK 2: BENGALI EDITION -->
-                <div id="book-2-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div id="book-2-bengali-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden">
                     <div class="lg:col-span-4 flex justify-center py-6">
                         <div class="book-container-3d">
                             <div class="book-mockup">
@@ -1298,7 +1298,7 @@
                 </div>
 
                 <!-- BOOK 2: ENGLISH EDITION -->
-                <div id="book-2-english-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden">
+                <div id="book-2-english-edition" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-4 flex justify-center py-6">
                         <div class="book-container-3d">
                             <div class="book-mockup">
@@ -1710,12 +1710,27 @@
                 style="display: none;">Tip: Tap the sides of the book or swipe to turn pages</p>
         </div>
 
-        <!-- Language Toggle Floating Button -->
-        <div class="fixed bottom-6 left-6 z-40">
-            <button onclick="toggleLanguage()"
+        <!-- Language Selector Floating Menu -->
+        <div class="fixed bottom-6 left-6 z-40 flex flex-col items-start">
+            <!-- Language Dropdown Menu -->
+            <div id="lang-dropdown" class="hidden flex-col bg-brand-black/90 backdrop-blur-md border border-gray-800 shadow-2xl p-1 w-40 mb-2 transition-all duration-300 transform scale-95 origin-bottom-left">
+                <button onclick="changeLanguage('EN')" class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
+                    <span>English</span>
+                    <span id="check-en" class="hidden text-brand-blue font-black text-sm">✓</span>
+                </button>
+                <button onclick="changeLanguage('BN')" class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
+                    <span>বাংলা (BN)</span>
+                    <span id="check-bn" class="hidden text-brand-blue font-black text-sm">✓</span>
+                </button>
+            </div>
+            <!-- Main Trigger Button -->
+            <button id="lang-btn" onclick="toggleLangDropdown()"
                 class="bg-brand-black hover:bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest py-3.5 px-5 shadow-2xl border border-gray-800 transition duration-300 flex items-center gap-2 rounded-none">
                 <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse" id="lang-dot"></span>
                 <span id="lang-btn-text">Language: EN</span>
+                <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-300" id="lang-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                </svg>
             </button>
         </div>
 
@@ -1836,14 +1851,65 @@
                 if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
             }
 
-            function toggleLanguage() {
-                currentLang = currentLang === 'EN' ? 'BN' : 'EN';
-                localStorage.setItem('lang', currentLang);
-                updatePageContent();
+            function toggleLangDropdown() {
+                const dropdown = document.getElementById('lang-dropdown');
+                const arrow = document.getElementById('lang-arrow');
+                if (dropdown) {
+                    if (dropdown.classList.contains('hidden')) {
+                        dropdown.classList.remove('hidden');
+                        dropdown.classList.add('flex');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        dropdown.classList.add('hidden');
+                        dropdown.classList.remove('flex');
+                        if (arrow) arrow.style.transform = '';
+                    }
+                }
             }
 
+            function changeLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('lang', currentLang);
+                updatePageContent();
+                const dropdown = document.getElementById('lang-dropdown');
+                const arrow = document.getElementById('lang-arrow');
+                if (dropdown) {
+                    dropdown.classList.add('hidden');
+                    dropdown.classList.remove('flex');
+                }
+                if (arrow) arrow.style.transform = '';
+            }
+
+            // Close language dropdown if clicked outside
+            window.addEventListener('click', function (e) {
+                const dropdown = document.getElementById('lang-dropdown');
+                const btn = document.getElementById('lang-btn');
+                const arrow = document.getElementById('lang-arrow');
+                if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                    dropdown.classList.remove('flex');
+                    if (arrow) arrow.style.transform = '';
+                }
+            });
+
             function updatePageContent() {
-                document.getElementById('lang-btn-text').innerText = "Language: " + currentLang;
+                const langBtnText = document.getElementById('lang-btn-text');
+                if (langBtnText) {
+                    langBtnText.innerText = "Language: " + currentLang;
+                }
+
+                // Update dropdown checkmarks
+                const checkEn = document.getElementById('check-en');
+                const checkBn = document.getElementById('check-bn');
+                if (checkEn && checkBn) {
+                    if (currentLang === 'EN') {
+                        checkEn.classList.remove('hidden');
+                        checkBn.classList.add('hidden');
+                    } else {
+                        checkEn.classList.add('hidden');
+                        checkBn.classList.remove('hidden');
+                    }
+                }
 
                 document.querySelectorAll('[data-translate]').forEach(el => {
                     const key = el.getAttribute('data-translate');
@@ -1889,11 +1955,11 @@
                 let bookEN = document.getElementById('book-english-edition');
                 if (bookBN && bookEN) {
                     if (currentLang === 'BN') {
-                        bookBN.style.display = 'grid';
-                        bookEN.style.display = 'none';
+                        bookBN.classList.remove('hidden');
+                        bookEN.classList.add('hidden');
                     } else {
-                        bookBN.style.display = 'none';
-                        bookEN.style.display = 'grid';
+                        bookBN.classList.add('hidden');
+                        bookEN.classList.remove('hidden');
                     }
                 }
 
@@ -1901,11 +1967,11 @@
                 let book2EN = document.getElementById('book-2-english-edition');
                 if (book2BN && book2EN) {
                     if (currentLang === 'BN') {
-                        book2BN.style.display = 'grid';
-                        book2EN.style.display = 'none';
+                        book2BN.classList.remove('hidden');
+                        book2EN.classList.add('hidden');
                     } else {
-                        book2BN.style.display = 'none';
-                        book2EN.style.display = 'grid';
+                        book2BN.classList.add('hidden');
+                        book2EN.classList.remove('hidden');
                     }
                 }
             }
