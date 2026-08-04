@@ -357,7 +357,7 @@
                     spinnerEl.classList.add('hidden');
                     if (data && data.length > 0) {
                         inputEl.classList.add('border-green-500');
-                        
+
                         // Load Google Map Embed
                         const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(addressVal)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
                         mapIframe.src = embedUrl;
@@ -413,9 +413,9 @@
                 // Default coordinates (Dhaka, Bangladesh)
                 const lat = 23.8103;
                 const lon = 90.4125;
-                
+
                 leafletMap = L.map('interactive-picker-map').setView([lat, lon], 12);
-                
+
                 L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
                     maxZoom: 20,
                     attribution: '© Google Maps'
@@ -427,18 +427,18 @@
                 reverseGeocode(lat, lon);
 
                 // Map Click Handler
-                leafletMap.on('click', function(e) {
+                leafletMap.on('click', function (e) {
                     leafletMarker.setLatLng(e.latlng);
                     reverseGeocode(e.latlng.lat, e.latlng.lng);
                 });
 
                 // Marker Dragend Handler
-                leafletMarker.on('dragend', function() {
+                leafletMarker.on('dragend', function () {
                     const pos = leafletMarker.getLatLng();
                     reverseGeocode(pos.lat, pos.lng);
                 });
             }
-            
+
             // Re-render map sizing
             setTimeout(() => {
                 leafletMap.invalidateSize();
@@ -782,7 +782,8 @@
             <span onclick="switchTab('home')"
                 class="text-3xl font-black tracking-tighter hover:opacity-80 transition cursor-pointer">M<span
                     class="text-brand-blue">.</span></span>
-            <nav class="hidden md:flex gap-2 lg:gap-4 xl:gap-5 text-[9px] lg:text-[10px] xl:text-xs font-semibold uppercase tracking-widest text-gray-600 flex-wrap justify-end">
+            <nav
+                class="hidden md:flex gap-2 lg:gap-4 xl:gap-5 text-[9px] lg:text-[10px] xl:text-xs font-semibold uppercase tracking-widest text-gray-600 flex-wrap justify-end">
                 <span id="nav-home" onclick="switchTab('home')" data-translate="nav_home"
                     class="hover:text-brand-black transition cursor-pointer text-brand-blue">Home</span>
                 <span id="nav-experience" onclick="switchTab('experience')" data-translate="nav_experience"
@@ -834,8 +835,10 @@
                 <span onclick="switchTab('education'); toggleMobileMenu()" data-translate="nav_education"
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Education</span>
                 <span onclick="switchTab('books'); toggleMobileMenu()" data-translate="nav_books"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My Diary</span>
-                <span id="mobile-nav-content" onclick="switchTab('content'); toggleMobileMenu()" data-translate="nav_content"
+                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
+                    Diary</span>
+                <span id="mobile-nav-content" onclick="switchTab('content'); toggleMobileMenu()"
+                    data-translate="nav_content"
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
                     Content</span>
                 <span onclick="switchTab('expertise'); toggleMobileMenu()" data-translate="nav_expertise"
@@ -860,13 +863,16 @@
                         </h1>
                         <div class="max-w-md mt-4">
                             <h2 class="text-xl md:text-2xl font-bold uppercase leading-tight mb-4">
-                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer Operator</span><br>
-                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2"
-                                    class="text-brand-blue">& Fast Software Learner.</span>
+                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer
+                                    Operator</span><br>
+                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">&
+                                    Fast Software Learner.</span>
                             </h2>
                             <p id="hero_desc" data-translate="hero_desc"
                                 class="text-gray-500 text-sm mb-8 leading-relaxed">
-                                I am MD Mukid Hasan Seiam, an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. I pride myself on being highly resourceful, using modern AI tools to elevate my output to a professional level.
+                                I am MD Mukid Hasan Seiam, an organized and adaptable worker with a solid foundation in
+                                data entry, hardware tracking, and general office duties. I pride myself on being highly
+                                resourceful, using modern AI tools to elevate my output to a professional level.
                             </p>
                         </div>
                     </div>
@@ -1097,24 +1103,31 @@
                 </div>
 
                 <!-- PDF Upload Zone -->
-                <div class="border-2 border-dashed border-gray-300 hover:border-brand-blue bg-white p-8 text-center rounded-lg transition duration-300 relative cursor-pointer group max-w-4xl w-full mb-8 shadow-sm hover:shadow-md hidden" id="pdf-upload-zone">
+                <div class="border-2 border-dashed border-gray-300 hover:border-brand-blue bg-white p-8 text-center rounded-lg transition duration-300 relative cursor-pointer group max-w-4xl w-full mb-8 shadow-sm hover:shadow-md hidden"
+                    id="pdf-upload-zone">
                     <input type="file" id="pdf-file-input" accept="application/pdf" class="hidden">
                     <div class="flex flex-col items-center justify-center gap-3">
-                        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue group-hover:scale-110 transition duration-300">
+                        <div
+                            class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue group-hover:scale-110 transition duration-300">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                         </div>
-                        <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-brand-black" data-translate="upload_title">Upload PDF to Shelf</span>
-                        <span class="text-[11px] text-gray-500 font-medium" data-translate="upload_desc">Drag & drop a PDF file here, or click to browse</span>
-                        <span class="text-[10px] text-red-500 font-bold uppercase tracking-wider hidden mt-2" id="upload-error-msg"></span>
+                        <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-brand-black"
+                            data-translate="upload_title">Upload PDF to Shelf</span>
+                        <span class="text-[11px] text-gray-500 font-medium" data-translate="upload_desc">Drag & drop a
+                            PDF file here, or click to browse</span>
+                        <span class="text-[10px] text-red-500 font-bold uppercase tracking-wider hidden mt-2"
+                            id="upload-error-msg"></span>
                     </div>
                 </div>
 
                 <!-- Custom Uploaded Books Container -->
                 <div id="custom-books-section" class="hidden flex flex-col gap-12 w-full">
                     <div class="border-t border-gray-200 my-4"></div>
-                    <h3 class="font-heading text-3xl uppercase text-brand-black" data-translate="custom_books_header">My Uploaded Diaries</h3>
+                    <h3 class="font-heading text-3xl uppercase text-brand-black" data-translate="custom_books_header">My
+                        Uploaded Diaries</h3>
                     <div id="custom-books-container" class="flex flex-col gap-12"></div>
                     <div class="border-t border-gray-200 my-4"></div>
                 </div>
@@ -1144,7 +1157,8 @@
                         <span
                             class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">বাংলা
                             সংস্করণ</span>
-                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4" data-translate="book1_title">
+                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4"
+                            data-translate="book1_title">
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
                             <span data-translate="book1_author"></span>
@@ -1202,8 +1216,10 @@
 
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <span
-                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4" data-translate="book1_badge"></span>
-                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4" data-translate="book1_title">
+                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4"
+                            data-translate="book1_badge"></span>
+                        <h2 class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4"
+                            data-translate="book1_title">
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
                             <span data-translate="book1_author"></span>
@@ -1251,7 +1267,9 @@
                                     <div class="book-cover-content">
                                         <div class="text-[10px] font-bold uppercase tracking-widest text-sky-300">
                                             সমাজ ও বাস্তবতা</div>
-                                        <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">কর্পোরেট জগৎ<br><span class="text-[11px] text-sky-200 block mt-1">ক্যারিয়ার নাকি ফাঁদ?</span></h3>
+                                        <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">কর্পোরেট
+                                            জগৎ<br><span class="text-[11px] text-sky-200 block mt-1">ক্যারিয়ার নাকি
+                                                ফাঁদ?</span></h3>
                                         <div class="text-[9px] text-gray-400 font-semibold tracking-wider">মো. মুকিদ
                                             হাসান সিয়াম</div>
                                     </div>
@@ -1263,8 +1281,10 @@
 
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <span data-translate="book2_badge"
-                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">বাংলা সংস্করণ</span>
-                        <h2 data-translate="book2_title" class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
+                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">বাংলা
+                            সংস্করণ</span>
+                        <h2 data-translate="book2_title"
+                            class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
                             কর্পোরেট জগৎ - ক্যারিয়ার নাকি ফাঁদ?
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
@@ -1275,10 +1295,13 @@
 
                         <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
                             <p data-translate="book2_desc1">
-                                বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য বলে মনে হলেও, ভেতর থেকে এটি অনেক সময়ই একটি সুকৌশলী ফাঁদ। একটা সময় পর মনে হতে বাধ্য যে, আমরা আসলে স্বাধীন মানুষ হিসেবে কাজ করছি, নাকি আধুনিক কোনো ক্রীতদাস প্রথায় জড়িয়ে পড়েছি?
+                                বাইরে থেকে কর্পোরেট জগৎকে ক্যারিয়ার গড়ার চূড়ান্ত গন্তব্য বলে মনে হলেও, ভেতর থেকে এটি
+                                অনেক সময়ই একটি সুকৌশলী ফাঁদ। একটা সময় পর মনে হতে বাধ্য যে, আমরা আসলে স্বাধীন মানুষ
+                                হিসেবে কাজ করছি, নাকি আধুনিক কোনো ক্রীতদাস প্রথায় জড়িয়ে পড়েছি?
                             </p>
                             <p data-translate="book2_desc2">
-                                পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই বইটিতে অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।
+                                পদবির মোহ, স্কিলের ক্ষয়, ঋণের ফাঁদ এবং আধুনিক মজুরি-দাসত্বের মতো বিষয়গুলোকে এই বইটিতে
+                                অত্যন্ত চমৎকার ও বাস্তবসম্মত দৃষ্টিভঙ্গিতে ফুটিয়ে তোলা হয়েছে।
                             </p>
                         </div>
 
@@ -1314,7 +1337,9 @@
                                     <div class="book-cover-content">
                                         <div class="text-[10px] font-bold uppercase tracking-widest text-sky-300">
                                             Society & Reality</div>
-                                        <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">Corporate World<br><span class="text-[11px] text-sky-200 block mt-1">Career or Trap?</span></h3>
+                                        <h3 class="text-white text-lg font-bold leading-tight my-auto px-2">Corporate
+                                            World<br><span class="text-[11px] text-sky-200 block mt-1">Career or
+                                                Trap?</span></h3>
                                         <div class="text-[9px] text-gray-400 font-semibold tracking-wider">Md. Mukid
                                             Hasan Seiam</div>
                                     </div>
@@ -1326,8 +1351,10 @@
 
                     <div class="lg:col-span-8 flex flex-col justify-center">
                         <span data-translate="book2_badge"
-                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">Bengali Edition</span>
-                        <h2 data-translate="book2_title" class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
+                            class="bg-gray-100 text-brand-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1.5 w-fit rounded-full mb-4">Bengali
+                            Edition</span>
+                        <h2 data-translate="book2_title"
+                            class="text-3xl md:text-4xl font-bold uppercase text-brand-black leading-tight mb-4">
                             Corporate World - Career or Trap?
                         </h2>
                         <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-6 flex gap-4">
@@ -1338,10 +1365,14 @@
 
                         <div class="max-w-2xl text-gray-600 text-sm space-y-4 mb-10 leading-relaxed">
                             <p data-translate="book2_desc1">
-                                While the corporate world seems like the ultimate destination for career growth from the outside, from the inside it is often a clever trap. This book explores whether we are working as free individuals or getting entangled in modern wage-slavery.
+                                While the corporate world seems like the ultimate destination for career growth from the
+                                outside, from the inside it is often a clever trap. This book explores whether we are
+                                working as free individuals or getting entangled in modern wage-slavery.
                             </p>
                             <p data-translate="book2_desc2">
-                                Issues like the illusion of job titles, erosion of core skills, the consumer debt trap, and modern wage-slavery are highlighted in this book with an extremely engaging and realistic perspective.
+                                Issues like the illusion of job titles, erosion of core skills, the consumer debt trap,
+                                and modern wage-slavery are highlighted in this book with an extremely engaging and
+                                realistic perspective.
                             </p>
                         </div>
 
@@ -1371,12 +1402,15 @@
             <!-- Page: My Content -->
             <div id="page-content" class="tab-page py-6 flex flex-col gap-12">
                 <div class="max-w-4xl mb-6">
-                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block" data-translate="creative_portfolio_tag">Creative
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block"
+                        data-translate="creative_portfolio_tag">Creative
                         Portfolio</span>
-                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8" data-translate="creative_content_title">
+                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8"
+                        data-translate="creative_content_title">
                         MY CREATIVE <span class="text-brand-blue">CONTENT</span>
                     </h2>
-                    <p class="text-gray-600 text-sm md:text-base leading-relaxed font-medium" data-translate="creative_content_desc">
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed font-medium"
+                        data-translate="creative_content_desc">
                         প্রযুক্তির সীমানা ছাড়িয়ে বিভিন্ন কাস্টম ক্রাফট, ২ডি গেম মডিফিকেশন এবং ভিন্টেজ মিডিয়া আর্কাইভ
                         নিয়ে আমার নানা এক্সপেরিমেন্ট ও শখের কাজগুলো এখানে তুলে ধরা হলো।
                     </p>
@@ -1387,10 +1421,11 @@
                     <div
                         class="group border border-gray-200 p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div>
-                            <span
-                                class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block" data-translate="content_c1_tag">2D
+                            <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
+                                data-translate="content_c1_tag">2D
                                 Game Development</span>
-                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4" data-translate="content_c1_title">OpenBOR & MUGEN Mods</h3>
+                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                data-translate="content_c1_title">OpenBOR & MUGEN Mods</h3>
                             <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c1_desc">
                                 কাস্টম স্প্রাইট শিট ডিজাইনিং, টু-ডি অ্যানিমেশন ফ্রেম অ্যালাইনমেন্ট এবং ওপেন-সোর্স
                                 ইঞ্জিনগুলোর মাধ্যমে ক্যারেক্টার মেকানিক্স মডিফিকেশন।
@@ -1411,10 +1446,11 @@
                     <div
                         class="group border border-gray-200 p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div>
-                            <span
-                                class="text-brand-blue text-[9px] font-extrabold uppcase tracking-widest mb-3 block" data-translate="content_c2_tag">Hardware
+                            <span class="text-brand-blue text-[9px] font-extrabold uppcase tracking-widest mb-3 block"
+                                data-translate="content_c2_tag">Hardware
                                 & DIY</span>
-                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4" data-translate="content_c2_title">DIY Concept Crafts</h3>
+                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                data-translate="content_c2_title">DIY Concept Crafts</h3>
                             <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c2_desc">
                                 দৈনন্দিন জীবন ও কর্মক্ষেত্রের কাজকে সহজ করতে বিভিন্ন কাস্টম হার্ডওয়্যার মডিফিকেশন,
                                 টেস্টিং টুলস এবং ইলেকট্রনিক্স ডিজাইন প্রজেক্ট।
@@ -1435,9 +1471,10 @@
                     <div
                         class="group border border-gray-200 p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div>
-                            <span
-                                class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block" data-translate="content_c3_tag">Media</span>
-                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4" data-translate="content_c3_title">Social Media Activities
+                            <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
+                                data-translate="content_c3_tag">Media</span>
+                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                data-translate="content_c3_title">Social Media Activities
                             </h3>
                             <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c3_desc">
                                 Social media activities and content.
@@ -1458,10 +1495,11 @@
                     <div
                         class="group border border-gray-200 p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div>
-                            <span
-                                class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block" data-translate="content_c4_tag">Generative
+                            <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
+                                data-translate="content_c4_tag">Generative
                                 Art</span>
-                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4" data-translate="content_c4_title">AI Visual Compositions
+                            <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                data-translate="content_c4_title">AI Visual Compositions
                             </h3>
                             <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c4_desc">
                                 সুনির্দিষ্ট স্টাইলিং ও লাইটিং সেটআপ ব্যবহার করে হাই-ডিটেইল ডিজিটাল আর্ট এবং ইমেজ প্রম্পট
@@ -1484,7 +1522,8 @@
             <!-- Page: Hobbies -->
             <div id="page-hobbies" class="tab-page py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
-                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My Hobbies</span>
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
+                        Hobbies</span>
                     <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
                         THINGS I <span class="text-brand-blue">LOVE</span>
                     </h2>
@@ -1499,7 +1538,8 @@
             <!-- Page: Interests -->
             <div id="page-interests" class="tab-page py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
-                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My Interests</span>
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
+                        Interests</span>
                     <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
                         WHAT DRIVES <span class="text-brand-blue">ME</span>
                     </h2>
@@ -1516,46 +1556,64 @@
             <!-- Page: Education -->
             <div id="page-education" class="tab-page py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
-                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My Education</span>
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
+                        Education</span>
                     <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-12">
                         ACADEMIC <span class="text-brand-blue">JOURNEY</span>
                     </h2>
-                    
+
                     <div class="space-y-8">
                         <!-- HSC -->
                         <div class="flex items-start gap-6 border-l-4 border-brand-blue pl-6 relative">
-                            <div class="absolute -left-[14px] top-0 w-6 h-6 bg-brand-black rounded-full border-4 border-white flex items-center justify-center">
+                            <div
+                                class="absolute -left-[14px] top-0 w-6 h-6 bg-brand-black rounded-full border-4 border-white flex items-center justify-center">
                                 <div class="w-2 h-2 bg-brand-blue rounded-full"></div>
                             </div>
                             <div class="flex-grow">
                                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                    <h3 class="text-xl font-bold uppercase tracking-wide text-brand-black">Higher Secondary Certificate (HSC) - Commerce</h3>
-                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Pass: 2014</span>
+                                    <h3 class="text-xl font-bold uppercase tracking-wide text-brand-black">Higher
+                                        Secondary Certificate (HSC) - Commerce</h3>
+                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Pass:
+                                        2014</span>
                                 </div>
                                 <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 overflow-hidden shrink-0">
-                                        <img src="https://eshiksa-central.blr1.digitaloceanspaces.com/tenants/sbpgc/logos/b88bf9cd177b344a-logo-desktop.webp" alt="Shaikh Burhanuddin Post Graduate College Logo" class="w-full h-full object-contain p-1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3ciIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTIgMTRsOS01LTktNS05IDUgOSA1em0wIDBsNi4xNi0zLjQyMmExMi4wODMgMTIuMDgzIDAgMDEuNjY1IDYuNDc5QTExLjk1MiAxMS45NTIgMCAwMDEyIDIwLjA1NWExMS45NTIgMTEuOTUyIDAgMDAtNi44MjQtMi45OTggMTIuMDc4IDEyLjA3OCAwIDAxLjY2NS02LjQ3OUwxMiAxNHoiLz48L3N2Zz4='">
+                                    <div
+                                        class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 overflow-hidden shrink-0">
+                                        <img src="https://eshiksa-central.blr1.digitaloceanspaces.com/tenants/sbpgc/logos/b88bf9cd177b344a-logo-desktop.webp"
+                                            alt="Shaikh Burhanuddin Post Graduate College Logo"
+                                            class="w-full h-full object-contain p-1"
+                                            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3ciIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTIgMTRsOS01LTktNS05IDUgOSA1em0wIDBsNi4xNi0zLjQyMmExMi4wODMgMTIuMDgzIDAgMDEuNjY1IDYuNDc5QTExLjk1MiAxMS45NTIgMCAwMDEyIDIwLjA1NWExMS45NTIgMTEuOTUyIDAgMDAtNi44MjQtMi45OTggMTIuMDc4IDEyLjA3OCAwIDAxLjY2NS02LjQ3OUwxMiAxNHoiLz48L3N2Zz4='">
                                     </div>
-                                    <a href="https://www.sbpgc.edu.bd/en" target="_blank" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Shaikh Burhanuddin Post Graduate College</a>
+                                    <a href="https://www.sbpgc.edu.bd/en" target="_blank"
+                                        class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Shaikh
+                                        Burhanuddin Post Graduate College</a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- SSC -->
                         <div class="flex items-start gap-6 border-l-4 border-gray-300 pl-6 relative">
-                            <div class="absolute -left-[14px] top-0 w-6 h-6 bg-gray-300 rounded-full border-4 border-white flex items-center justify-center">
+                            <div
+                                class="absolute -left-[14px] top-0 w-6 h-6 bg-gray-300 rounded-full border-4 border-white flex items-center justify-center">
                                 <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
                             </div>
                             <div class="flex-grow">
                                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                    <h3 class="text-xl font-bold uppercase tracking-wide text-brand-black">Secondary School Certificate (SSC)</h3>
-                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Pass: 2011</span>
+                                    <h3 class="text-xl font-bold uppercase tracking-wide text-brand-black">Secondary
+                                        School Certificate (SSC)</h3>
+                                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Pass:
+                                        2011</span>
                                 </div>
                                 <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 overflow-hidden shrink-0">
-                                        <img src="https://ahmedbawanyacademy.edu.bd/images/bawanylogoNoBG.png" alt="Ahmed Bawani Academy Logo" class="w-full h-full object-contain p-1" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3ciIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTIgMTRsOS01LTktNS05IDUgOSA1em0wIDBsNi4xNi0zLjQyMmExMi4wODMgMTIuMDgzIDAgMDEuNjY1IDYuNDc5QTExLjk1MiAxMS45NTIgMCAwMDEyIDIwLjA1NWExMS45NTIgMTEuOTUyIDAgMDAtNi44MjQtMi45OTggMTIuMDc4IDEyLjA3OCAwIDAxLjY2NS02LjQ3OUwxMiAxNHptLTQgNnYtNy41bDQtMi4yMjIiLz48L3N2Zz4='">
+                                    <div
+                                        class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 overflow-hidden shrink-0">
+                                        <img src="https://ahmedbawanyacademy.edu.bd/images/bawanylogoNoBG.png"
+                                            alt="Ahmed Bawani Academy Logo" class="w-full h-full object-contain p-1"
+                                            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3ciIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTIgMTRsOS01LTktNS05IDUgOSA1em0wIDBsNi4xNi0zLjQyMmExMi4wODMgMTIuMDgzIDAgMDEuNjY1IDYuNDc5QTExLjk1MiAxMS45NTIgMCAwMDEyIDIwLjA1NWExMS45NTIgMTEuOTUyIDAgMDAtNi44MjQtMi45OTggMTIuMDc4IDEyLjA3OCAwIDAxLjY2NS02LjQ3OUwxMiAxNHptLTQgNnYtNy41bDQtMi4yMjIiLz48L3N2Zz4='">
                                     </div>
-                                    <a href="https://www.ahmedbawanyacademy.edu.bd/" target="_blank" class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Ahmed Bawani Academy</a>
+                                    <a href="https://www.ahmedbawanyacademy.edu.bd/" target="_blank"
+                                        class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Ahmed
+                                        Bawani Academy</a>
                                 </div>
                             </div>
                         </div>
@@ -1635,19 +1693,29 @@
                                         </svg>
                                     </button>
                                     <div id="address-spinner" class="absolute right-10 top-1/2 -translate-y-1/2 hidden">
-                                        <div class="w-4 h-4 border-2 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
-                                    </div>
-                                    
-                                    <!-- Map Picker Popover -->
-                                    <div id="map-picker-popover" class="hidden absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-2xl p-4 z-40">
-                                        <div class="flex justify-between items-center mb-2">
-                                            <span class="text-[10px] font-bold uppercase tracking-widest text-brand-blue">Drag marker or click to pick location</span>
-                                            <button type="button" onclick="closeMapPicker(event)" class="text-xs font-bold uppercase text-red-500 hover:text-red-700">Close</button>
+                                        <div
+                                            class="w-4 h-4 border-2 border-brand-blue border-t-transparent rounded-full animate-spin">
                                         </div>
-                                        <div id="interactive-picker-map" class="w-full h-52 bg-gray-100 rounded mb-2" style="z-index: 1;"></div>
+                                    </div>
+
+                                    <!-- Map Picker Popover -->
+                                    <div id="map-picker-popover"
+                                        class="hidden absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-2xl p-4 z-40">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span
+                                                class="text-[10px] font-bold uppercase tracking-widest text-brand-blue">Drag
+                                                marker or click to pick location</span>
+                                            <button type="button" onclick="closeMapPicker(event)"
+                                                class="text-xs font-bold uppercase text-red-500 hover:text-red-700">Close</button>
+                                        </div>
+                                        <div id="interactive-picker-map" class="w-full h-52 bg-gray-100 rounded mb-2"
+                                            style="z-index: 1;"></div>
                                         <div class="flex justify-between items-center gap-2">
-                                            <span id="picker-status" class="text-[9.5px] text-gray-500 font-medium truncate max-w-[65%]">No location selected</span>
-                                            <button type="button" onclick="confirmPickedLocation(event)" class="bg-brand-blue text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded hover:bg-brand-black transition shrink-0">Confirm</button>
+                                            <span id="picker-status"
+                                                class="text-[9.5px] text-gray-500 font-medium truncate max-w-[65%]">No
+                                                location selected</span>
+                                            <button type="button" onclick="confirmPickedLocation(event)"
+                                                class="bg-brand-blue text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded hover:bg-brand-black transition shrink-0">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1675,14 +1743,22 @@
                                         class="text-brand-blue">*</span></label>
                                 <select name="help_sector" required
                                     class="w-full border p-3 text-sm focus:outline-none focus:border-brand-blue bg-white">
-                                    <option value="" disabled selected data-translate="opt_select_sector">Select a sector...</option>
-                                    <option value="Computer Fixing" data-translate="opt_comp_fixing">Computer & Electronics Repair</option>
-                                    <option value="Data Entry" data-translate="opt_data_entry">Data Entry & Book Formatting</option>
-                                    <option value="CCTV" data-translate="opt_cctv">CCTV Camera Installation & Maintenance</option>
-                                    <option value="Label Printing" data-translate="opt_label_printing">Label Printing & Barcode Solutions</option>
-                                    <option value="Photoshop" data-translate="opt_photoshop">Photoshop & Graphic Design</option>
-                                    <option value="Illustrator" data-translate="opt_illustrator">Adobe Illustrator Vector Work</option>
-                                    <option value="Other Support" data-translate="opt_other_support">Other Technical Support</option>
+                                    <option value="" disabled selected data-translate="opt_select_sector">Select a
+                                        sector...</option>
+                                    <option value="Computer Fixing" data-translate="opt_comp_fixing">Computer &
+                                        Electronics Repair</option>
+                                    <option value="Data Entry" data-translate="opt_data_entry">Data Entry & Book
+                                        Formatting</option>
+                                    <option value="CCTV" data-translate="opt_cctv">CCTV Camera Installation &
+                                        Maintenance</option>
+                                    <option value="Label Printing" data-translate="opt_label_printing">Label Printing &
+                                        Barcode Solutions</option>
+                                    <option value="Photoshop" data-translate="opt_photoshop">Photoshop & Graphic Design
+                                    </option>
+                                    <option value="Illustrator" data-translate="opt_illustrator">Adobe Illustrator
+                                        Vector Work</option>
+                                    <option value="Other Support" data-translate="opt_other_support">Other Technical
+                                        Support</option>
                                 </select>
                             </div>
 
@@ -1778,13 +1854,21 @@
                 <div class="space-y-4">
                     <h4 class="text-brand-blue font-bold tracking-widest uppercase text-lg text-center">YouTube</h4>
                     <div class="aspect-video w-full bg-black rounded overflow-hidden shadow-2xl border border-gray-800">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/S5iAWErIPj0?si=5Vkx55DPZdE3jfMd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/S5iAWErIPj0?si=5Vkx55DPZdE3jfMd"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="space-y-4">
                     <h4 class="text-brand-blue font-bold tracking-widest uppercase text-lg text-center">YouTube</h4>
                     <div class="aspect-video w-full bg-black rounded overflow-hidden shadow-2xl border border-gray-800">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/gTks9WkN-QM?si=57TWlz4Fj2MQrxY5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/gTks9WkN-QM?si=57TWlz4Fj2MQrxY5"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -1827,12 +1911,15 @@
         <!-- Language Selector Floating Menu -->
         <div class="fixed bottom-6 left-6 z-40 flex flex-col items-start">
             <!-- Language Dropdown Menu -->
-            <div id="lang-dropdown" class="hidden flex-col bg-brand-black/90 backdrop-blur-md border border-gray-800 shadow-2xl p-1 w-40 mb-2 transition-all duration-300 transform scale-95 origin-bottom-left">
-                <button onclick="changeLanguage('EN')" class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
+            <div id="lang-dropdown"
+                class="hidden flex-col bg-brand-black/90 backdrop-blur-md border border-gray-800 shadow-2xl p-1 w-40 mb-2 transition-all duration-300 transform scale-95 origin-bottom-left">
+                <button onclick="changeLanguage('EN')"
+                    class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
                     <span>English</span>
                     <span id="check-en" class="hidden text-brand-blue font-black text-sm">✓</span>
                 </button>
-                <button onclick="changeLanguage('BN')" class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
+                <button onclick="changeLanguage('BN')"
+                    class="flex items-center justify-between w-full text-left text-[10px] font-bold uppercase tracking-widest py-2.5 px-4 text-gray-400 hover:text-white hover:bg-brand-blue transition duration-200">
                     <span>বাংলা (BN)</span>
                     <span id="check-bn" class="hidden text-brand-blue font-black text-sm">✓</span>
                 </button>
@@ -1842,7 +1929,8 @@
                 class="bg-brand-black hover:bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest py-3.5 px-5 shadow-2xl border border-gray-800 transition duration-300 flex items-center gap-2 rounded-none">
                 <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse" id="lang-dot"></span>
                 <span id="lang-btn-text">Language: EN</span>
-                <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-300" id="lang-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-300" id="lang-arrow" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
@@ -1869,7 +1957,7 @@
                     if (!excelResponse.ok) throw new Error("Failed to fetch data.xlsx: " + excelResponse.status);
                     const excelBuffer = await excelResponse.arrayBuffer();
                     const workbook = XLSX.read(excelBuffer, { type: 'array' });
-                    
+
                     // Parse Translations
                     const transSheet = workbook.Sheets['Translations'];
                     if (transSheet) {
@@ -1882,7 +1970,7 @@
                             };
                         });
                     }
-                    
+
                     // Parse FallbackBooks
                     const booksSheet = workbook.Sheets['FallbackBooks'];
                     if (booksSheet) {
@@ -1892,13 +1980,13 @@
                             const { BookId, Lang, PageIdx, Side, Type, Title, Context, Author, Text, Verse, Num } = row;
                             if (!fallbackBooks[BookId]) fallbackBooks[BookId] = {};
                             if (!fallbackBooks[BookId][Lang]) fallbackBooks[BookId][Lang] = { pages: [] };
-                            
+
                             const pagesArray = fallbackBooks[BookId][Lang].pages;
                             const idx = parseInt(PageIdx);
                             while (pagesArray.length <= idx) {
                                 pagesArray.push({ front: {}, back: {} });
                             }
-                            
+
                             pagesArray[idx][Side] = {
                                 type: Type || "",
                                 title: Title || "",
@@ -1916,42 +2004,42 @@
                     if (!binResponse.ok) throw new Error("Failed to fetch images.bin: " + binResponse.status);
                     const binBuffer = await binResponse.arrayBuffer();
                     const view = new DataView(binBuffer);
-                    
+
                     let offset = 0;
                     if (binBuffer.byteLength >= 4) {
                         const fileCount = view.getUint32(offset, true);
                         offset += 4;
-                        
+
                         const files = [];
                         for (let i = 0; i < fileCount; i++) {
                             if (offset + 1 > binBuffer.byteLength) break;
                             const nameLen = view.getUint8(offset);
                             offset += 1;
-                            
+
                             if (offset + nameLen > binBuffer.byteLength) break;
                             const nameBytes = new Uint8Array(binBuffer, offset, nameLen);
                             const filename = new TextDecoder().decode(nameBytes);
                             offset += nameLen;
-                            
+
                             if (offset + 4 > binBuffer.byteLength) break;
                             const fileSize = view.getUint32(offset, true);
                             offset += 4;
-                            
+
                             files.push({ filename, size: fileSize });
                         }
-                        
+
                         for (const file of files) {
                             if (offset + file.size <= binBuffer.byteLength) {
                                 const dataBytes = new Uint8Array(binBuffer, offset, file.size);
                                 offset += file.size;
-                                
+
                                 let mimeType = 'image/png';
                                 if (file.filename.endsWith('.jpg') || file.filename.endsWith('.jpeg')) {
                                     mimeType = 'image/jpeg';
                                 } else if (file.filename.endsWith('.webp')) {
                                     mimeType = 'image/webp';
                                 }
-                                
+
                                 const blob = new Blob([dataBytes], { type: mimeType });
                                 localImagesMap[file.filename] = URL.createObjectURL(blob);
                             }
@@ -2101,7 +2189,7 @@
             function getLocalImagePath(baseName, imgElement) {
                 if (!imgElement) return;
                 const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
-                
+
                 // Try to find image in loaded binary images first
                 let found = false;
                 for (const ext of extensions) {
@@ -2112,7 +2200,7 @@
                         break;
                     }
                 }
-                
+
                 if (found) {
                     imgElement.style.display = 'block';
                     const err = imgElement.parentElement.querySelector('.error-box');
@@ -2277,17 +2365,17 @@
                     const books = await getAllBooksFromDB();
                     const container = document.getElementById("custom-books-container");
                     const section = document.getElementById("custom-books-section");
-                    
+
                     if (!container) return;
                     container.innerHTML = "";
-                    
+
                     if (books.length === 0) {
                         section.classList.add("hidden");
                         return;
                     }
-                    
+
                     section.classList.remove("hidden");
-                    
+
                     for (const book of books) {
                         const blob = new Blob([book.data], { type: "application/pdf" });
                         const blobUrl = URL.createObjectURL(blob);
@@ -2296,18 +2384,18 @@
                             blobUrl: blobUrl,
                             title: book.title
                         };
-                        
+
                         const cardHTML = createBookCardHTML(book.id, book.title, blobUrl, book.addedAt, book.size);
                         container.insertAdjacentHTML("beforeend", cardHTML);
-                        
+
                         const canvas = document.getElementById(`cover-${book.id}`);
                         if (canvas) {
                             renderPDFCover(book.data, canvas);
                         }
                     }
-                    
+
                     updatePageContent();
-                    
+
                 } catch (err) {
                     console.error("Error loading custom books:", err);
                 }
@@ -2317,7 +2405,7 @@
                 const formattedDate = new Date(date).toLocaleDateString(undefined, {
                     year: 'numeric', month: 'short', day: 'numeric'
                 });
-                
+
                 const sizeKb = (size / 1024).toFixed(1);
                 const formattedSize = `${sizeKb} KB`;
 
@@ -2393,7 +2481,7 @@
                         const context = canvas.getContext('2d');
                         canvas.width = viewport.width;
                         canvas.height = viewport.height;
-                        
+
                         const renderContext = {
                             canvasContext: context,
                             viewport: viewport
@@ -2409,20 +2497,20 @@
                 const zone = document.getElementById("pdf-upload-zone");
                 const fileInput = document.getElementById("pdf-file-input");
                 const errorMsg = document.getElementById("upload-error-msg");
-                
+
                 if (!zone || !fileInput) return;
-                
+
                 zone.onclick = () => fileInput.click();
-                
+
                 zone.ondragover = (e) => {
                     e.preventDefault();
                     zone.classList.add("border-brand-blue", "bg-blue-50/20");
                 };
-                
+
                 zone.ondragleave = () => {
                     zone.classList.remove("border-brand-blue", "bg-blue-50/20");
                 };
-                
+
                 zone.ondrop = (e) => {
                     e.preventDefault();
                     zone.classList.remove("border-brand-blue", "bg-blue-50/20");
@@ -2431,43 +2519,43 @@
                         handlePDFFile(files[0]);
                     }
                 };
-                
+
                 fileInput.onchange = (e) => {
                     const files = e.target.files;
                     if (files.length > 0) {
                         handlePDFFile(files[0]);
                     }
                 };
-                
+
                 function showError(msg) {
                     errorMsg.innerText = msg;
                     errorMsg.classList.remove("hidden");
                 }
-                
+
                 function clearError() {
                     errorMsg.classList.add("hidden");
                 }
-                
+
                 function handlePDFFile(file) {
                     if (file.type !== "application/pdf") {
                         showError(currentLang === 'BN' ? "শুধুমাত্র PDF ফাইল আপলোড করা যাবে।" : "Only PDF files are supported.");
                         return;
                     }
-                    
+
                     if (file.size > 20 * 1024 * 1024) {
                         showError(currentLang === 'BN' ? "ফাইলের সাইজ ২০ এমবি এর চেয়ে কম হতে হবে।" : "File size must be under 20MB.");
                         return;
                     }
-                    
+
                     clearError();
-                    
+
                     const reader = new FileReader();
                     reader.onload = async (event) => {
                         try {
                             const arrayBuffer = event.target.result;
                             const bookId = "pdf-" + Date.now();
                             const title = file.name.replace(/\.[^/.]+$/, "");
-                            
+
                             const book = {
                                 id: bookId,
                                 title: title,
@@ -2475,7 +2563,7 @@
                                 size: file.size,
                                 addedAt: new Date().toISOString()
                             };
-                            
+
                             await saveBookToDB(book);
                             await loadCustomBooks();
                         } catch (err) {
@@ -2671,11 +2759,11 @@
                         if (pageNumFront === 1) {
                             frontDiv.classList.add('modal-cover-front');
                         }
-                        
+
                         const canvasFront = document.createElement('canvas');
                         canvasFront.className = "w-full h-full object-contain";
                         frontDiv.appendChild(canvasFront);
-                        
+
                         const numSpanFront = document.createElement('span');
                         numSpanFront.className = "absolute bottom-2 right-4 text-[10px] font-bold text-gray-400 z-10 bg-white/80 px-1.5 py-0.5 rounded";
                         numSpanFront.innerText = pageNumFront;
@@ -2686,7 +2774,7 @@
                         const backDiv = document.createElement('div');
                         backDiv.className = 'modal-back p-0 bg-slate-50 relative';
                         const pageNumBack = 2 * i + 2;
-                        
+
                         let canvasBack = null;
                         if (pageNumBack <= numPages) {
                             canvasBack = document.createElement('canvas');
@@ -2744,7 +2832,7 @@
                     const viewport = page.getViewport({ scale: 1.5 });
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
-                    
+
                     const renderContext = {
                         canvasContext: ctx,
                         viewport: viewport
@@ -2956,7 +3044,7 @@
                 const iframes = modal.querySelectorAll('iframe');
                 iframes.forEach(iframe => {
                     const src = iframe.src;
-                    iframe.src = src; 
+                    iframe.src = src;
                 });
                 modal.classList.add('hidden');
             }
