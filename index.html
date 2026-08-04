@@ -1588,6 +1588,10 @@
                                         class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Shaikh
                                         Burhanuddin Post Graduate College</a>
                                 </div>
+                                <button onclick="openCertificateSidebar('Higher Secondary Certificate.jpeg')" class="mt-2 text-[10px] font-bold text-brand-blue uppercase tracking-widest bg-brand-blue/10 px-3 py-1.5 rounded hover:bg-brand-blue/20 transition cursor-pointer flex items-center gap-1.5 w-fit">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    Show Certificate
+                                </button>
                             </div>
                         </div>
 
@@ -1615,6 +1619,10 @@
                                         class="text-sm font-semibold text-gray-600 hover:text-brand-blue transition">Ahmed
                                         Bawani Academy</a>
                                 </div>
+                                <button onclick="openCertificateSidebar('Secondary School Certificate.jpeg')" class="mt-2 text-[10px] font-bold text-brand-blue uppercase tracking-widest bg-brand-blue/10 px-3 py-1.5 rounded hover:bg-brand-blue/20 transition cursor-pointer flex items-center gap-1.5 w-fit">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    Show Certificate
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -3049,18 +3057,54 @@
                 modal.classList.add('hidden');
             }
 
+            function openCertificateSidebar(imageSrc) {
+                const sidebar = document.getElementById('certificateSidebar');
+                const backdrop = document.getElementById('certificateBackdrop');
+                const img = document.getElementById('certificateImage');
+                img.src = imageSrc;
+                
+                sidebar.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+            }
+
+            function closeCertificateSidebar() {
+                const sidebar = document.getElementById('certificateSidebar');
+                const backdrop = document.getElementById('certificateBackdrop');
+                
+                sidebar.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => backdrop.classList.add('hidden'), 300);
+            }
+
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     if (!document.getElementById('book3DModal').classList.contains('hidden')) {
                         close3DBook();
                     } else if (!document.getElementById('socialMediaModal').classList.contains('hidden')) {
                         closeSocialMediaModal();
+                    } else if (!document.getElementById('certificateSidebar').classList.contains('translate-x-full')) {
+                        closeCertificateSidebar();
                     } else {
                         closeBooksModal();
                     }
                 }
             });
         </script>
+        
+        <!-- Certificate Sidebar Overlay -->
+        <div id="certificateBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden opacity-0 transition-opacity duration-300" onclick="closeCertificateSidebar()"></div>
+        <div id="certificateSidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+            <div class="p-6 border-b flex justify-between items-center bg-brand-black text-white">
+                <h3 class="font-heading text-2xl uppercase tracking-wider">Certificate</h3>
+                <button onclick="closeCertificateSidebar()" class="text-white hover:text-brand-blue transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 flex-grow overflow-y-auto bg-gray-50 flex items-center justify-center">
+                <img id="certificateImage" src="" alt="Certificate" class="w-full h-auto max-h-full object-contain shadow-lg rounded border border-gray-200">
+            </div>
+        </div>
 </body>
 
 </html>
