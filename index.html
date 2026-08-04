@@ -782,7 +782,7 @@
             <span onclick="switchTab('home')"
                 class="text-3xl font-black tracking-tighter hover:opacity-80 transition cursor-pointer">M<span
                     class="text-brand-blue">.</span></span>
-            <nav class="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-gray-600">
+            <nav class="hidden md:flex gap-3 lg:gap-6 text-[10px] xl:text-xs font-semibold uppercase tracking-widest text-gray-600">
                 <span id="nav-home" onclick="switchTab('home')" data-translate="nav_home"
                     class="hover:text-brand-black transition cursor-pointer text-brand-blue">Home</span>
                 <span id="nav-experience" onclick="switchTab('experience')" data-translate="nav_experience"
@@ -795,6 +795,10 @@
                     class="hover:text-brand-black transition cursor-pointer">Expertise</span>
                 <span id="nav-about" onclick="switchTab('about')" data-translate="nav_about"
                     class="hover:text-brand-black transition cursor-pointer">About</span>
+                <span id="nav-hobbies" onclick="switchTab('hobbies')" data-translate="nav_hobbies"
+                    class="hover:text-brand-black transition cursor-pointer">Hobbies</span>
+                <span id="nav-interests" onclick="switchTab('interests')" data-translate="nav_interests"
+                    class="hover:text-brand-black transition cursor-pointer">Interests</span>
                 <span id="nav-contact" onclick="switchTab('contact')" data-translate="nav_contact"
                     class="hover:text-brand-black transition cursor-pointer">Contact</span>
             </nav>
@@ -832,6 +836,10 @@
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Expertise</span>
                 <span onclick="switchTab('about'); toggleMobileMenu()" data-translate="nav_about"
                     class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">About</span>
+                <span onclick="switchTab('hobbies'); toggleMobileMenu()" data-translate="nav_hobbies"
+                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Hobbies</span>
+                <span onclick="switchTab('interests'); toggleMobileMenu()" data-translate="nav_interests"
+                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Interests</span>
                 <span onclick="switchTab('contact'); toggleMobileMenu()" data-translate="nav_contact"
                     class="mobile-nav-item py-2 text-sm font-semibold uppercase tracking-wider text-gray-600">Contact</span>
             </div>
@@ -1470,6 +1478,38 @@
                             </svg>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Page: Hobbies -->
+            <div id="page-hobbies" class="tab-page py-6">
+                <div class="max-w-4xl mx-auto mb-6 px-6">
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My Hobbies</span>
+                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
+                        THINGS I <span class="text-brand-blue">LOVE</span>
+                    </h2>
+                    <ul class="text-gray-600 text-sm md:text-base leading-relaxed font-medium space-y-4 list-disc pl-5">
+                        <li>Riding bikes, long-distance cycling & swimming</li>
+                        <li>Making small electronic items (12V)</li>
+                        <li>Eco-friendly farming, travel & antiques</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page: Interests -->
+            <div id="page-interests" class="tab-page py-6">
+                <div class="max-w-4xl mx-auto mb-6 px-6">
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My Interests</span>
+                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
+                        WHAT DRIVES <span class="text-brand-blue">ME</span>
+                    </h2>
+                    <ul class="text-gray-600 text-sm md:text-base leading-relaxed font-medium space-y-4 list-disc pl-5">
+                        <li>Writing philosophy books</li>
+                        <li>Entrepreneurship (Pharmacy primary business & small business shareholder)</li>
+                        <li>Video editing, vlogs, short stories & podcasts</li>
+                        <li>Building community presence and engaging with people</li>
+                        <li>Content creation, memes & internet trends</li>
+                    </ul>
                 </div>
             </div>
 
