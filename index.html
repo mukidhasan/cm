@@ -1059,7 +1059,7 @@
                                     <span class="text-xs font-bold text-gray-400 block mb-1">Present</span>
                                     <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">CORNEA Nursing Coaching Center</h4>
                                     <a href="https://www.facebook.com/cornealtd" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                    <img src="Companies logos/Cornea Coaching Center.png" alt="CORNEA Logo" class="h-8 object-contain">
+                                    <img src="Companies logos/Cornea Coaching Center.png" alt="CORNEA Logo" class="h-8 object-contain max-w-full">
                                 </div>
                                 <div class="md:col-span-3">
                                     <h5 class="text-lg font-heading text-brand-black mb-3">Computer Operator / Graphic Designer</h5>
@@ -2018,15 +2018,12 @@
                     <span id="check-bn" class="hidden text-brand-blue font-black text-sm">✓</span>
                 </button>
             </div>
-            <!-- Main Trigger Button -->
+            <!-- Main Trigger Button (Circle) -->
             <button id="lang-btn" onclick="toggleLangDropdown()"
-                class="bg-brand-black hover:bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest py-3.5 px-5 shadow-2xl border border-gray-800 transition duration-300 flex items-center gap-2 rounded-none">
-                <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse" id="lang-dot"></span>
-                <span id="lang-btn-text">Language: EN</span>
-                <svg class="w-3.5 h-3.5 text-gray-400 transition-transform duration-300" id="lang-arrow" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                class="bg-brand-black hover:bg-brand-blue text-white shadow-2xl border border-gray-800 transition duration-300 flex items-center justify-center w-12 h-12 rounded-full relative"
+                title="Change Language">
+                <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse absolute top-1.5 right-1.5" id="lang-dot"></span>
+                <span id="lang-btn-text" class="text-[9px] font-black uppercase tracking-widest leading-none">EN</span>
             </button>
         </div>
 
@@ -2199,7 +2196,7 @@
             function updatePageContent() {
                 const langBtnText = document.getElementById('lang-btn-text');
                 if (langBtnText) {
-                    langBtnText.innerText = "Language: " + currentLang;
+                    langBtnText.innerText = currentLang;
                 }
 
                 // Update dropdown checkmarks
