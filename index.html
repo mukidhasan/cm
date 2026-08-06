@@ -821,7 +821,10 @@
 
         <!-- Header (Fixed to avoid blank tabs) -->
         <header class="flex justify-between items-center py-6 border-b border-gray-200 relative z-30">
-            <span onclick="switchTab('home')" class="hover:opacity-80 transition cursor-pointer inline-block">
+            <span onclick="switchTab('home')" class="hover:opacity-80 transition cursor-pointer inline-block relative">
+                <!-- Blinking blue dot above logo -->
+                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-blue rounded-full z-10 animate-ping"></span>
+                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-blue rounded-full z-10"></span>
                 <svg class="h-10 w-auto" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 595.28 841.89" style="enable-background:new 0 0 595.28 841.89;" xml:space="preserve">
                 <style type="text/css">
@@ -920,6 +923,11 @@
                 <!-- Hero Section -->
                 <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-10 pb-0 relative">
                     <div class="lg:col-span-7 flex flex-col justify-center z-10 relative">
+                        <!-- Name above heading -->
+                        <p class="text-brand-blue text-sm md:text-base font-bold tracking-wide mb-1 flex items-center gap-2">
+                            <span class="inline-block w-5 h-5 bg-brand-blue rounded-full flex items-center justify-center text-white font-black text-[10px]">M</span>
+                            <span id="hero_name" data-translate="hero_name">ukid Hasan Seiam</span>
+                        </p>
                         <!-- Dynamic Text -->
                         <h1 id="hero_title" data-translate="hero_title"
                             class="font-heading text-[3.8rem] md:text-[5.5rem] lg:text-[7rem] leading-[0.85] uppercase text-brand-black mb-4 relative">
