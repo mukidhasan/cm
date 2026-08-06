@@ -61,7 +61,22 @@
         }
 
         let isTransitioning = false;
-        function switchTab(tabId) {
+
+        // Tab → URL path mapping
+        const tabToPath = {
+            'home':       '/cm/',
+            'experience': '/cm/experience',
+            'hobbies':    '/cm/hobbies',
+            'interests':  '/cm/interests',
+            'education':  '/cm/education',
+            'books':      '/cm/books',
+            'content':    '/cm/content',
+            'expertise':  '/cm/expertise',
+            'contact':    '/cm/contact',
+        };
+        const pathToTab = Object.fromEntries(Object.entries(tabToPath).map(([k,v]) => [v, k]));
+
+        function switchTab(tabId, pushState = true) {
             if (isTransitioning) return;
             const targetPage = document.getElementById(`page-${tabId}`);
             const currentPage = document.querySelector('.tab-page.active');
@@ -69,6 +84,12 @@
             if (!targetPage || targetPage === currentPage) return;
 
             isTransitioning = true;
+
+            // Update URL without reloading
+            if (pushState) {
+                const newPath = tabToPath[tabId] || '/cm/';
+                history.pushState({ tab: tabId }, '', newPath);
+            }
 
             // Highlight active nav tab
             document.querySelectorAll('nav span').forEach(el => {
@@ -117,6 +138,27 @@
                 isTransitioning = false;
             }
         }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', (e) => {
+            const tab = (e.state && e.state.tab) ? e.state.tab : getTabFromPath(location.pathname);
+            switchTab(tab, false);
+        });
+
+        // Detect tab from current URL path on first load
+        function getTabFromPath(pathname) {
+            return pathToTab[pathname] || pathToTab[pathname.replace(/\/$/, '')] || 'home';
+        }
+
+        // On first load, route to correct tab based on URL
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialTab = getTabFromPath(location.pathname);
+            if (initialTab !== 'home') {
+                switchTab(initialTab, false);
+            }
+            // Set initial history state
+            history.replaceState({ tab: initialTab }, '', location.pathname || '/cm/');
+        });
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileNavMenu');
