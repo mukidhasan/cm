@@ -2400,7 +2400,9 @@
                     };
                     const logoSrc = logoMap[imgKey] || null;
                     const logoHTML = logoSrc
-                        ? `<img src="${logoSrc}" alt="${title} logo" class="h-10 object-contain filter brightness-0 invert drop-shadow-lg transition duration-500 ${isInovace ? 'group-hover:opacity-0' : ''}" style="max-width:140px;">`
+                        ? `<div class="inline-block bg-white/90 backdrop-blur-sm rounded px-3 py-1.5 shadow-lg transition duration-500 ${isInovace ? 'group-hover:opacity-0' : ''}">
+                             <img src="${logoSrc}" alt="${title} logo" class="h-8 object-contain" style="max-width:130px;">
+                           </div>`
                         : `<h3 class="font-heading text-4xl md:text-5xl uppercase relative z-10 w-full leading-none drop-shadow-lg transition duration-500 ${isInovace ? 'group-hover:opacity-0' : ''}">${title}</h3>`;
 
                     // CANVA 16:9 FIX: Changed aspect ratio to 'aspect-video' (16:9)
