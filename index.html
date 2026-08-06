@@ -821,14 +821,15 @@
 
         <!-- Header (Fixed to avoid blank tabs) -->
         <header class="flex justify-between items-center py-6 border-b border-gray-200 relative z-30">
-            <span onclick="switchTab('home')" class="hover:opacity-80 transition cursor-pointer inline-block relative">
-                <!-- Blinking blue dot above logo -->
-                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-blue rounded-full z-10 animate-ping"></span>
-                <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-blue rounded-full z-10"></span>
-                <svg class="h-10 w-auto" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            <span onclick="switchTab('home')" class="hover:opacity-80 transition cursor-pointer inline-block">
+                <svg class="h-10 w-auto" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 595.28 841.89" style="enable-background:new 0 0 595.28 841.89;" xml:space="preserve">
                 <style type="text/css">
-                    .st0{fill:#003EC4;}
+                    .st0 { fill:#003EC4; animation: dotPulse 1.4s ease-in-out infinite; transform-origin: 413px 274px; }
+                    @keyframes dotPulse {
+                        0%, 100% { opacity: 1; transform: scale(1); }
+                        50% { opacity: 0.2; transform: scale(0.6); }
+                    }
                 </style>
                 <g>
                     <g>
