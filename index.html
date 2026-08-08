@@ -3264,22 +3264,26 @@
             }
 
             function openCertificateSidebar(imageSrc) {
-                const sidebar = document.getElementById('certificateSidebar');
                 const backdrop = document.getElementById('certificateBackdrop');
+                const modalContent = document.getElementById('certificateModalContent');
                 const img = document.getElementById('certificateImage');
                 img.src = imageSrc;
                 
-                sidebar.classList.remove('translate-x-full');
                 backdrop.classList.remove('hidden');
-                setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+                setTimeout(() => {
+                    backdrop.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
             }
 
             function closeCertificateSidebar() {
-                const sidebar = document.getElementById('certificateSidebar');
                 const backdrop = document.getElementById('certificateBackdrop');
+                const modalContent = document.getElementById('certificateModalContent');
                 
-                sidebar.classList.add('translate-x-full');
                 backdrop.classList.add('opacity-0');
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => backdrop.classList.add('hidden'), 300);
             }
 
@@ -3289,7 +3293,7 @@
                         close3DBook();
                     } else if (!document.getElementById('socialMediaModal').classList.contains('hidden')) {
                         closeSocialMediaModal();
-                    } else if (!document.getElementById('certificateSidebar').classList.contains('translate-x-full')) {
+                    } else if (!document.getElementById('certificateBackdrop').classList.contains('hidden')) {
                         closeCertificateSidebar();
                     } else {
                         closeBooksModal();
@@ -3298,17 +3302,13 @@
             });
         </script>
         
-        <!-- Certificate Sidebar Overlay -->
-        <div id="certificateBackdrop" class="fixed inset-0 bg-black/60 z-40 hidden opacity-0 transition-opacity duration-300" onclick="closeCertificateSidebar()"></div>
-        <div id="certificateSidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
-            <div class="p-6 border-b flex justify-between items-center bg-brand-black text-white">
-                <h3 class="font-heading text-2xl uppercase tracking-wider">Certificate</h3>
-                <button onclick="closeCertificateSidebar()" class="text-white hover:text-brand-blue transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <!-- Certificate Modal Overlay -->
+        <div id="certificateBackdrop" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300 backdrop-blur-sm" onclick="closeCertificateSidebar()">
+            <div id="certificateModalContent" class="relative max-w-5xl w-full mx-4 transform scale-95 opacity-0 transition-all duration-300 flex items-center justify-center" onclick="event.stopPropagation()">
+                <button onclick="closeCertificateSidebar()" class="absolute -top-12 right-0 text-white hover:text-brand-blue transition z-10 bg-black/50 hover:bg-black/80 rounded-full p-1">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-            </div>
-            <div class="p-6 flex-grow overflow-y-auto bg-gray-50 flex items-center justify-center">
-                <img id="certificateImage" src="" alt="Certificate" class="w-full h-auto max-h-full object-contain shadow-lg rounded border border-gray-200">
+                <img id="certificateImage" src="" alt="Certificate" class="w-auto h-auto max-w-full max-h-[90vh] object-contain shadow-2xl rounded-md border border-white/10">
             </div>
         </div>
 </body>
