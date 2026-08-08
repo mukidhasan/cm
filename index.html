@@ -924,127 +924,83 @@
             <!-- Page: Home -->
             <section id="section-home" class="relative">
                 <!-- Hero Section -->
-                <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-10 pb-0 relative">
-                    <div class="lg:col-span-7 flex flex-col justify-center z-10 relative">
-                        <!-- Name Logo Animation -->
-                        <div class="mb-4">
+                <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-12 pb-0 relative bg-[#4f7cff] rounded-[30px] overflow-hidden shadow-xl mt-4">
+                    <!-- Curved white background shape for the right side (mimics UI) -->
+                    <div class="absolute top-0 right-0 w-[120%] md:w-[70%] lg:w-[55%] h-[150%] bg-white z-0" style="border-radius: 400px 0 0 400px; transform: translateX(20%) translateY(-10%);"></div>
+                    
+                    <div class="lg:col-span-7 flex flex-col justify-center z-10 relative px-6 md:px-12 lg:px-16 pb-12 lg:pb-16">
+                        <!-- Name Logo Animation (Adapted for blue background) -->
+                        <div class="mb-6">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 900.3 117" class="h-10 md:h-14 lg:h-16 w-auto" xml:space="preserve">
+                                viewBox="0 0 900.3 117" class="h-10 md:h-12 w-auto" xml:space="preserve">
                             <style type="text/css">
-                                .stLogo0 { fill:#003EC4; animation: dotPulse 1.4s ease-in-out infinite; transform-origin: 183px 85px; }
-                                .stLogo1 { font-family:'MyriadPro-Regular', sans-serif; fill: #1f2937; font-weight: bold; }
+                                .stLogo0 { fill:#ffffff; animation: dotPulse 1.4s ease-in-out infinite; transform-origin: 183px 85px; }
+                                .stLogo1 { font-family:'MyriadPro-Regular', sans-serif; fill: #ffffff; font-weight: bold; }
                                 .stLogo2 { font-size:86.2772px; }
-                                
-                                /* Name Animation: Types in, stays for 5s, wipes out */
-                                .animate-name {
-                                    animation: nameSequence 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-                                    clip-path: inset(0 100% 0 0); /* Start hidden */
-                                }
-                                @keyframes nameSequence {
-                                    0%, 5% { clip-path: inset(0 100% 0 0); }          /* Hidden */
-                                    15%, 45% { clip-path: inset(0 -10% 0 0); }        /* Visible (Mukid Hasan Seiam) */
-                                    55%, 100% { clip-path: inset(0 100% 0 0); }       /* Wiped out */
-                                }
-
-                                /* C Logo Animation: Fades in after name deletes */
-                                .animate-c {
-                                    animation: cSequence 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-                                    opacity: 0;
-                                    transform: translate(-700px, 0); 
-                                }
-                                @keyframes cSequence {
-                                    0%, 50% { opacity: 0; transform: translate(-700px, 0); }  /* Hidden while name is showing */
-                                    60%, 95% { opacity: 1; transform: translate(-689.2px, 0); } /* Visible as CM Logo */
-                                    100% { opacity: 0; transform: translate(-700px, 0); } /* Fade out to restart loop */
-                                }
+                                .animate-name { animation: nameSequence 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; clip-path: inset(0 100% 0 0); }
+                                @keyframes nameSequence { 0%, 5% { clip-path: inset(0 100% 0 0); } 15%, 45% { clip-path: inset(0 -10% 0 0); } 55%, 100% { clip-path: inset(0 100% 0 0); } }
+                                .animate-c { animation: cSequence 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; opacity: 0; transform: translate(-700px, 0); }
+                                @keyframes cSequence { 0%, 50% { opacity: 0; transform: translate(-700px, 0); } 60%, 95% { opacity: 1; transform: translate(-689.2px, 0); } 100% { opacity: 0; transform: translate(-700px, 0); } }
                             </style>
                             <g>
                                 <g>
-                                    <!-- The C shape from the full CM logo -->
                                     <g class="animate-c">
-                                        <path d="M769.6,38.3c-0.3,0-0.6,0-0.9,0c-11,0-21.9,0-32.9,0c-0.9,0-0.9,0-0.9,0.9c0,13.5,0,26.9,0,40.4c0,0.6,0.2,0.7,0.8,0.7
-                                            c11.1,0,22.1,0,33.2,0c0.9,0,0.9,0,0.9,0.8c0,6.7,0,13.3,0,20c0,0.8,0,0.8-0.8,0.8c-15,0-30,0-45,0c-0.4,0-0.8-0.1-1.1-0.4
-                                            c-2.9-3-5.9-5.9-8.9-8.9c-0.4-0.4-0.7-0.7-1-1.1c-0.1-0.2-0.2-0.5-0.2-0.7c0-10.8-0.1-21.7-0.1-32.5c0-9.9,0-19.9,0-29.8
-                                            c0-0.6,0.2-1,0.6-1.4c3.3-3.2,6.5-6.5,9.8-9.8c0.3-0.3,0.6-0.4,1-0.4c15,0,29.9,0,44.9,0c0.8,0,0.8,0,0.8,0.8c0,6.7,0,13.4,0,20.1
-                                            C769.6,37.9,769.6,38,769.6,38.3z"/>
+                                        <path fill="#ffffff" d="M769.6,38.3c-0.3,0-0.6,0-0.9,0c-11,0-21.9,0-32.9,0c-0.9,0-0.9,0-0.9,0.9c0,13.5,0,26.9,0,40.4c0,0.6,0.2,0.7,0.8,0.7 c11.1,0,22.1,0,33.2,0c0.9,0,0.9,0,0.9,0.8c0,6.7,0,13.3,0,20c0,0.8,0,0.8-0.8,0.8c-15,0-30,0-45,0c-0.4,0-0.8-0.1-1.1-0.4 c-2.9-3-5.9-5.9-8.9-8.9c-0.4-0.4-0.7-0.7-1-1.1c-0.1-0.2-0.2-0.5-0.2-0.7c0-10.8-0.1-21.7-0.1-32.5c0-9.9,0-19.9,0-29.8 c0-0.6,0.2-1,0.6-1.4c3.3-3.2,6.5-6.5,9.8-9.8c0.3-0.3,0.6-0.4,1-0.4c15,0,29.9,0,44.9,0c0.8,0,0.8,0,0.8,0.8c0,6.7,0,13.4,0,20.1 C769.6,37.9,769.6,38,769.6,38.3z"/>
                                     </g>
-                                    
-                                    <!-- The M shape -->
-                                    <path d="M112.4,60c0,0.7,0,1.4,0,2.1c0,9.8,0,19.6,0,29.3c0,3.2,0,6.4,0,9.7c0,0.8,0,0.8-0.8,0.8c-7.2,0-14.5,0-21.7,0
-                                        c-0.9,0-0.9,0-0.9-0.9c0-7.5,0-15.1,0-22.6c0-12.5,0-25,0-37.5c0-7.8-0.1-15.5-0.1-23.3c0-0.8,0-0.8,0.8-0.8c7.4,0,14.9,0,22.3,0
-                                        c0.3,0,0.7,0.1,0.9,0.3c2.7,2.6,5.4,5.1,8.1,7.7c4,3.8,8,7.6,12,11.4c0.2,0.2,0.4,0.3,0.6,0.5c0.8-0.7,1.6-1.4,2.4-2.1
-                                        c5-4.5,10-9,15-13.5c1.5-1.3,3-2.7,4.5-4c0.2-0.2,0.6-0.3,0.8-0.3c7.4,0,14.9,0,22.3,0c0.6,0,0.7,0.2,0.7,0.7c0,6.8,0,13.7,0,20.5
-                                        c0,0.5-0.1,0.8-0.5,1.1c-3,2.6-5.9,5.2-8.9,7.7c-4.2,3.7-8.3,7.3-12.5,11c-4.7,4.1-9.4,8.2-14,12.3c-3.2,2.8-6.4,5.6-9.5,8.4
-                                        c-0.4,0.4-0.7,0.4-1.1,0c-2.6-2.5-5.3-4.9-7.9-7.3c-3.1-2.8-6.1-5.7-9.2-8.5c-1-0.9-2-1.9-3-2.9C112.6,59.9,112.5,59.9,112.4,60z"
-                                        />
-                                        
-                                    <!-- The Blue Dot -->
-                                    <path class="stLogo0" d="M183.6,85c0.2,8.7-7.2,16.9-16.9,17c-9.3,0.1-16.7-7.6-17.2-16c-0.6-10.5,8.1-17.8,16.4-18.1
-                                        C175.5,67.5,183.8,75.5,183.6,85z"/>
+                                    <path fill="#ffffff" d="M112.4,60c0,0.7,0,1.4,0,2.1c0,9.8,0,19.6,0,29.3c0,3.2,0,6.4,0,9.7c0,0.8,0,0.8-0.8,0.8c-7.2,0-14.5,0-21.7,0 c-0.9,0-0.9,0-0.9-0.9c0-7.5,0-15.1,0-22.6c0-12.5,0-25,0-37.5c0-7.8-0.1-15.5-0.1-23.3c0-0.8,0-0.8,0.8-0.8c7.4,0,14.9,0,22.3,0 c0.3,0,0.7,0.1,0.9,0.3c2.7,2.6,5.4,5.1,8.1,7.7c4,3.8,8,7.6,12,11.4c0.2,0.2,0.4,0.3,0.6,0.5c0.8-0.7,1.6-1.4,2.4-2.1 c5-4.5,10-9,15-13.5c1.5-1.3,3-2.7,4.5-4c0.2-0.2,0.6-0.3,0.8-0.3c7.4,0,14.9,0,22.3,0c0.6,0,0.7,0.2,0.7,0.7c0,6.8,0,13.7,0,20.5 c0,0.5-0.1,0.8-0.5,1.1c-3,2.6-5.9,5.2-8.9,7.7c-4.2,3.7-8.3,7.3-12.5,11c-4.7,4.1-9.4,8.2-14,12.3c-3.2,2.8-6.4,5.6-9.5,8.4 c-0.4,0.4-0.7,0.4-1.1,0c-2.6-2.5-5.3-4.9-7.9-7.3c-3.1-2.8-6.1-5.7-9.2-8.5c-1-0.9-2-1.9-3-2.9C112.6,59.9,112.5,59.9,112.4,60z" />
+                                    <path class="stLogo0" d="M183.6,85c0.2,8.7-7.2,16.9-16.9,17c-9.3,0.1-16.7-7.6-17.2-16c-0.6-10.5,8.1-17.8,16.4-18.1 C175.5,67.5,183.8,75.5,183.6,85z"/>
                                 </g>
                             </g>
-                            <!-- The Text -->
                             <text transform="matrix(1 0 0 1 183.6079 89.9058)" class="stLogo1 stLogo2 animate-name">ukid Hasan Seiam</text>
                             </svg>
                         </div>
-                        <!-- Dynamic Text -->
-                        <h1 id="hero_title" data-translate="hero_title"
-                            class="font-heading text-[3.8rem] md:text-[5.5rem] lg:text-[7rem] leading-[0.85] uppercase text-brand-black mb-4 relative">
-                            TECH <span
-                                class="text-brand-blue absolute top-0 text-[2.8rem] md:text-[4.2rem] lg:text-[5.6rem]">*</span><br>SPECIALIST
-                        </h1>
-                        <div class="max-w-xl mt-6">
-                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-5 text-brand-black">
-                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer Operator</span>
-                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">& Fast Software Learner.</span>
-                            </h2>
+                        
+                        <div class="max-w-xl">
+                            <h1 id="hero_title" data-translate="hero_title"
+                                class="text-4xl md:text-5xl lg:text-[3.2rem] font-bold leading-tight mb-6 text-white">
+                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer Operator</span><br>
+                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2">& Fast Software Learner.</span>
+                            </h1>
                             <p id="hero_desc" data-translate="hero_desc"
-                                class="text-gray-500 text-sm md:text-base mb-8 leading-relaxed max-w-lg">
+                                class="text-white/90 text-sm md:text-base lg:text-lg mb-10 leading-relaxed max-w-lg font-medium">
                                 I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner — relying on modern AI tools (Gemini, ChatGPT) to elevate my output to a professional level.
                             </p>
+                            
                             <!-- UI-style Action Buttons -->
                             <div class="flex flex-wrap items-center gap-4">
-                                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" class="bg-brand-blue text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-sky-600 transition flex items-center gap-2">
+                                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" class="bg-white text-[#4f7cff] font-bold py-3.5 px-8 rounded-full shadow-lg hover:bg-gray-50 transition flex items-center gap-2">
                                     Hire Me
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </button>
-                                <button onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" class="border-2 border-brand-blue text-brand-blue font-bold py-3 px-8 rounded-full hover:bg-brand-blue hover:text-white transition">
+                                <button onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" class="border-2 border-white/40 text-white font-bold py-3.5 px-8 rounded-full hover:bg-white/10 transition">
                                     View Experience
                                 </button>
+                            </div>
+
+                            <!-- Rating Badge -->
+                            <div class="mt-12 bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex flex-col gap-2 border border-white/30 shadow-lg">
+                                <div class="flex items-center gap-4">
+                                    <span class="text-4xl font-bold flex items-center text-white">4.9 <span class="text-2xl font-bold ml-1">*</span></span>
+                                    <div class="flex -space-x-3">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=5" alt="Reviewer">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=3" alt="Reviewer">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=1" alt="Reviewer">
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center gap-6 text-[10px] uppercase font-bold tracking-widest text-white mt-1">
+                                    <span>Average rating<br>based on feedback</span>
+                                    <span class="bg-[#4f7cff] text-white px-3 py-1.5 rounded-full shadow-sm">100+ Reviews</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Image 1 -->
-                    <div class="lg:col-span-5 relative min-h-[450px] flex items-center justify-end">
-                        <!-- Curved background shape inspired by the UI -->
-                        <div class="absolute top-0 right-0 w-[100%] h-full bg-brand-blue z-0" style="border-radius: 200px 0 0 200px;"></div>
-                        <div class="absolute top-10 right-10 text-white text-right text-[10px] font-bold uppercase tracking-widest z-20"
-                            data-translate="based_in">Based in<br>Dhaka, BD</div>
-                        <div
-                            class="relative z-10 w-[95%] max-w-[380px] aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl mr-4 border-4 border-white">
-                            <img id="img-Photo1"
-                                src="Hero.png"
-                                alt="MD Mukid Hasan Seiam" class="w-full h-full object-cover"
-                                onerror="handleMissingImage(this, 'admin')">
-                        </div>
-                        <div
-                            class="absolute bottom-8 -left-10 z-30 w-28 h-28 bg-white rounded-full flex items-center justify-center border border-gray-200 shadow-xl">
-                            <svg class="w-full h-full circular-text absolute" viewBox="0 0 100 100">
-                                <path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" id="circle"
-                                    fill="none" />
-                                <text class="text-[9.5px] font-bold uppercase tracking-widest" fill="#000">
-                                    <textPath id="circular-text-path" data-translate="circular_text" href="#circle"
-                                        startOffset="0%">• IT SUPPORT • 2D GAME Dev • DATA Entry</textPath>
-                                </text>
-                            </svg>
-                            <div class="text-center">
-                                <span class="block text-[8px] font-bold uppercase tracking-widest text-gray-500"
-                                    data-translate="ready_for">Ready For</span>
-                                <span class="block text-[10px] font-black uppercase tracking-wider text-brand-black"
-                                    data-translate="new_roles">New Roles</span>
-                            </div>
-                        </div>
+                    <!-- Image Section -->
+                    <div class="lg:col-span-5 relative min-h-[400px] flex items-end justify-center lg:justify-end pr-0 lg:pr-8">
+                        <img id="img-Photo1"
+                            src="Hero.png"
+                            alt="MD Mukid Hasan Seiam" class="w-full h-auto max-w-[500px] object-contain relative z-20"
+                            onerror="handleMissingImage(this, 'admin')">
                     </div>
                 </section>
 
