@@ -60,64 +60,34 @@
             }
         }
 
-        let isTransitioning = false;
+        let isTransitioning = false; // kept for compatibility
 
-        function switchTab(tabId) {
-            if (isTransitioning) return;
-            const targetPage = document.getElementById(`page-${tabId}`);
-            const currentPage = document.querySelector('.tab-page.active');
-
-            if (!targetPage || targetPage === currentPage) return;
-
-            isTransitioning = true;
-
-            // Highlight active nav tab
-            document.querySelectorAll('nav span').forEach(el => {
-                if (el.id === `nav-${tabId}`) {
-                    el.classList.add('text-brand-blue');
-                    el.classList.remove('text-gray-600');
-                } else {
-                    el.classList.remove('text-brand-blue');
-                    el.classList.add('text-gray-600');
-                }
-            });
-
-            // Update mobile nav highlight
-            document.querySelectorAll('.mobile-nav-item').forEach(el => {
-                const translateKey = el.getAttribute('data-translate');
-                if (translateKey === `nav_${tabId}` || (tabId === 'content' && el.id === 'mobile-nav-content')) {
-                    el.classList.add('text-brand-blue');
-                    el.classList.remove('text-gray-600');
-                } else {
-                    el.classList.remove('text-brand-blue');
-                    el.classList.add('text-gray-600');
-                }
-            });
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (currentPage) {
-                currentPage.style.position = 'absolute';
-                currentPage.classList.remove('active');
-                currentPage.classList.add('slide-out-right');
-
-                targetPage.style.position = 'absolute';
-                targetPage.classList.remove('slide-out-right');
-                targetPage.classList.add('active');
-
-                setTimeout(() => {
-                    currentPage.classList.remove('slide-out-right');
-                    currentPage.style.position = '';
-                    targetPage.style.position = 'relative';
-                    isTransitioning = false;
-                }, 600);
-            } else {
-                targetPage.classList.add('active');
-                targetPage.style.position = 'relative';
-                isTransitioning = false;
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const top = el.getBoundingClientRect().top + window.scrollY - headerHeight - 24;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+            // Close mobile menu if open
+            const menu = document.getElementById('mobileNavMenu');
+            if (menu && !menu.classList.contains('hidden')) {
+                toggleMobileMenu();
             }
         }
+
+        // Legacy switchTab support (for footer/other buttons)
+        function switchTab(tabId) {
+            if (tabId === 'contact') {
+                scrollToSection('section-contact');
+            } else if (tabId === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                scrollToSection('section-' + tabId);
+            }
+        }
+
+
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileNavMenu');
@@ -132,19 +102,19 @@
         }
 
         function openModal() {
-            switchTab('contact');
+            document.getElementById('section-contact').scrollIntoView({ behavior: 'smooth' });
         }
 
         function closeModal() {
-            switchTab('home');
+            // no-op in single-page layout
         }
 
         function openBooksModal() {
-            switchTab('books');
+            document.getElementById('section-books').scrollIntoView({ behavior: 'smooth' });
         }
 
         function closeBooksModal() {
-            switchTab('home');
+            // no-op in single-page layout
         }
 
         function handleFormSubmit(event) {
@@ -777,35 +747,17 @@
             -webkit-transform: rotateY(-180deg) !important;
         }
 
-        /* Tab page transition styles */
-        .tab-page {
-            width: 100%;
-            opacity: 0;
-            transform: translateX(-100%);
-            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease;
-            visibility: hidden;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
+        html { scroll-behavior: smooth; }
+        section[id] { scroll-margin-top: 80px; }
+
+        /* Section separators */
+        section[id]:not(#section-home) {
+            border-top: 1px solid rgba(59,158,255,0.1);
+            padding-top: 4rem;
+            margin-top: 2rem;
         }
 
-        .tab-page.active {
-            opacity: 1;
-            transform: translateX(0);
-            visibility: visible;
-            pointer-events: auto;
-            position: relative;
-        }
-
-        .tab-page.slide-out-right {
-            opacity: 0;
-            transform: translateX(100%);
-            visibility: hidden;
-            pointer-events: none;
-            position: absolute;
-        }
-        /* Floating decorative dots scattered on page */
+        /* Floating decorative dots */
         .deco-dot {
             position: fixed;
             border-radius: 50%;
@@ -813,38 +765,18 @@
             z-index: 0;
             opacity: 0.5;
         }
-        .deco-dot-1 { width:14px; height:14px; background:#3b9eff; top:15%; left:6%; animation: floatDot 6s ease-in-out infinite; }
-        .deco-dot-2 { width:10px; height:10px; background:#f59e0b; top:35%; right:4%; animation: floatDot 8s ease-in-out infinite 1s; }
-        .deco-dot-3 { width:18px; height:18px; background:#3b9eff; bottom:30%; left:3%; border-radius: 3px; transform: rotate(45deg); animation: floatDot 7s ease-in-out infinite 0.5s; }
-        .deco-dot-4 { width:8px; height:8px; background:#f59e0b; top:60%; right:8%; animation: floatDot 9s ease-in-out infinite 2s; }
-        .deco-dot-5 { width:12px; height:12px; background:#3b9eff; bottom:15%; right:15%; border-radius: 3px; transform: rotate(45deg); animation: floatDot 5s ease-in-out infinite 0.8s; }
+        .deco-dot-1 { width:14px; height:14px; background:#3b9eff; top:15%; left:3%; animation: floatDotRound 6s ease-in-out infinite; }
+        .deco-dot-2 { width:10px; height:10px; background:#f59e0b; top:35%; right:2%; animation: floatDotRound 8s ease-in-out infinite 1s; }
+        .deco-dot-3 { width:18px; height:18px; background:#3b9eff; bottom:30%; left:2%; transform: rotate(45deg); animation: floatDot 7s ease-in-out infinite 0.5s; }
+        .deco-dot-4 { width:8px; height:8px; background:#f59e0b; top:60%; right:5%; animation: floatDotRound 9s ease-in-out infinite 2s; }
+        .deco-dot-5 { width:12px; height:12px; background:#3b9eff; bottom:15%; right:12%; transform: rotate(45deg); animation: floatDot 5s ease-in-out infinite 0.8s; }
         @keyframes floatDot {
             0%, 100% { transform: translateY(0) rotate(45deg); }
             50% { transform: translateY(-12px) rotate(45deg); }
         }
-        .deco-dot-1, .deco-dot-2, .deco-dot-4 {
-            border-radius: 50%;
-        }
         @keyframes floatDotRound {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-12px); }
-        }
-        .deco-dot-1 { animation: floatDotRound 6s ease-in-out infinite; }
-        .deco-dot-2 { animation: floatDotRound 8s ease-in-out infinite 1s; }
-        .deco-dot-4 { animation: floatDotRound 9s ease-in-out infinite 2s; }
-
-        /* Card style */
-        .theme-card {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(59,158,255,0.12);
-            border-radius: 20px;
-            box-shadow: 0 4px 24px rgba(59,158,255,0.07), 0 1px 4px rgba(0,0,0,0.04);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-        .theme-card:hover {
-            box-shadow: 0 8px 40px rgba(59,158,255,0.15), 0 2px 8px rgba(0,0,0,0.06);
-            transform: translateY(-3px);
         }
 
         /* Nav pill active highlight */
@@ -862,6 +794,20 @@
         nav span:hover {
             background: rgba(59,158,255,0.07);
         }
+
+        /* Card style */
+        .theme-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59,158,255,0.12);
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(59,158,255,0.07), 0 1px 4px rgba(0,0,0,0.04);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .theme-card:hover {
+            box-shadow: 0 8px 40px rgba(59,158,255,0.15), 0 2px 8px rgba(0,0,0,0.06);
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 
@@ -876,8 +822,8 @@
     <div class="w-full px-6 md:px-12 lg:px-16 relative flex flex-col min-h-screen justify-between" style="background: transparent;">
 
         <!-- Header -->
-        <header class="flex justify-between items-center py-5 relative z-30" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(59,158,255,0.12); border-radius: 0 0 20px 20px; padding-left: 2rem; padding-right: 2rem; margin: 0 -1.5rem;">
-            <span onclick="switchTab('home')" class="hover:opacity-80 transition cursor-pointer inline-block">
+        <header class="flex justify-between items-center py-5 sticky top-0 z-50" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(59,158,255,0.12); padding-left: 2rem; padding-right: 2rem; margin: 0 -1.5rem;">
+            <span onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:opacity-80 transition cursor-pointer inline-block">
                 <svg class="h-10 w-auto" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 595.28 841.89" style="enable-background:new 0 0 595.28 841.89;" xml:space="preserve">
                 <style type="text/css">
@@ -913,25 +859,25 @@
             </span>
             <nav
                 class="hidden md:flex gap-2 lg:gap-4 xl:gap-5 text-[9px] lg:text-[10px] xl:text-xs font-semibold uppercase tracking-widest text-gray-600 flex-wrap justify-end">
-                <span id="nav-home" onclick="switchTab('home')" data-translate="nav_home"
+                <span data-section="section-home" onclick="document.getElementById('section-home').scrollIntoView({behavior:'smooth'})" data-translate="nav_home"
                     class="hover:text-brand-black transition cursor-pointer text-brand-blue">Home</span>
-                <span id="nav-experience" onclick="switchTab('experience')" data-translate="nav_experience"
+                <span data-section="section-experience" onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" data-translate="nav_experience"
                     class="hover:text-brand-black transition cursor-pointer">Experience</span>
-                <span id="nav-hobbies" onclick="switchTab('hobbies')" data-translate="nav_hobbies"
+                <span data-section="section-hobbies" onclick="document.getElementById('section-hobbies').scrollIntoView({behavior:'smooth'})" data-translate="nav_hobbies"
                     class="hover:text-brand-black transition cursor-pointer">Hobbies</span>
-                <span id="nav-interests" onclick="switchTab('interests')" data-translate="nav_interests"
+                <span data-section="section-interests" onclick="document.getElementById('section-interests').scrollIntoView({behavior:'smooth'})" data-translate="nav_interests"
                     class="hover:text-brand-black transition cursor-pointer">Interests</span>
-                <span id="nav-education" onclick="switchTab('education')" data-translate="nav_education"
+                <span data-section="section-education" onclick="document.getElementById('section-education').scrollIntoView({behavior:'smooth'})" data-translate="nav_education"
                     class="hover:text-brand-black transition cursor-pointer">Certificates</span>
-                <span id="nav-books" onclick="switchTab('books')" data-translate="nav_books"
+                <span data-section="section-books" onclick="document.getElementById('section-books').scrollIntoView({behavior:'smooth'})" data-translate="nav_books"
                     class="hover:text-brand-black transition cursor-pointer">My Diary</span>
-                <span id="nav-content" onclick="switchTab('content')" data-translate="nav_content"
+                <span data-section="section-content" onclick="document.getElementById('section-content').scrollIntoView({behavior:'smooth'})" data-translate="nav_content"
                     class="hover:text-brand-black transition cursor-pointer">My Content</span>
-                <span id="nav-expertise" onclick="switchTab('expertise')" data-translate="nav_expertise"
+                <span data-section="section-expertise" onclick="document.getElementById('section-expertise').scrollIntoView({behavior:'smooth'})" data-translate="nav_expertise"
                     class="hover:text-brand-black transition cursor-pointer">Skills</span>
             </nav>
             <div class="flex items-center gap-4">
-                <button onclick="switchTab('contact')" data-translate="let_talk"
+                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" data-translate="let_talk"
                     class="hidden sm:flex bg-brand-blue text-white text-xs font-bold uppercase tracking-wider py-2.5 px-6 items-center gap-2 transition" style="border-radius: 50px; box-shadow: 0 4px 14px rgba(59,158,255,0.35); letter-spacing: 0.08em;" onmouseover="this.style.boxShadow='0 6px 20px rgba(59,158,255,0.5)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 4px 14px rgba(59,158,255,0.35)'; this.style.transform='translateY(0)'">
                     Let's Talk <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
@@ -951,32 +897,32 @@
             <!-- Mobile Navigation Overlay (Dropdown) -->
             <div id="mobileNavMenu"
                 class="absolute top-[80px] left-0 w-full bg-white border-b border-gray-200 shadow-lg hidden md:hidden flex-col p-6 gap-4 z-50 transition-all duration-300">
-                <span onclick="switchTab('home'); toggleMobileMenu()" data-translate="nav_home"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-brand-blue">Home</span>
-                <span onclick="switchTab('experience'); toggleMobileMenu()" data-translate="nav_experience"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Experience</span>
-                <span onclick="switchTab('hobbies'); toggleMobileMenu()" data-translate="nav_hobbies"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Hobbies</span>
-                <span onclick="switchTab('interests'); toggleMobileMenu()" data-translate="nav_interests"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Interests</span>
-                <span onclick="switchTab('education'); toggleMobileMenu()" data-translate="nav_education"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Certificates</span>
-                <span onclick="switchTab('books'); toggleMobileMenu()" data-translate="nav_books"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
+                <span class="mobile-nav-item" data-section="section-home" onclick="document.getElementById('section-home').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_home"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-brand-blue">Home</span>
+                <span class="mobile-nav-item" data-section="section-experience" onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_experience"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Experience</span>
+                <span class="mobile-nav-item" data-section="section-hobbies" onclick="document.getElementById('section-hobbies').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_hobbies"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Hobbies</span>
+                <span class="mobile-nav-item" data-section="section-interests" onclick="document.getElementById('section-interests').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_interests"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Interests</span>
+                <span class="mobile-nav-item" data-section="section-education" onclick="document.getElementById('section-education').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_education"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">Certificates</span>
+                <span class="mobile-nav-item" data-section="section-books" onclick="document.getElementById('section-books').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_books"
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
                     Diary</span>
-                <span id="mobile-nav-content" onclick="switchTab('content'); toggleMobileMenu()"
+                <span class="mobile-nav-item" id="mobile-nav-content" data-section="section-content" onclick="document.getElementById('section-content').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()"
                     data-translate="nav_content"
-                    class="mobile-nav-item py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
+                    class="py-2 border-b border-gray-100 text-sm font-semibold uppercase tracking-wider text-gray-600">My
                     Content</span>
-                <span onclick="switchTab('expertise'); toggleMobileMenu()" data-translate="nav_expertise"
-                    class="mobile-nav-item py-2 text-sm font-semibold uppercase tracking-wider text-gray-600">Skills</span>
+                <span class="mobile-nav-item" data-section="section-expertise" onclick="document.getElementById('section-expertise').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_expertise"
+                    class="py-2 text-sm font-semibold uppercase tracking-wider text-gray-600">Skills</span>
             </div>
         </header>
 
-        <main class="relative flex-grow w-full overflow-hidden my-6">
+        <main class="relative flex-grow w-full my-6">
 
             <!-- Page: Home -->
-            <div id="page-home" class="tab-page active" style="position: relative;">
+            <section id="section-home" class="relative">
                 <!-- Hero Section -->
                 <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-10 pb-0 relative">
                     <div class="lg:col-span-7 flex flex-col justify-center z-10 relative">
@@ -1196,128 +1142,124 @@
                         </div>
                     </div>
                 </section>
-            </div>
+            </section>
 
             <!-- Page: Experience -->
-            <div id="page-experience" class="tab-page">
-                <section class="py-10">
-                    <div class="flex justify-between items-end mb-10">
-                        <h2 class="font-heading text-5xl md:text-6xl uppercase leading-none"
-                            data-translate="career_title">Career Highlights</h2>
-                    </div>
+            <section id="section-experience" class="py-10">
+                <div class="flex justify-between items-end mb-10">
+                    <h2 class="font-heading text-5xl md:text-6xl uppercase leading-none"
+                        data-translate="career_title">Career Highlights</h2>
+                </div>
 
-                    <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <p class="text-sm font-bold text-gray-400 animate-pulse col-span-3 text-center py-10"
-                            data-translate="loading_projects">Loading Projects...</p>
-                    </div>
+                <div id="projects-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <p class="text-sm font-bold text-gray-400 animate-pulse col-span-3 text-center py-10"
+                        data-translate="loading_projects">Loading Projects...</p>
+                </div>
+                
+                <!-- Company Details Section -->
+                <div class="mt-16 pt-12 border-t border-gray-200">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-brand-blue mb-8">Career Timeline</h3>
                     
-                    <!-- Company Details Section -->
-                    <div class="mt-16 pt-12 border-t border-gray-200">
-                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-brand-blue mb-8">Career Timeline</h3>
+                    <div class="flex flex-col gap-10">
+                        <!-- Job 1 -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div class="md:col-span-1">
+                                <span class="text-xs font-bold text-gray-400 block mb-1">Present</span>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">CORNEA Nursing Coaching Center</h4>
+                                <a href="https://www.facebook.com/cornealtd" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
+                                <img src="Companies logos/Cornea Coaching Center.png" alt="CORNEA Logo" class="h-8 object-contain max-w-full">
+                            </div>
+                            <div class="md:col-span-3">
+                                <h5 class="text-lg font-heading text-brand-black mb-3">Computer Operator / Graphic Designer</h5>
+                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
+                                    <li>Design promotional graphics and visual advertisements for CORNEA marketing campaigns.</li>
+                                    <li>Type, format, and edit educational guide books, completing full textual corrections in softcopy format.</li>
+                                    <li>Conduct thorough text proofreading in both softcopy and printed formats to ensure 100% accuracy prior to final publication.</li>
+                                </ul>
+                            </div>
+                        </div>
                         
-                        <div class="flex flex-col gap-10">
-                            <!-- Job 1 -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                <div class="md:col-span-1">
-                                    <span class="text-xs font-bold text-gray-400 block mb-1">Present</span>
-                                    <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">CORNEA Nursing Coaching Center</h4>
-                                    <a href="https://www.facebook.com/cornealtd" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                    <img src="Companies logos/Cornea Coaching Center.png" alt="CORNEA Logo" class="h-8 object-contain max-w-full">
-                                </div>
-                                <div class="md:col-span-3">
-                                    <h5 class="text-lg font-heading text-brand-black mb-3">Computer Operator / Graphic Designer</h5>
-                                    <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                        <li>Design promotional graphics and visual advertisements for CORNEA marketing campaigns.</li>
-                                        <li>Type, format, and edit educational guide books, completing full textual corrections in softcopy format.</li>
-                                        <li>Conduct thorough text proofreading in both softcopy and printed formats to ensure 100% accuracy prior to final publication.</li>
-                                    </ul>
-                                </div>
+                        <!-- Job 2 -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div class="md:col-span-1">
+                                <span class="text-xs font-bold text-gray-400 block mb-1">Jul 2018 &ndash; Apr 2026</span>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">Inovace Technologies Ltd</h4>
+                                <a href="https://inovacetech.com/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
+                                <img src="Companies logos/Inovace Technologies.png" alt="Inovace Logo" class="h-8 object-contain">
                             </div>
-                            
-                            <!-- Job 2 -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                <div class="md:col-span-1">
-                                    <span class="text-xs font-bold text-gray-400 block mb-1">Jul 2018 &ndash; Apr 2026</span>
-                                    <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">Inovace Technologies Ltd</h4>
-                                    <a href="https://inovacetech.com/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                    <img src="Companies logos/Inovace Technologies.png" alt="Inovace Logo" class="h-8 object-contain">
-                                </div>
-                                <div class="md:col-span-3">
-                                    <h5 class="text-lg font-heading text-brand-black mb-3">Sr. Executive / Repair Manager</h5>
-                                    <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                        <li>Managed the full cycle of returned products (RMA) and comprehensive stock repair documentation.</li>
-                                        <li>Developed data reports and maintained extensive maintenance logs for office hardware and systems.</li>
-                                        <li>Created and implemented Standard Operating Procedures (SOPs) and visual guidelines for streamlined office work.</li>
-                                        <li>Tracked office inventory diligently and managed the proper distribution of technical items and supplies.</li>
-                                        <li>Utilized Google Sheets and Airtable to track real-time inventory and archive daily data accurately.</li>
-                                    </ul>
-                                </div>
+                            <div class="md:col-span-3">
+                                <h5 class="text-lg font-heading text-brand-black mb-3">Sr. Executive / Repair Manager</h5>
+                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
+                                    <li>Managed the full cycle of returned products (RMA) and comprehensive stock repair documentation.</li>
+                                    <li>Developed data reports and maintained extensive maintenance logs for office hardware and systems.</li>
+                                    <li>Created and implemented Standard Operating Procedures (SOPs) and visual guidelines for streamlined office work.</li>
+                                    <li>Tracked office inventory diligently and managed the proper distribution of technical items and supplies.</li>
+                                    <li>Utilized Google Sheets and Airtable to track real-time inventory and archive daily data accurately.</li>
+                                </ul>
                             </div>
+                        </div>
 
-                            <!-- Job 3 -->
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                <div class="md:col-span-1">
-                                    <span class="text-xs font-bold text-gray-400 block mb-1">Feb 2015 &ndash; Jun 2018</span>
-                                    <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">Sunan Prokashoni</h4>
-                                    <a href="https://www.facebook.com/sunanprokashoni.bongshal/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                    <img src="Companies logos/Sunan Prokashoni.png" alt="Sunan Prokashoni Logo" class="h-8 object-contain">
-                                </div>
-                                <div class="md:col-span-3">
-                                    <h5 class="text-lg font-heading text-brand-black mb-3">IT Manager</h5>
-                                    <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                        <li>Safeguarded and maintained office computers, networking equipment, and software infrastructure.</li>
-                                        <li>Assisted in designing and formatting layouts for books and various promotional marketing materials.</li>
-                                        <li>Conducted daily data entry operations and efficiently managed corporate email correspondence.</li>
-                                    </ul>
-                                </div>
+                        <!-- Job 3 -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div class="md:col-span-1">
+                                <span class="text-xs font-bold text-gray-400 block mb-1">Feb 2015 &ndash; Jun 2018</span>
+                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black">Sunan Prokashoni</h4>
+                                <a href="https://www.facebook.com/sunanprokashoni.bongshal/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
+                                <img src="Companies logos/Sunan Prokashoni.png" alt="Sunan Prokashoni Logo" class="h-8 object-contain">
+                            </div>
+                            <div class="md:col-span-3">
+                                <h5 class="text-lg font-heading text-brand-black mb-3">IT Manager</h5>
+                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
+                                    <li>Safeguarded and maintained office computers, networking equipment, and software infrastructure.</li>
+                                    <li>Assisted in designing and formatting layouts for books and various promotional marketing materials.</li>
+                                    <li>Conducted daily data entry operations and efficiently managed corporate email correspondence.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
 
             <!-- Page: Expertise -->
-            <div id="page-expertise" class="tab-page">
-                <section class="py-10 flex flex-col lg:flex-row gap-10">
-                    <div
-                        class="lg:w-1/3 bg-brand-blue text-brand-black p-12 flex flex-col justify-between min-h-[300px]">
-                        <h2 id="expertise_title" data-translate="expertise_title"
-                            class="font-heading text-5xl md:text-6xl uppercase tracking-wide mt-auto">My<br>Skills
-                        </h2>
+            <section id="section-expertise" class="py-10 flex flex-col lg:flex-row gap-10">
+                <div
+                    class="lg:w-1/3 bg-brand-blue text-brand-black p-12 flex flex-col justify-between min-h-[300px]">
+                    <h2 id="expertise_title" data-translate="expertise_title"
+                        class="font-heading text-5xl md:text-6xl uppercase tracking-wide mt-auto">My<br>Skills
+                    </h2>
+                </div>
+                <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                    <div>
+                        <h4 id="exp1_title" data-translate="exp1_title"
+                            class="font-bold text-sm uppercase tracking-wider mb-2">Hardware Diagnostics</h4>
+                        <p id="exp1_desc" data-translate="exp1_desc" class="text-xs text-gray-500 leading-relaxed">
+                            ...</p>
                     </div>
-                    <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-                        <div>
-                            <h4 id="exp1_title" data-translate="exp1_title"
-                                class="font-bold text-sm uppercase tracking-wider mb-2">Hardware Diagnostics</h4>
-                            <p id="exp1_desc" data-translate="exp1_desc" class="text-xs text-gray-500 leading-relaxed">
-                                ...</p>
-                        </div>
-                        <div>
-                            <h4 id="exp2_title" data-translate="exp2_title"
-                                class="font-bold text-sm uppercase tracking-wider mb-2">Computer Operations</h4>
-                            <p id="exp2_desc" data-translate="exp2_desc" class="text-xs text-gray-500 leading-relaxed">
-                                ...</p>
-                        </div>
-                        <div>
-                            <h4 id="exp3_title" data-translate="exp3_title"
-                                class="font-bold text-sm uppercase tracking-wider mb-2">Learning 2D Game Dev</h4>
-                            <p id="exp3_desc" data-translate="exp3_desc" class="text-xs text-gray-500 leading-relaxed">
-                                ...</p>
-                        </div>
-                        <div>
-                            <h4 id="exp4_title" data-translate="exp4_title"
-                                class="font-bold text-sm uppercase tracking-wider mb-2">AI Image Generation</h4>
-                            <p id="exp4_desc" data-translate="exp4_desc" class="text-xs text-gray-500 leading-relaxed">
-                                ...</p>
-                        </div>
+                    <div>
+                        <h4 id="exp2_title" data-translate="exp2_title"
+                            class="font-bold text-sm uppercase tracking-wider mb-2">Computer Operations</h4>
+                        <p id="exp2_desc" data-translate="exp2_desc" class="text-xs text-gray-500 leading-relaxed">
+                            ...</p>
                     </div>
-                </section>
-            </div>
+                    <div>
+                        <h4 id="exp3_title" data-translate="exp3_title"
+                            class="font-bold text-sm uppercase tracking-wider mb-2">Learning 2D Game Dev</h4>
+                        <p id="exp3_desc" data-translate="exp3_desc" class="text-xs text-gray-500 leading-relaxed">
+                            ...</p>
+                    </div>
+                    <div>
+                        <h4 id="exp4_title" data-translate="exp4_title"
+                            class="font-bold text-sm uppercase tracking-wider mb-2">AI Image Generation</h4>
+                        <p id="exp4_desc" data-translate="exp4_desc" class="text-xs text-gray-500 leading-relaxed">
+                            ...</p>
+                    </div>
+                </div>
+            </section>
 
 
 
             <!-- Page: Books -->
-            <div id="page-books" class="tab-page py-6 flex flex-col gap-12">
+            <section id="section-books" class="py-6 flex flex-col gap-12">
                 <div class="max-w-4xl mb-12">
                     <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block"
                         data-translate="books_subtitle">Publications & Writings</span>
@@ -1646,10 +1588,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Page: My Content -->
-            <div id="page-content" class="tab-page py-6 flex flex-col gap-12">
+            <section id="section-content" class="py-6 flex flex-col gap-12">
                 <div class="max-w-4xl mb-6">
                     <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block"
                         data-translate="creative_portfolio_tag">Creative
@@ -1766,10 +1708,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Page: Hobbies -->
-            <div id="page-hobbies" class="tab-page py-6">
+            <section id="section-hobbies" class="py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
                     <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
                         Hobbies</span>
@@ -1782,10 +1724,10 @@
                         <li>Eco-friendly farming, travel & antiques</li>
                     </ul>
                 </div>
-            </div>
+            </section>
 
             <!-- Page: Interests -->
-            <div id="page-interests" class="tab-page py-6">
+            <section id="section-interests" class="py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
                     <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
                         Interests</span>
@@ -1800,10 +1742,10 @@
                         <li>Content creation, memes & internet trends</li>
                     </ul>
                 </div>
-            </div>
+            </section>
 
             <!-- Page: Education -->
-            <div id="page-education" class="tab-page py-6">
+            <section id="section-education" class="py-6">
                 <div class="max-w-4xl mx-auto mb-6 px-6">
                     <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">My
                         Certificates</span>
@@ -1876,11 +1818,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Page: Contact -->
-            <div id="page-contact"
-                class="tab-page py-12 flex justify-center items-stretch gap-8 max-w-2xl mx-auto w-full flex-col">
+            <section id="section-contact"
+                class="py-12 flex justify-center items-stretch gap-8 max-w-2xl mx-auto w-full flex-col">
 
                 <!-- Left: Contact Form -->
                 <div
@@ -2054,7 +1996,7 @@
 
 
 
-            </div>
+            </section>
 
         </main>
 
@@ -2064,7 +2006,7 @@
                 <h2 id="footer_title" data-translate="footer_title"
                     class="font-heading text-4xl md:text-5xl uppercase leading-none w-2/3">Let's Create<br>Something
                     Great<br>Together.</h2>
-                <button onclick="switchTab('contact')"
+                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})"
                     class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-brand-black hover:scale-110 transition duration-300" style="box-shadow: 0 4px 16px rgba(0,0,0,0.15);"><svg
                         class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"
@@ -2195,6 +2137,31 @@
         <!-- ========================================== -->
         <script src="pdf_data.js"></script>
         <script>
+            // Highlight active nav item on scroll
+            document.addEventListener('DOMContentLoaded', () => {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('nav span[data-section], .mobile-nav-item[data-section]');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id;
+                            navLinks.forEach(link => {
+                                link.classList.remove('text-brand-blue');
+                                link.classList.add('text-gray-600');
+                            });
+                            const active = document.querySelector(`[data-section="${id}"]`);
+                            if (active) {
+                                active.classList.add('text-brand-blue');
+                                active.classList.remove('text-gray-600');
+                            }
+                        }
+                    });
+                }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+                sections.forEach(s => observer.observe(s));
+            });
+
             const webAppUrl = "https://script.google.com/macros/s/AKfycbwyoxaULc3mCR1E-VH3k15OyASG4iM9bOqsR1d-MzkHJswWWUDyrNSXhGfNdu1Pj3_r/exec";
 
             let currentLang = localStorage.getItem('lang') || 'EN';
