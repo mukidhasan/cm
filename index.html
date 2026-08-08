@@ -3401,7 +3401,7 @@
             let auth = null;
             let currentUser = null;
 
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
                 if (!firebase.apps.length) {
                     firebase.initializeApp(firebaseConfig);
                 }
@@ -3415,12 +3415,15 @@
             }
 
             function openReviewModal() {
-                document.getElementById('reviewModal').classList.remove('hidden');
+                const modal = document.getElementById('reviewModal');
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
                 updateReviewModalUI();
             }
             
             function closeReviewModal() {
-                document.getElementById('reviewModal').classList.add('hidden');
+                const modal = document.getElementById('reviewModal');
+                modal.style.display = 'none';
             }
 
             function updateReviewModalUI() {
