@@ -993,30 +993,39 @@
                             TECH <span
                                 class="text-brand-blue absolute top-0 text-[2.8rem] md:text-[4.2rem] lg:text-[5.6rem]">*</span><br>SPECIALIST
                         </h1>
-                        <div class="max-w-sm mt-3">
-                            <h2 class="text-base md:text-lg font-bold uppercase leading-tight mb-3">
-                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer
-                                    Operator</span><br>
-                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">&
-                                    Fast Software Learner.</span>
+                        <div class="max-w-xl mt-6">
+                            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-5 text-brand-black">
+                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer Operator</span>
+                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2" class="text-brand-blue">& Fast Software Learner.</span>
                             </h2>
                             <p id="hero_desc" data-translate="hero_desc"
-                                class="text-gray-500 text-xs mb-6 leading-relaxed">
+                                class="text-gray-500 text-sm md:text-base mb-8 leading-relaxed max-w-lg">
                                 I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner — relying on modern AI tools (Gemini, ChatGPT) to elevate my output to a professional level.
                             </p>
+                            <!-- UI-style Action Buttons -->
+                            <div class="flex flex-wrap items-center gap-4">
+                                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" class="bg-brand-blue text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-sky-600 transition flex items-center gap-2">
+                                    Hire Me
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </button>
+                                <button onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" class="border-2 border-brand-blue text-brand-blue font-bold py-3 px-8 rounded-full hover:bg-brand-blue hover:text-white transition">
+                                    View Experience
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Image 1 -->
-                    <div class="lg:col-span-5 relative min-h-[350px] flex items-start justify-end">
-                        <div class="absolute top-0 right-0 w-[80%] h-full bg-brand-blue z-0"></div>
-                        <div class="absolute top-6 right-6 text-white text-right text-[9px] font-bold uppercase tracking-widest z-20"
+                    <div class="lg:col-span-5 relative min-h-[450px] flex items-center justify-end">
+                        <!-- Curved background shape inspired by the UI -->
+                        <div class="absolute top-0 right-0 w-[100%] h-full bg-brand-blue z-0" style="border-radius: 200px 0 0 200px;"></div>
+                        <div class="absolute top-10 right-10 text-white text-right text-[10px] font-bold uppercase tracking-widest z-20"
                             data-translate="based_in">Based in<br>Dhaka, BD</div>
                         <div
-                            class="relative z-10 w-[90%] max-w-[320px] aspect-[4/5] bg-gray-200 overflow-hidden border-b-8 border-brand-black">
+                            class="relative z-10 w-[95%] max-w-[380px] aspect-[3/4] overflow-hidden rounded-2xl shadow-2xl mr-4 border-4 border-white">
                             <img id="img-Photo1"
-                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                alt="Tech Setup" class="w-full h-full object-cover"
+                                src="Hero.png"
+                                alt="MD Mukid Hasan Seiam" class="w-full h-full object-cover"
                                 onerror="handleMissingImage(this, 'admin')">
                         </div>
                         <div
