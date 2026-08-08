@@ -23,12 +23,6 @@
     <meta name="twitter:image" content="https://mukidhasan.github.io/cm/thumbnail.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- Leaflet Map CSS & JS for Interactive Map Picker -->
@@ -962,10 +956,13 @@
                         
                         <div class="max-w-xl">
                             <h1 id="hero_title" data-translate="hero_title"
-                                class="text-4xl md:text-5xl lg:text-[3.2rem] font-bold leading-tight mb-6 text-white">
-                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Computer Operator</span><br>
-                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2">& Fast Software Learner.</span>
+                                class="text-5xl md:text-6xl lg:text-[4rem] font-heading uppercase tracking-wide leading-tight mb-2 text-white">
+                                Tech Specialist
                             </h1>
+                            <h2 class="text-xl md:text-2xl font-bold leading-tight mb-6 text-white/90">
+                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Tech & Computer Operator</span><br>
+                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2">& Fast Software Learner.</span>
+                            </h2>
                             <p id="hero_desc" data-translate="hero_desc"
                                 class="text-white/90 text-sm md:text-base lg:text-lg mb-10 leading-relaxed max-w-lg font-medium">
                                 I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner — relying on modern AI tools (Gemini, ChatGPT) to elevate my output to a professional level.
@@ -1167,21 +1164,6 @@
             </section>
 
 
-
-            <!-- Review Board Section -->
-            <section id="section-reviews" class="py-10 border-t border-gray-200">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-                    <div>
-                        <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-3 block" data-translate="reviews_tag">Feedback</span>
-                        <h2 class="font-heading text-4xl md:text-5xl uppercase leading-none text-brand-black" data-translate="reviews_title">Review Board</h2>
-                    </div>
-                    <button onclick="openReviewModal()" class="bg-brand-blue text-white font-bold uppercase tracking-widest text-xs py-3 px-6 rounded-full shadow-lg hover:bg-brand-black transition duration-300">Add Review</button>
-                </div>
-                
-                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <p class="text-sm font-bold text-gray-400 animate-pulse col-span-full text-center py-10" id="loading-reviews-text">Loading Reviews...</p>
-                </div>
-            </section>
 
             <!-- Page: Books -->
             <section id="section-books" class="py-6 flex flex-col gap-12">
@@ -3329,201 +3311,6 @@
             </div>
         </div>
 
-        <!-- Review Modal -->
-        <div id="reviewModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-            <div class="bg-white rounded-3xl p-8 max-w-md w-full relative shadow-2xl">
-                <button onclick="closeReviewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-brand-black transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <h3 class="font-heading text-3xl uppercase text-brand-black mb-6">Leave a Review</h3>
-                
-                <!-- Login Section (Visible if not logged in) -->
-                <div id="review-login-section" class="flex flex-col gap-4">
-                    <p class="text-xs font-medium text-gray-500 mb-2">Please login with your social account to leave a review.</p>
-                    <button onclick="loginWithFacebook()" class="w-full bg-[#1877F2] text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 hover:opacity-90 transition">
-                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        Continue with Facebook
-                    </button>
-                    <button onclick="loginWithGoogle()" class="w-full border border-gray-300 text-gray-700 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/><path fill="none" d="M1 1h22v22H1z"/></svg>
-                        Continue with Google
-                    </button>
-                </div>
-
-                <!-- Form Section (Visible if logged in) -->
-                <div id="review-form-section" class="hidden flex flex-col gap-5">
-                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                        <img id="review-user-photo" src="" alt="User" class="w-10 h-10 rounded-full object-cover border border-gray-200">
-                        <div>
-                            <span class="block text-[10px] uppercase font-bold text-gray-400">Posting as</span>
-                            <span id="review-user-name" class="font-bold text-sm text-brand-black"></span>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Select Skill</label>
-                        <select id="review-skill" class="w-full border border-gray-200 rounded-xl p-3 text-sm font-medium focus:outline-none focus:border-brand-blue bg-white">
-                            <option value="Photoshop">Photoshop</option>
-                            <option value="Graphic Design">Graphic Design</option>
-                            <option value="Computer Operations">Computer Operations</option>
-                            <option value="Tech Troubleshooting">Tech Troubleshooting</option>
-                            <option value="Hardware Services">Hardware Services</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Rating (Out of 10)</label>
-                        <div class="flex items-center gap-4">
-                            <input type="range" id="review-rating" min="1" max="10" value="6" class="w-full accent-brand-blue" oninput="document.getElementById('rating-val').innerText = this.value">
-                            <span class="font-bold text-lg text-brand-black w-8 text-center" id="rating-val">6</span>
-                        </div>
-                    </div>
-
-                    <button id="submitReviewBtn" onclick="submitReview()" class="w-full bg-brand-blue text-white font-bold py-4 rounded-xl mt-2 shadow-lg hover:bg-brand-black transition duration-300 uppercase tracking-widest text-xs">Submit Review</button>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            // TODO: REPLACE THIS WITH YOUR ACTUAL FIREBASE CONFIG
-            const firebaseConfig = {
-                apiKey: "YOUR_API_KEY",
-                authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-                projectId: "YOUR_PROJECT_ID",
-                storageBucket: "YOUR_PROJECT_ID.appspot.com",
-                messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-                appId: "YOUR_APP_ID"
-            };
-
-            // Initialize Firebase only if the user has provided a real config
-            let db = null;
-            let auth = null;
-            let currentUser = null;
-
-            if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "YOUR_API_KEY") {
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
-                }
-                db = firebase.firestore();
-                auth = firebase.auth();
-
-                auth.onAuthStateChanged((user) => {
-                    currentUser = user;
-                    updateReviewModalUI();
-                });
-            }
-
-            function openReviewModal() {
-                const modal = document.getElementById('reviewModal');
-                modal.classList.remove('hidden');
-                modal.style.display = 'flex';
-                updateReviewModalUI();
-            }
-            
-            function closeReviewModal() {
-                const modal = document.getElementById('reviewModal');
-                modal.style.display = 'none';
-            }
-
-            function updateReviewModalUI() {
-                const loginSection = document.getElementById('review-login-section');
-                const formSection = document.getElementById('review-form-section');
-                if (currentUser) {
-                    loginSection.classList.add('hidden');
-                    formSection.classList.remove('hidden');
-                    document.getElementById('review-user-name').innerText = currentUser.displayName || 'Anonymous';
-                    document.getElementById('review-user-photo').src = currentUser.photoURL || 'https://i.pravatar.cc/150';
-                } else {
-                    loginSection.classList.remove('hidden');
-                    formSection.classList.add('hidden');
-                }
-            }
-
-            function loginWithGoogle() {
-                if (!auth) { alert("⚠️ Firebase is not configured! Please add your config in the code."); return; }
-                const provider = new firebase.auth.GoogleAuthProvider();
-                auth.signInWithPopup(provider).catch(error => alert("Login Failed: " + error.message));
-            }
-
-            function loginWithFacebook() {
-                if (!auth) { alert("⚠️ Firebase is not configured! Please add your config in the code."); return; }
-                const provider = new firebase.auth.FacebookAuthProvider();
-                auth.signInWithPopup(provider).catch(error => alert("Login Failed: " + error.message));
-            }
-
-            function submitReview() {
-                if (!db || !currentUser) { alert("⚠️ Firebase is not configured or user not logged in!"); return; }
-                const skill = document.getElementById('review-skill').value;
-                const rating = document.getElementById('review-rating').value;
-                const btn = document.getElementById('submitReviewBtn');
-                btn.innerText = "Submitting...";
-                btn.disabled = true;
-
-                db.collection("reviews").add({
-                    userId: currentUser.uid,
-                    name: currentUser.displayName || 'Anonymous',
-                    photoURL: currentUser.photoURL || 'https://i.pravatar.cc/150',
-                    skill: skill,
-                    rating: parseInt(rating),
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => {
-                    closeReviewModal();
-                    loadReviews(); // reload
-                    btn.innerText = "Submit Review";
-                    btn.disabled = false;
-                    alert("Thank you for your review!");
-                }).catch(error => {
-                    console.error("Error submitting review: ", error);
-                    alert("Error submitting review. Check console.");
-                    btn.innerText = "Submit Review";
-                    btn.disabled = false;
-                });
-            }
-
-            function loadReviews() {
-                const container = document.getElementById('reviews-container');
-                if (!container) return;
-                
-                // Skip fetch if config is still placeholder
-                if(firebaseConfig.apiKey === "YOUR_API_KEY") {
-                    container.innerHTML = \`<p class="text-sm text-red-500 col-span-full text-center py-10 font-bold">⚠️ Firebase Configuration Missing!<br><span class="text-xs text-gray-500 font-normal">Please replace the placeholder config in the HTML code with your actual Firebase project config.</span></p>\`;
-                    return;
-                }
-
-                db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
-                    container.innerHTML = '';
-                    if (snapshot.empty) {
-                        container.innerHTML = \`<p class="text-sm text-gray-500 col-span-full text-center py-10">No reviews yet. Be the first to leave one!</p>\`;
-                        return;
-                    }
-                    snapshot.forEach((doc) => {
-                        const data = doc.data();
-                        container.innerHTML += \`
-                            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col gap-4">
-                                <div class="flex items-center gap-4">
-                                    <img src="\${data.photoURL || 'https://i.pravatar.cc/150'}" alt="\${data.name}" class="w-12 h-12 rounded-full object-cover shadow-md border border-gray-200">
-                                    <div>
-                                        <h4 class="font-bold text-brand-black text-sm uppercase tracking-wider">\${data.name}</h4>
-                                        <span class="text-xs font-bold text-gray-400 block">\${data.skill}</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center mt-2 pt-4 border-t border-gray-100">
-                                    <span class="text-[10px] uppercase font-bold tracking-widest text-brand-blue">Rating Score</span>
-                                    <span class="bg-brand-black text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">\${data.rating}/10</span>
-                                </div>
-                            </div>
-                        \`;
-                    });
-                }, (error) => {
-                    console.error("Error fetching reviews: ", error);
-                    container.innerHTML = \`<p class="text-sm text-red-500 col-span-full text-center py-10">Error loading reviews from database.</p>\`;
-                });
-            }
-
-            // Load initial reviews if possible
-            window.addEventListener('DOMContentLoaded', loadReviews);
-        </script>
 </body>
 
 </html>
