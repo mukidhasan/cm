@@ -3396,18 +3396,23 @@
                 appId: "YOUR_APP_ID"
             };
 
-            // Initialize Firebase
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            const db = firebase.firestore();
-            const auth = firebase.auth();
+            // Initialize Firebase only if the user has provided a real config
+            let db = null;
+            let auth = null;
             let currentUser = null;
 
-            auth.onAuthStateChanged((user) => {
-                currentUser = user;
-                updateReviewModalUI();
-            });
+            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                db = firebase.firestore();
+                auth = firebase.auth();
+
+                auth.onAuthStateChanged((user) => {
+                    currentUser = user;
+                    updateReviewModalUI();
+                });
+            }
 
             function openReviewModal() {
                 document.getElementById('reviewModal').classList.remove('hidden');
@@ -3433,17 +3438,19 @@
             }
 
             function loginWithGoogle() {
+                if (!auth) { alert("⚠️ Firebase is not configured! Please add your config in the code."); return; }
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider).catch(error => alert("Login Failed: " + error.message));
             }
 
             function loginWithFacebook() {
+                if (!auth) { alert("⚠️ Firebase is not configured! Please add your config in the code."); return; }
                 const provider = new firebase.auth.FacebookAuthProvider();
                 auth.signInWithPopup(provider).catch(error => alert("Login Failed: " + error.message));
             }
 
             function submitReview() {
-                if (!currentUser) return;
+                if (!db || !currentUser) { alert("⚠️ Firebase is not configured or user not logged in!"); return; }
                 const skill = document.getElementById('review-skill').value;
                 const rating = document.getElementById('review-rating').value;
                 const btn = document.getElementById('submitReviewBtn');
