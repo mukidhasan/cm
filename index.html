@@ -980,7 +980,7 @@
                             </div>
 
                             <!-- Rating Badge -->
-                            <div class="mt-12 bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex flex-col gap-2 border border-white/30 shadow-lg">
+                            <div onclick="document.getElementById('fbReviewModal').classList.remove('hidden')" class="mt-12 bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex flex-col gap-2 border border-white/30 shadow-lg cursor-pointer hover:bg-white/30 hover:scale-105 transition-all duration-300 group">
                                 <div class="flex items-center gap-4">
                                     <span class="text-4xl font-bold flex items-center text-white">4.9 <span class="text-2xl font-bold ml-1">*</span></span>
                                     <div class="flex -space-x-3">
@@ -991,7 +991,7 @@
                                 </div>
                                 <div class="flex justify-between items-center gap-6 text-[10px] uppercase font-bold tracking-widest text-white mt-1">
                                     <span>Average rating<br>based on feedback</span>
-                                    <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm">100+ Reviews</span>
+                                    <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm group-hover:bg-brand-black transition">100+ Reviews</span>
                                 </div>
                             </div>
                         </div>
@@ -1165,25 +1165,31 @@
 
 
 
-            <!-- Facebook Review Section Starts -->
-            <section id="section-reviews" class="py-10 border-t border-gray-200">
-                <div style="max-width: 600px; margin: 30px auto; padding: 20px; font-family: Arial, sans-serif; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                  
-                  <h3 style="color: #333; border-bottom: 2px solid #5479ff; padding-bottom: 10px;">Leave an Authentic Review</h3>
-                  <p style="font-size: 14px; color: #555;">Doyakore apnar review-ti nicher format-e likhun:<br>
-                  <b>Skill:</b> (Jemon: Hardware Repair, AppSheet, Photoshop)<br>
-                  <b>Rating:</b> (Jemon: 8/10)</p>
+            <!-- Facebook Review Modal -->
+            <div id="fbReviewModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden">
+                <div class="flex items-center justify-center w-full h-full p-4">
+                    <div class="bg-white rounded-2xl w-full max-w-2xl relative shadow-2xl max-h-[90vh] overflow-y-auto">
+                        <button onclick="document.getElementById('fbReviewModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 bg-gray-100 hover:bg-gray-200 transition rounded-full p-2 z-50">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        
+                        <div style="padding: 30px 20px; font-family: Arial, sans-serif; background: #fff; border-radius: 16px;">
+                            <h3 style="color: #333; border-bottom: 2px solid #5479ff; padding-bottom: 10px; margin-right: 40px; margin-top: 0;">Leave an Authentic Review</h3>
+                            <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Doyakore apnar review-ti nicher format-e likhun:<br>
+                            <b>Skill:</b> (Jemon: Hardware Repair, AppSheet, Photoshop)<br>
+                            <b>Rating:</b> (Jemon: 8/10)</p>
 
-                  <!-- Facebook Required Scripts -->
-                  <div id="fb-root"></div>
-                  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
+                            <!-- Facebook Required Scripts -->
+                            <div id="fb-root"></div>
+                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
 
-                  <!-- Facebook Comments Box -->
-                  <div class="fb-comments" data-href="https://mukidhasan.github.io/cm" data-width="100%" data-numposts="5"></div>
-
+                            <!-- Facebook Comments Box -->
+                            <div class="fb-comments" data-href="https://mukidhasan.github.io/cm" data-width="100%" data-numposts="5"></div>
+                        </div>
+                    </div>
                 </div>
-            </section>
-            <!-- Facebook Review Section Ends -->
+            </div>
+            <!-- Facebook Review Modal Ends -->
 
             <!-- Page: Books -->
             <section id="section-books" class="py-6 flex flex-col gap-12">
