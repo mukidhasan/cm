@@ -36,7 +36,7 @@
             theme: {
                 extend: {
                     colors: {
-                        'brand-blue': '#3b9eff',
+                        'brand-blue': '#00AECC',
                         'brand-black': '#1a1a2e',
                     },
                     fontFamily: {
@@ -49,14 +49,14 @@
         }
 
         function handleMissingImage(img, filename) {
-            if (img.src.includes('data:image/gif')) return;
+            if (img.src && img.src.includes('data:image/gif')) return;
             const parent = img.parentElement;
             img.style.display = 'none';
             if (!parent.querySelector('.error-box')) {
                 const errorDiv = document.createElement('div');
-                errorDiv.className = "error-box absolute inset-0 flex flex-col items-center justify-center p-4 bg-gray-100 border border-dashed border-sky-400 text-center z-10";
-                errorDiv.innerHTML = `<svg class="w-8 h-8 text-brand-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg><span class="text-xs font-mono font-bold text-brand-black">${filename}</span><span class="text-[10px] uppercase tracking-wider font-bold text-brand-blue mt-1">(File Missing)</span>`;
-                parent.appendChild(errorDiv);
+                errorDiv.className = "error-box absolute inset-0 flex flex-col items-center justify-center p-4 bg-gray-900/50 border border-dashed border-gray-700 text-center z-0";
+                errorDiv.innerHTML = `<svg class="w-8 h-8 text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg><span class="text-[10px] font-mono font-bold text-gray-500">${filename}</span><span class="text-[8px] uppercase tracking-wider font-bold text-gray-600 mt-1">(Missing)</span>`;
+                parent.insertBefore(errorDiv, img.nextSibling);
             }
         }
 
@@ -456,7 +456,7 @@
     </script>
     <style>
         :root {
-            --brand-blue: #3b9eff;
+            --brand-blue: #00AECC;
             --brand-light: #e8f4ff;
             --brand-bg: #f0f7ff;
         }
@@ -765,11 +765,11 @@
             z-index: 0;
             opacity: 0.5;
         }
-        .deco-dot-1 { width:14px; height:14px; background:#3b9eff; top:15%; left:3%; animation: floatDotRound 6s ease-in-out infinite; }
+        .deco-dot-1 { width:14px; height:14px; background:#00AECC; top:15%; left:3%; animation: floatDotRound 6s ease-in-out infinite; }
         .deco-dot-2 { width:10px; height:10px; background:#f59e0b; top:35%; right:2%; animation: floatDotRound 8s ease-in-out infinite 1s; }
-        .deco-dot-3 { width:18px; height:18px; background:#3b9eff; bottom:30%; left:2%; transform: rotate(45deg); animation: floatDot 7s ease-in-out infinite 0.5s; }
+        .deco-dot-3 { width:18px; height:18px; background:#00AECC; bottom:30%; left:2%; transform: rotate(45deg); animation: floatDot 7s ease-in-out infinite 0.5s; }
         .deco-dot-4 { width:8px; height:8px; background:#f59e0b; top:60%; right:5%; animation: floatDotRound 9s ease-in-out infinite 2s; }
-        .deco-dot-5 { width:12px; height:12px; background:#3b9eff; bottom:15%; right:12%; transform: rotate(45deg); animation: floatDot 5s ease-in-out infinite 0.8s; }
+        .deco-dot-5 { width:12px; height:12px; background:#00AECC; bottom:15%; right:12%; transform: rotate(45deg); animation: floatDot 5s ease-in-out infinite 0.8s; }
         @keyframes floatDot {
             0%, 100% { transform: translateY(0) rotate(45deg); }
             50% { transform: translateY(-12px) rotate(45deg); }
@@ -782,7 +782,7 @@
         /* Nav pill active highlight */
         nav span.text-brand-blue {
             background: rgba(59,158,255,0.1);
-            color: #3b9eff !important;
+            color: #00AECC !important;
             padding: 4px 12px;
             border-radius: 50px;
         }
@@ -924,9 +924,8 @@
             <!-- Page: Home -->
             <section id="section-home" class="relative">
                 <!-- Hero Section -->
-                <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-12 pb-0 relative bg-[#4f7cff] rounded-[30px] overflow-hidden shadow-xl mt-4">
-                    <!-- Curved white background shape for the right side (mimics UI) -->
-                    <div class="absolute top-0 right-0 w-[120%] md:w-[70%] lg:w-[55%] h-[150%] bg-white z-0" style="border-radius: 400px 0 0 400px; transform: translateX(20%) translateY(-10%);"></div>
+                <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-12 pb-0 relative bg-[#00788C] rounded-[30px] overflow-hidden shadow-xl mt-4">
+                    <!-- White circle background is now inside the Image Section instead of global curve -->
                     
                     <div class="lg:col-span-7 flex flex-col justify-center z-10 relative px-6 md:px-12 lg:px-16 pb-12 lg:pb-16">
                         <!-- Name Logo Animation (Adapted for blue background) -->
@@ -968,7 +967,7 @@
                             
                             <!-- UI-style Action Buttons -->
                             <div class="flex flex-wrap items-center gap-4">
-                                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" class="bg-white text-[#4f7cff] font-bold py-3.5 px-8 rounded-full shadow-lg hover:bg-gray-50 transition flex items-center gap-2">
+                                <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" class="bg-white text-[#00788C] font-bold py-3.5 px-8 rounded-full shadow-lg hover:bg-gray-50 transition flex items-center gap-2">
                                     Hire Me
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </button>
@@ -982,25 +981,34 @@
                                 <div class="flex items-center gap-4">
                                     <span class="text-4xl font-bold flex items-center text-white">4.9 <span class="text-2xl font-bold ml-1">*</span></span>
                                     <div class="flex -space-x-3">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=5" alt="Reviewer">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=3" alt="Reviewer">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#4f7cff] object-cover" src="https://i.pravatar.cc/100?img=1" alt="Reviewer">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=5" alt="Reviewer">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=3" alt="Reviewer">
+                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=1" alt="Reviewer">
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center gap-6 text-[10px] uppercase font-bold tracking-widest text-white mt-1">
                                     <span>Average rating<br>based on feedback</span>
-                                    <span class="bg-[#4f7cff] text-white px-3 py-1.5 rounded-full shadow-sm">100+ Reviews</span>
+                                    <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm">100+ Reviews</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Image Section -->
-                    <div class="lg:col-span-5 relative min-h-[400px] flex items-end justify-center lg:justify-end pr-0 lg:pr-8">
-                        <img id="img-Photo1"
-                            src="Hero.png"
-                            alt="MD Mukid Hasan Seiam" class="w-full h-auto max-w-[500px] object-contain relative z-20"
-                            onerror="handleMissingImage(this, 'admin')">
+                    <!-- Image Section (1:1 Frame with Circular Pop-out Effect) -->
+                    <div class="lg:col-span-5 relative flex items-center justify-center p-8 lg:p-12 min-h-[400px]">
+                        <div class="relative w-full max-w-[420px] aspect-square mt-8">
+                            <!-- Circular White Background & Bottom Mask -->
+                            <div class="absolute inset-0 bg-white rounded-full overflow-hidden shadow-2xl z-10 border border-white/20">
+                                <!-- Bottom part of image (clipped by circle) -->
+                                <img src="Hero.png" alt="MD Mukid Hasan Seiam" class="absolute bottom-0 left-[5%] w-[90%] h-auto object-contain" style="transform: scale(1.15); transform-origin: bottom;">
+                            </div>
+
+                            <!-- Top Half (Pops out of the circle) -->
+                            <div class="absolute bottom-[50%] left-0 w-full h-full overflow-hidden z-20">
+                                <!-- Top part of image (visible outside circle) -->
+                                <img id="img-Photo1" src="Hero.png" alt="MD Mukid Hasan Seiam" class="absolute bottom-[-50%] left-[5%] w-[90%] h-auto object-contain" style="transform: scale(1.15); transform-origin: bottom;" onerror="handleMissingImage(this, 'Hero')">
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -1037,74 +1045,7 @@
                     </div>
                 </section>
 
-                <!-- About Section (Moved from About Tab) -->
-                <section class="py-8 border-t border-gray-200 mt-8 pt-8 px-6">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div>
-                            <span id="about_tag" data-translate="about_tag"
-                                class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-3 block">About
-                                Me</span>
-                            <h2 id="about_title" data-translate="about_title"
-                                class="font-heading text-2xl uppercase leading-tight mb-4">Tech is about<br>solving
-                                problems<br>and building worlds.</h2>
-                            <p id="about_desc" data-translate="about_desc"
-                                class="text-xs text-gray-500 leading-relaxed mb-4">...</p>
-                            <div id="about_signature" data-translate="about_signature"
-                                class="font-signature text-2xl opacity-80">Mukid Hasan</div>
-                        </div>
 
-                        <!-- Image 5 -->
-                        <div class="relative flex justify-center items-end">
-                            <div class="absolute inset-0 bg-brand-blue w-1/2 ml-auto h-[80%] bottom-0 z-0"></div>
-                            <div class="relative z-10 w-[80%] max-w-[380px] aspect-[4/5] bg-gray-200 overflow-hidden">
-                                <img id="img-Photo5"
-                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                    alt="Mukid Hasan Portrait" class="w-full h-full object-cover"
-                                    onerror="handleMissingImage(this, 'Photo5')">
-                            </div>
-                        </div>
-
-                        <!-- Progress Bars -->
-                        <div class="flex flex-col justify-center gap-6 pt-10">
-                            <div>
-                                <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
-                                    <span id="skill1_name" data-translate="skill1_name" class="text-gray-500">Tech
-                                        Troubleshooting</span>
-                                    <span id="skill1_pct" class="text-brand-black">95%</span>
-                                </div>
-                                <div class="h-[2px] w-full bg-gray-200 relative">
-                                    <div id="skill1_pct_bar"
-                                        class="absolute top-0 left-0 h-full bg-brand-blue w-[95%] transition-all duration-1000">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
-                                    <span id="skill2_name" data-translate="skill2_name" class="text-gray-500">Computer
-                                        Operations</span>
-                                    <span id="skill2_pct" class="text-brand-black">90%</span>
-                                </div>
-                                <div class="h-[2px] w-full bg-gray-200 relative">
-                                    <div id="skill2_pct_bar"
-                                        class="absolute top-0 left-0 h-full bg-brand-blue w-[90%] transition-all duration-1000">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
-                                    <span id="skill3_name" data-translate="skill3_name" class="text-gray-500">Learning
-                                        Game Dev</span>
-                                    <span id="skill3_pct" class="text-brand-black">65%</span>
-                                </div>
-                                <div class="h-[2px] w-full bg-gray-200 relative">
-                                    <div id="skill3_pct_bar"
-                                        class="absolute top-0 left-0 h-full bg-brand-blue w-[65%] transition-all duration-1000">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </section>
 
             <!-- Page: Experience -->
@@ -1961,6 +1902,75 @@
 
             </section>
 
+            <!-- About Section (Moved from About Tab) -->
+            <section id="section-about" class="py-12 border-t border-gray-200 mt-12 pt-12 px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <span id="about_tag" data-translate="about_tag"
+                            class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-3 block">About
+                            Me</span>
+                        <h2 id="about_title" data-translate="about_title"
+                            class="font-heading text-2xl uppercase leading-tight mb-4">Tech is about<br>solving
+                            problems<br>and building worlds.</h2>
+                        <p id="about_desc" data-translate="about_desc"
+                            class="text-xs text-gray-500 leading-relaxed mb-4">...</p>
+                        <div id="about_signature" data-translate="about_signature"
+                            class="font-signature text-2xl opacity-80">Mukid Hasan</div>
+                    </div>
+
+                    <!-- Image 5 -->
+                    <div class="relative flex justify-center items-end">
+                        <div class="absolute inset-0 bg-brand-blue w-1/2 ml-auto h-[80%] bottom-0 z-0"></div>
+                        <div class="relative z-10 w-[80%] max-w-[380px] aspect-[4/5] bg-gray-200 overflow-hidden">
+                            <img id="img-Photo5"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                alt="Mukid Hasan Portrait" class="w-full h-full object-cover"
+                                onerror="handleMissingImage(this, 'Photo5')">
+                        </div>
+                    </div>
+
+                    <!-- Progress Bars -->
+                    <div class="flex flex-col justify-center gap-6 pt-10">
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span id="skill1_name" data-translate="skill1_name" class="text-gray-500">Tech
+                                    Troubleshooting</span>
+                                <span id="skill1_pct" class="text-brand-black">95%</span>
+                            </div>
+                            <div class="h-[2px] w-full bg-gray-200 relative">
+                                <div id="skill1_pct_bar"
+                                    class="absolute top-0 left-0 h-full bg-brand-blue w-[95%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span id="skill2_name" data-translate="skill2_name" class="text-gray-500">Computer
+                                    Operations</span>
+                                <span id="skill2_pct" class="text-brand-black">90%</span>
+                            </div>
+                            <div class="h-[2px] w-full bg-gray-200 relative">
+                                <div id="skill2_pct_bar"
+                                    class="absolute top-0 left-0 h-full bg-brand-blue w-[90%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                <span id="skill3_name" data-translate="skill3_name" class="text-gray-500">Learning
+                                    Game Dev</span>
+                                <span id="skill3_pct" class="text-brand-black">65%</span>
+                            </div>
+                            <div class="h-[2px] w-full bg-gray-200 relative">
+                                <div id="skill3_pct_bar"
+                                    class="absolute top-0 left-0 h-full bg-brand-blue w-[65%] transition-all duration-1000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
 
         <!-- Footer -->
@@ -2241,7 +2251,7 @@
             function triggerInitialImages() {
                 const imgPhoto1 = document.getElementById('img-Photo1');
                 const imgPhoto5 = document.getElementById('img-Photo5');
-                if (imgPhoto1) getLocalImagePath('admin', imgPhoto1);
+                if (imgPhoto1) getLocalImagePath('Hero', imgPhoto1);
                 if (imgPhoto5) getLocalImagePath('Photo5', imgPhoto5);
             }
 
