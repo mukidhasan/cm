@@ -1227,13 +1227,13 @@
                                 data-translate="content_c1_tag">2D
                                 Game Development</span>
                             <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
-                                data-translate="content_c1_title">OpenBOR & MUGEN Mods</h3>
+                                data-translate="content_c1_title">2D game Projects</h3>
                             <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c1_desc">
                                 কাস্টম স্প্রাইট শিট ডিজাইনিং, টু-ডি অ্যানিমেশন ফ্রেম অ্যালাইনমেন্ট এবং ওপেন-সোর্স
                                 ইঞ্জিনগুলোর মাধ্যমে ক্যারেক্টার মেকানিক্স মডিফিকেশন।
                             </p>
                         </div>
-                        <div
+                        <div onclick="openGameProjectsModal()"
                             class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
                             <span data-translate="btn_view_concept">View Concept</span>
                             <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
@@ -2088,6 +2088,40 @@
             </div>
         </footer>
 
+        
+        <!-- Game Projects Modal -->
+        <div id="gameProjectsModal"
+            class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
+            <button onclick="closeGameProjectsModal()"
+                class="absolute top-6 right-6 text-gray-400 hover:text-white transition duration-300 z-50 p-2 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+            <div class="max-w-7xl w-full max-h-[90vh] overflow-y-auto p-4 space-y-8 no-scrollbar flex flex-col items-center justify-center h-full">
+                <h3 class="font-heading text-4xl uppercase text-white text-center mb-12 mt-auto">2D Game Projects</h3>
+                
+                <div class="flex flex-col items-center pb-8 mb-auto">
+                    <h4 class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-6">Software Used</h4>
+                    <div class="flex gap-8 items-center justify-center">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#500000] rounded-2xl flex items-center justify-center border-2 border-[#FF3333] shadow-[0_0_15px_rgba(255,51,51,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FF3333] font-black text-2xl font-sans leading-none">Ob</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">OpenBOR</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#111111] rounded-2xl flex items-center justify-center border-2 border-[#FFFFFF] shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FFFFFF] font-black text-2xl font-sans leading-none">Mg</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">M.U.G.E.N</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Social Media Videos Modal -->
         <div id="socialMediaModal"
             class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
@@ -2129,8 +2163,40 @@
                         <div class="aspect-video w-full bg-gray-900 rounded overflow-hidden shadow-2xl border border-gray-800 flex items-center justify-center">
                             <span class="text-gray-700 text-xs uppercase tracking-widest">Coming Soon</span>
                         </div>
+                </div>
+                <div class="border-t border-gray-800 my-6"></div>
+                <!-- Software Logos -->
+                <div class="flex flex-col items-center pb-8">
+                    <h4 class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-6">Software Used</h4>
+                    <div class="flex flex-wrap gap-8 items-center justify-center">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#000000] rounded-2xl flex items-center justify-center border-2 border-[#FFFFFF] shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FFFFFF] font-black text-2xl font-sans leading-none">Cc</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Capcut</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#002833] rounded-2xl flex items-center justify-center border-2 border-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#00E5FF] font-black text-2xl font-sans leading-none">Fm</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Wondershare</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#2B003D] rounded-2xl flex items-center justify-center border-2 border-[#E685FF] shadow-[0_0_15px_rgba(230,133,255,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#E685FF] font-black text-2xl font-sans leading-none">Pr</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Premiere CC</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#331100] rounded-2xl flex items-center justify-center border-2 border-[#FF6600] shadow-[0_0_15px_rgba(255,102,0,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FF6600] font-black text-2xl font-sans leading-none">Hb</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Handbrake</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
             </div>
         </div>
 
@@ -2233,7 +2299,7 @@
                 <!-- Software Logos -->
                 <div class="flex flex-col items-center pb-8">
                     <h4 class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-6">Software Used</h4>
-                    <div class="flex gap-8 items-center justify-center">
+                                        <div class="flex flex-wrap gap-8 items-center justify-center">
                         <div class="flex flex-col items-center gap-3">
                             <div class="w-14 h-14 bg-[#001E36] rounded-2xl flex items-center justify-center border-2 border-[#31A8FF] shadow-[0_0_15px_rgba(49,168,255,0.3)] hover:scale-110 transition duration-300">
                                 <span class="text-[#31A8FF] font-black text-2xl font-sans leading-none">Ps</span>
@@ -2245,6 +2311,27 @@
                                 <span class="text-[#FF9A00] font-black text-2xl font-sans leading-none">Ai</span>
                             </div>
                             <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Illustrator</span>
+                        </div>
+                        <!-- Nano Banana 2.0 -->
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#333300] rounded-2xl flex items-center justify-center border-2 border-[#FFFF00] shadow-[0_0_15px_rgba(255,255,0,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FFFF00] font-black text-2xl font-sans leading-none">Nb</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Nano Banana 2.0</span>
+                        </div>
+                        <!-- ChatGPT -->
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#002211] rounded-2xl flex items-center justify-center border-2 border-[#10A37F] shadow-[0_0_15px_rgba(16,163,127,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#10A37F] font-black text-2xl font-sans leading-none">Cg</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">ChatGPT</span>
+                        </div>
+                        <!-- PicsArt -->
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-14 h-14 bg-[#220022] rounded-2xl flex items-center justify-center border-2 border-[#FF00FF] shadow-[0_0_15px_rgba(255,0,255,0.3)] hover:scale-110 transition duration-300">
+                                <span class="text-[#FF00FF] font-black text-2xl font-sans leading-none">Pa</span>
+                            </div>
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">PicsArt</span>
                         </div>
                     </div>
                 </div>
@@ -3462,7 +3549,18 @@
                 };
             }
 
-            function openSocialMediaModal() {
+            
+        function openGameProjectsModal() {
+            const modal = document.getElementById('gameProjectsModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeGameProjectsModal() {
+            const modal = document.getElementById('gameProjectsModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function openSocialMediaModal() {
                 document.getElementById('socialMediaModal').classList.remove('hidden');
             }
 
