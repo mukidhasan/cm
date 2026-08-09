@@ -508,6 +508,36 @@
             }
         }
 
+        /* 3D Swipe Up Text Animation */
+        .text-3d-wrapper {
+            position: relative;
+            height: 4rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        @media (min-width: 768px) {
+            .text-3d-wrapper { height: 4.5rem; }
+        }
+
+        .text-3d-item {
+            position: absolute;
+            width: 100%;
+            margin: 0;
+            opacity: 0;
+            transform-origin: 50% 100%;
+            transform: rotateX(-90deg);
+            animation: swipe3D 8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+        }
+
+        .text-3d-item:nth-child(1) { animation-delay: 0s; }
+        .text-3d-item:nth-child(2) { animation-delay: 4s; }
+
+        @keyframes swipe3D {
+            0% { opacity: 0; transform: rotateX(-90deg) translateY(20px); }
+            5%, 45% { opacity: 1; transform: rotateX(0deg) translateY(0); }
+            50%, 100% { opacity: 0; transform: rotateX(90deg) translateY(-20px); }
+        }
+
         /* 3D Book Mockup CSS */
         .book-container-3d {
             perspective: 1000px;
@@ -959,10 +989,14 @@
                                 class="text-5xl md:text-6xl lg:text-[4rem] font-heading uppercase tracking-wide leading-tight mb-2 text-white">
                                 Tech Specialist
                             </h1>
-                            <h2 class="text-xl md:text-2xl font-bold leading-tight mb-6 text-white/90">
-                                <span id="hero_subtitle_1" data-translate="hero_subtitle_1">Versatile Tech & Computer Operator</span><br>
-                                <span id="hero_subtitle_2" data-translate="hero_subtitle_2">& Fast Software Learner.</span>
-                            </h2>
+                            <div class="text-xl md:text-2xl font-bold leading-tight mb-6 text-white/90 text-3d-wrapper" style="perspective: 1000px;">
+                                <h2 class="text-3d-item">
+                                    Bridging hardware logic with<br>creative digital experiences.
+                                </h2>
+                                <h2 class="text-3d-item">
+                                    Versatile Computer Operator<br>& Fast Software Learner.
+                                </h2>
+                            </div>
                             <p id="hero_desc" data-translate="hero_desc"
                                 class="text-white/90 text-sm md:text-base lg:text-lg mb-10 leading-relaxed max-w-lg font-medium">
                                 I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner — relying on modern AI tools (Gemini, ChatGPT) to elevate my output to a professional level.
