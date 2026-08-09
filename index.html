@@ -1485,8 +1485,11 @@
                     </p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div
-                        class="group border border-gray-200 p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md">
+                    <!-- Content Card Game -->
+                    <div onclick="openGameProjectsModal()" onmouseenter="startCardSlide('game', this)" onmouseleave="stopCardSlide('game', this)"
+                        class="group relative overflow-hidden aspect-square border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                        <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                        <div class="relative z-10 p-8 flex flex-col justify-between h-full">
                         <div>
                             <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
                                 data-translate="content_c1_tag">2D
@@ -1502,8 +1505,7 @@
                                 <img src="Software Logos/MUGEN.png" alt="MUGEN" class="h-8 object-contain drop-shadow-md">
                             </div>
                         </div>
-                        <div onclick="openGameProjectsModal()"
-                            class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                        <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
                             <span data-translate="btn_view_concept">View Concept</span>
                             <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
@@ -1511,7 +1513,7 @@
                                 </path>
                             </svg>
                         </div>
-                    </div>
+                        </div>
                     </div>
 
                     <!-- Content Card Diy -->
