@@ -979,19 +979,20 @@
                                 </button>
                             </div>
 
-                            <!-- Rating Badge -->
-                            <div onclick="document.getElementById('fbReviewModal').classList.remove('hidden')" class="mt-12 bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex flex-col gap-2 border border-white/30 shadow-lg cursor-pointer hover:bg-white/30 hover:scale-105 transition-all duration-300 group">
+                            <!-- Visitor Count Badge -->
+                            <div class="mt-12 bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex flex-col gap-3 border border-white/30 shadow-lg hover:bg-white/30 transition-all duration-300">
                                 <div class="flex items-center gap-4">
-                                    <span class="text-4xl font-bold flex items-center text-white">4.9 <span class="text-2xl font-bold ml-1">*</span></span>
-                                    <div class="flex -space-x-3">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=5" alt="Reviewer">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=3" alt="Reviewer">
-                                        <img class="w-10 h-10 rounded-full border-2 border-[#00788C] object-cover" src="https://i.pravatar.cc/100?img=1" alt="Reviewer">
+                                    <div class="p-2.5 bg-white/20 rounded-full backdrop-blur-md border border-white/30">
+                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
                                     </div>
+                                    <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fmukidhasan.github.io%2Fcm&countColor=%2300788C" alt="visitor badge" class="h-7 rounded-sm shadow-sm">
                                 </div>
                                 <div class="flex justify-between items-center gap-6 text-[10px] uppercase font-bold tracking-widest text-white mt-1">
-                                    <span>Average rating<br>based on feedback</span>
-                                    <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm group-hover:bg-brand-black transition">100+ Reviews</span>
+                                    <span>Total Profile<br>Visitors</span>
+                                    <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm">Live Count</span>
                                 </div>
                             </div>
                         </div>
@@ -1165,31 +1166,7 @@
 
 
 
-            <!-- Facebook Review Modal -->
-            <div id="fbReviewModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden">
-                <div class="flex items-center justify-center w-full h-full p-4">
-                    <div class="bg-white rounded-2xl w-full max-w-2xl relative shadow-2xl max-h-[90vh] overflow-y-auto">
-                        <button onclick="document.getElementById('fbReviewModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 bg-gray-100 hover:bg-gray-200 transition rounded-full p-2 z-50">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                        
-                        <div style="padding: 30px 20px; font-family: Arial, sans-serif; background: #fff; border-radius: 16px;">
-                            <h3 style="color: #333; border-bottom: 2px solid #5479ff; padding-bottom: 10px; margin-right: 40px; margin-top: 0;">Leave an Authentic Review</h3>
-                            <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Doyakore apnar review-ti nicher format-e likhun:<br>
-                            <b>Skill:</b> (Jemon: Hardware Repair, AppSheet, Photoshop)<br>
-                            <b>Rating:</b> (Jemon: 8/10)</p>
 
-                            <!-- Facebook Required Scripts -->
-                            <div id="fb-root"></div>
-                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
-
-                            <!-- Facebook Comments Box -->
-                            <div class="fb-comments" data-href="https://mukidhasan.github.io/cm" data-width="100%" data-numposts="5"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Facebook Review Modal Ends -->
 
             <!-- Page: Books -->
             <section id="section-books" class="py-6 flex flex-col gap-12">
