@@ -109,6 +109,16 @@
             // no-op in single-page layout
         }
 
+        function openDiyConceptModal() {
+            const modal = document.getElementById('diyConceptModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeDiyConceptModal() {
+            const modal = document.getElementById('diyConceptModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
         function openGraphicDesignModal() {
             const modal = document.getElementById('graphicDesignModal');
             if (modal) modal.classList.remove('hidden');
@@ -1601,7 +1611,7 @@
                                 টেস্টিং টুলস এবং ইলেকট্রনিক্স ডিজাইন প্রজেক্ট।
                             </p>
                         </div>
-                        <div
+                        <div onclick="openDiyConceptModal()"
                             class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
                             <span data-translate="btn_view_concept">View Concept</span>
                             <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
@@ -2081,6 +2091,21 @@
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- DIY Concept Crafts Modal -->
+        <div id="diyConceptModal"
+            class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
+            <button onclick="closeDiyConceptModal()"
+                class="absolute top-6 right-6 text-gray-400 hover:text-white transition duration-300 z-50 p-2 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+            <div class="max-w-4xl w-full max-h-[90vh] overflow-y-auto p-4 space-y-8 no-scrollbar">
+                <h3 class="font-heading text-4xl uppercase text-white text-center mb-4">DIY Concept Crafts</h3>
                 <div class="space-y-4">
                     <h4 class="text-brand-blue font-bold tracking-widest uppercase text-lg text-center">YouTube</h4>
                     <div class="aspect-video w-full bg-black rounded overflow-hidden shadow-2xl border border-gray-800">
