@@ -155,9 +155,70 @@
             }, 300);
         }
 
-        function openGraphicDesignModal() {
+        let isGraphicDesignLoaded = false;
+        async function openGraphicDesignModal() {
             const modal = document.getElementById('graphicDesignModal');
             if (modal) modal.classList.remove('hidden');
+            
+            if (isGraphicDesignLoaded) return;
+            isGraphicDesignLoaded = true;
+            
+            const grid = document.getElementById('graphicDesignGalleryGrid');
+            const cacheKey = 'graphic_design_gallery_v1';
+            const cached = localStorage.getItem(cacheKey);
+            const cacheTime = localStorage.getItem(cacheKey + '_time');
+            
+            // Render function
+            const renderGallery = (images) => {
+                if (!images || images.length === 0) {
+                    grid.innerHTML = '<div class="w-full text-center text-white/50 py-10">No images found in Graphic Design folder.</div>';
+                    return;
+                }
+                
+                grid.innerHTML = images.map(img => `
+                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
+                        <img onclick="openLightbox(this.src)" src="${img.url}" alt="${img.name}" 
+                             class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                             onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Error+Loading'">
+                    </div>
+                `).join('');
+            };
+            
+            // Check cache (valid for 1 hour)
+            if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
+                renderGallery(JSON.parse(cached));
+                return;
+            }
+            
+            try {
+                // Fetch from GitHub API
+                const response = await fetch('https://api.github.com/repos/mukidhasan/cm/contents/Graphic%20Design');
+                if (!response.ok) throw new Error('Failed to fetch from GitHub API');
+                
+                const files = await response.json();
+                
+                // Filter for image files
+                const images = files
+                    .filter(file => file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
+                    .map(file => ({
+                        name: file.name,
+                        url: `Graphic Design/${file.name}`
+                    }));
+                    
+                // Save to cache
+                localStorage.setItem(cacheKey, JSON.stringify(images));
+                localStorage.setItem(cacheKey + '_time', Date.now().toString());
+                
+                renderGallery(images);
+            } catch (error) {
+                console.error('Error loading gallery from GitHub:', error);
+                if (cached) {
+                    renderGallery(JSON.parse(cached));
+                } else {
+                    grid.innerHTML = '<div class="w-full text-center text-red-400 py-10">Failed to load images from GitHub. Please try again later.</div>';
+                    isGraphicDesignLoaded = false; // Allow retrying
+                }
+            }
         }
 
         function closeGraphicDesignModal() {
@@ -2906,38 +2967,14 @@
             <div class="max-w-7xl w-full max-h-[90vh] overflow-y-auto p-4 space-y-8 no-scrollbar">
                 <h3 class="font-heading text-4xl uppercase text-white text-center mb-4">Graphic Design Samples</h3>
                 
-                <!-- Photo Grid (Behance Embeds) -->
-                <div class="flex flex-wrap justify-center gap-6">
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <img onclick="openLightbox(this.src)" src="Graphic Design/SSC Result feature.png" alt="SSC Result Feature" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Design+1'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here2.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+2'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here3.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+3'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here4.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+4'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here5.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+5'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here6.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+6'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here7.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+7'">
-                    </div>
-                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
-                        <!-- Replace src with your Behance Image URL -->
-                        <img onclick="openLightbox(this.src)" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/your_image_here8.jpg" alt="Design Sample" class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Behance+Design+8'">
+                <!-- Dynamic Photo Grid -->
+                <div id="graphicDesignGalleryGrid" class="flex flex-wrap justify-center gap-6">
+                    <div class="w-full text-center text-white/50 py-10 flex flex-col items-center">
+                        <svg class="animate-spin h-8 w-8 mb-4 text-[#00AECC]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading Graphic Design Gallery...
                     </div>
                 </div>
 
