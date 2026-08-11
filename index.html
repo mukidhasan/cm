@@ -1128,14 +1128,19 @@
                                 class="text-5xl md:text-6xl lg:text-[4rem] font-heading uppercase tracking-wide leading-tight mb-2 text-white">
                                 Tech Specialist
                             </h1>
-                            <div class="text-xl md:text-2xl font-bold leading-tight mb-4 text-white/90 text-3d-wrapper" style="perspective: 1000px;">
-                                <h2 class="text-3d-item">
-                                    Bridging hardware logic with<br>creative digital experiences.
-                                </h2>
-                                <h2 class="text-3d-item">
-                                    Versatile Computer Operator<br>& Fast Software Learner.
-                                </h2>
-                            </div>
+                            <!-- Software Logos Gallery Links -->
+                                <div class="bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex items-center gap-4 border border-white/30 shadow-lg hover:bg-white/30 transition-all duration-300 mb-6">
+                                    <img src="Software Logos/Adobe_Photoshop_CC_icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Adobe Photoshop">
+                                    <img src="Software Logos/Adobe_Illustrator_CC_icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Adobe Illustrator">
+                                    <img src="Software Logos/Canva_logo.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Canva">
+                                    <div class="w-px h-8 bg-white/30 mx-1"></div>
+                                    <img src="Software Logos/Capcut-icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openSocialMediaModal()" title="CapCut">
+                                    <img src="Software Logos/Wondershare_filmora_logo.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openSocialMediaModal()" title="Filmora">
+                                    <div class="w-px h-8 bg-white/30 mx-1"></div>
+                                    <img src="Software Logos/MUGEN.png" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200 object-contain drop-shadow-md" onclick="openGameProjectsModal()" title="MUGEN">
+                                    <img src="Software Logos/OPENBOR.png" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200 object-contain drop-shadow-md" onclick="openGameProjectsModal()" title="OpenBOR">
+                                </div>
+                            
                             <p id="hero_desc" data-translate="hero_desc"
                                 class="text-white/90 text-sm md:text-base lg:text-lg mb-6 leading-relaxed max-w-lg font-medium">
                                 I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner — relying on modern AI tools (Gemini, ChatGPT) to elevate my output to a professional level.
@@ -1174,24 +1179,13 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Software Logos Gallery Links -->
-                                <div class="bg-white/20 backdrop-blur-md rounded-2xl p-4 inline-flex items-center gap-4 border border-white/30 shadow-lg hover:bg-white/30 transition-all duration-300">
-                                    <img src="Software Logos/Adobe_Photoshop_CC_icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Adobe Photoshop">
-                                    <img src="Software Logos/Adobe_Illustrator_CC_icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Adobe Illustrator">
-                                    <img src="Software Logos/Canva_logo.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openGraphicDesignModal()" title="Canva">
-                                    <div class="w-px h-8 bg-white/30 mx-1"></div>
-                                    <img src="Software Logos/Capcut-icon.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openSocialMediaModal()" title="CapCut">
-                                    <img src="Software Logos/Wondershare_filmora_logo.svg" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200" onclick="openSocialMediaModal()" title="Filmora">
-                                    <div class="w-px h-8 bg-white/30 mx-1"></div>
-                                    <img src="Software Logos/MUGEN.png" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200 object-contain drop-shadow-md" onclick="openGameProjectsModal()" title="MUGEN">
-                                    <img src="Software Logos/OPENBOR.png" class="w-9 h-9 cursor-pointer hover:scale-110 hover:-translate-y-1 transition-all duration-200 object-contain drop-shadow-md" onclick="openGameProjectsModal()" title="OpenBOR">
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
 
                     <!-- Image Section (1:1 Frame with Circular Pop-out Effect) -->
-                    <div class="lg:col-span-5 relative flex items-center justify-center p-4 lg:p-8 min-h-[300px]">
+                    <div class="lg:col-span-5 relative flex flex-col items-center justify-center p-4 lg:p-8 min-h-[300px]">
                         <div class="relative w-full max-w-[420px] aspect-square mt-2">
                             <!-- Circular White Background & Bottom Mask -->
                             <div class="absolute inset-0 bg-white rounded-full overflow-hidden shadow-2xl z-10 border border-white/20">
@@ -1205,6 +1199,14 @@
                                 <img id="img-Photo1" src="Hero.png" alt="MD Mukid Hasan Seiam" class="absolute bottom-[-50%] left-[5%] w-[90%] h-auto object-contain" style="transform: scale(1.15); transform-origin: bottom;" onerror="handleMissingImage(this, 'Hero')">
                             </div>
                         </div>
+                        <div class="text-xl md:text-2xl font-bold leading-tight mt-4 text-center text-white/90 text-3d-wrapper" style="perspective: 1000px;">
+                                <h2 class="text-3d-item">
+                                    Bridging hardware logic with<br>creative digital experiences.
+                                </h2>
+                                <h2 class="text-3d-item">
+                                    Versatile Computer Operator<br>& Fast Software Learner.
+                                </h2>
+                            </div>
                     </div>
                 </section>
 
