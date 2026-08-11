@@ -1373,44 +1373,44 @@
                                 .stLogo1 { font-family:'MyriadPro-Regular', sans-serif; fill: #ffffff; font-weight: bold; }
                                 .stLogo2 { font-size:86.2772px; }
                                 
-                                /* Seiam text animation: visible for 3s, then transitions UP and fades out for 3s */
+                                /* Seiam text animation: visible for 10s, then transitions out for 2s */
                                 .animate-seiam {
-                                    animation: seiamLoop 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                                    animation: seiamLoop 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
                                 }
                                 @keyframes seiamLoop {
-                                    0%, 40% { opacity: 1; transform: translateY(0); }
-                                    45%, 95% { opacity: 0; transform: translateY(-40px); }
+                                    0%, 80% { opacity: 1; transform: translateY(0); }
+                                    84%, 96% { opacity: 0; transform: translateY(-40px); }
                                     100% { opacity: 1; transform: translateY(0); }
                                 }
                                 
                                 /* CM Logo fade in/out wrapper */
                                 .animate-cm-logo {
-                                    animation: cmLogoFade 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                                    animation: cmLogoFade 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
                                 }
                                 @keyframes cmLogoFade {
-                                    0%, 35% { opacity: 0; }
-                                    40%, 95% { opacity: 1; }
+                                    0%, 78% { opacity: 0; }
+                                    83%, 97% { opacity: 1; }
                                     100% { opacity: 0; }
                                 }
 
                                 /* C path sliding in from left */
                                 .animate-c-part {
                                     fill: #ffffff;
-                                    animation: cSlideIn 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                                    animation: cSlideIn 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
                                 }
                                 @keyframes cSlideIn {
-                                    0%, 40% { transform: translateX(-40px); }
-                                    45%, 95% { transform: translateX(0); }
+                                    0%, 80% { transform: translateX(-40px); }
+                                    84%, 96% { transform: translateX(0); }
                                     100% { transform: translateX(-40px); }
                                 }
 
                                 /* M logo crossfade */
                                 .animate-m-fade {
-                                    animation: mLogoFadeOut 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                                    animation: mLogoFadeOut 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
                                 }
                                 @keyframes mLogoFadeOut {
-                                    0%, 35% { opacity: 1; }
-                                    40%, 95% { opacity: 0; }
+                                    0%, 78% { opacity: 1; }
+                                    83%, 97% { opacity: 0; }
                                     100% { opacity: 1; }
                                 }
                             
