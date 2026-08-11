@@ -894,7 +894,101 @@
             box-shadow: 0 8px 40px rgba(59,158,255,0.15), 0 2px 8px rgba(0,0,0,0.06);
             transform: translateY(-3px);
         }
-    </style>
+    
+        /* The mechanical keycap styling with FINGER DISHING */
+        .mech-key {
+            appearance: none;
+            border: none;
+            outline: none;
+            position: relative;
+            cursor: pointer;
+            
+            /* Text styling */
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            
+            /* Size and shape */
+            padding: 10px 16px;
+            border-radius: 6px; /* Tighter corners for the top surface */
+            
+            /* Base color */
+            background-color: #f1f5f9;
+            color: #334155;
+            
+            /* The 3D Magic for the "Finger Dish" (Concave Top) and Skirt */
+            box-shadow: 
+                /* 1. THE DISH: These 4 inset shadows create the curved finger indentation */
+                inset 0 4px 5px rgba(255, 255, 255, 1),       /* Top inner rim highlight */
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         /* Bottom inner rim shadow */
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     /* Left inner rim highlight */
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         /* Right inner rim shadow */
+                
+                /* 2. THE SKIRT: The physical plastic height of the key */
+                0 6px 0 #94a3b8, 
+                
+                /* 3. THE DROP SHADOW: Cast onto the keyboard base */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+                
+            /* Snappy mechanical switch feel */
+            transition: all 0.08s cubic-bezier(0.4, 0.0, 0.2, 1);
+            
+            /* Flex layout to align contents if any */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* Cyan/Teal accent keys */
+        .mech-key.cyan {
+            background-color: #06b6d4;
+            color: #ffffff;
+            
+            /* Dish and skirt adjusted for the darker cyan color */
+            box-shadow: 
+                /* 1. THE DISH */
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                
+                /* 2. THE SKIRT */
+                0 6px 0 #0e7490, 
+                
+                /* 3. THE DROP SHADOW */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The physical press action (Pushed Down) */
+        .mech-key:active {
+            /* Moves the key down to cover the skirt distance */
+            transform: translateY(6px); 
+            
+            /* Keeps the finger dish, but removes the skirt height and shrinks the shadow */
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 1),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         
+                0 0px 0 #94a3b8, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+
+        /* The physical press action for cyan keys */
+        .mech-key.cyan:active {
+            transform: translateY(6px);
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                0 0px 0 #0e7490, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+</style>
 </head>
 
 <body class="text-brand-black overflow-x-hidden">
@@ -918,7 +1012,101 @@
                         0%, 100% { opacity: 1; transform: scale(1); }
                         50% { opacity: 0.2; transform: scale(0.6); }
                     }
-                </style>
+                
+        /* The mechanical keycap styling with FINGER DISHING */
+        .mech-key {
+            appearance: none;
+            border: none;
+            outline: none;
+            position: relative;
+            cursor: pointer;
+            
+            /* Text styling */
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            
+            /* Size and shape */
+            padding: 10px 16px;
+            border-radius: 6px; /* Tighter corners for the top surface */
+            
+            /* Base color */
+            background-color: #f1f5f9;
+            color: #334155;
+            
+            /* The 3D Magic for the "Finger Dish" (Concave Top) and Skirt */
+            box-shadow: 
+                /* 1. THE DISH: These 4 inset shadows create the curved finger indentation */
+                inset 0 4px 5px rgba(255, 255, 255, 1),       /* Top inner rim highlight */
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         /* Bottom inner rim shadow */
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     /* Left inner rim highlight */
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         /* Right inner rim shadow */
+                
+                /* 2. THE SKIRT: The physical plastic height of the key */
+                0 6px 0 #94a3b8, 
+                
+                /* 3. THE DROP SHADOW: Cast onto the keyboard base */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+                
+            /* Snappy mechanical switch feel */
+            transition: all 0.08s cubic-bezier(0.4, 0.0, 0.2, 1);
+            
+            /* Flex layout to align contents if any */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* Cyan/Teal accent keys */
+        .mech-key.cyan {
+            background-color: #06b6d4;
+            color: #ffffff;
+            
+            /* Dish and skirt adjusted for the darker cyan color */
+            box-shadow: 
+                /* 1. THE DISH */
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                
+                /* 2. THE SKIRT */
+                0 6px 0 #0e7490, 
+                
+                /* 3. THE DROP SHADOW */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The physical press action (Pushed Down) */
+        .mech-key:active {
+            /* Moves the key down to cover the skirt distance */
+            transform: translateY(6px); 
+            
+            /* Keeps the finger dish, but removes the skirt height and shrinks the shadow */
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 1),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         
+                0 0px 0 #94a3b8, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+
+        /* The physical press action for cyan keys */
+        .mech-key.cyan:active {
+            transform: translateY(6px);
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                0 0px 0 #0e7490, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+</style>
                 <g>
                     <g>
                         <path d="M288.84,216.38c0,1.64,0,3.29,0,4.93c0.01,22.43,0.01,44.86,0.02,67.29c0,7.39,0.02,14.77,0.03,22.16
@@ -944,31 +1132,27 @@
                 </svg>
             </span>
             <nav
-                class="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-5 text-[9px] lg:text-[10px] xl:text-xs font-bold uppercase tracking-widest text-gray-500 flex-wrap justify-end">
+                class="hidden md:flex items-center gap-3 lg:gap-4 xl:gap-5 text-gray-500 flex-wrap justify-end p-2 bg-gradient-to-b from-[#e2e8f0] to-[#cbd5e1] rounded-[10px] shadow-[inset_0_2px_5px_rgba(255,255,255,0.8),inset_0_-2px_5px_rgba(0,0,0,0.1),0_15px_25px_rgba(0,0,0,0.15)]">
                 <span data-section="section-home" onclick="document.getElementById('section-home').scrollIntoView({behavior:'smooth'})" data-translate="nav_home"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-[#00bcd4] bg-[#e0f7fa] shadow-[inset_3px_3px_6px_rgba(0,188,212,0.2),inset_-3px_-3px_6px_rgba(255,255,255,1)] font-bold">Home</span>
+                    class="mech-key cyan">Home</span>
                 <span data-section="section-experience" onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" data-translate="nav_experience"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">Experience</span>
+                    class="mech-key">Experience</span>
                 <span data-section="section-hobbies" onclick="document.getElementById('section-hobbies').scrollIntoView({behavior:'smooth'})" data-translate="nav_hobbies"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">Hobbies</span>
+                    class="mech-key">Hobbies</span>
                 <span data-section="section-interests" onclick="document.getElementById('section-interests').scrollIntoView({behavior:'smooth'})" data-translate="nav_interests"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">Interests</span>
+                    class="mech-key">Interests</span>
                 <span data-section="section-education" onclick="document.getElementById('section-education').scrollIntoView({behavior:'smooth'})" data-translate="nav_education"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">Certificates</span>
+                    class="mech-key">Certificates</span>
                 <span onclick="openDiariesModal()" data-translate="nav_books"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">My Diary</span>
+                    class="mech-key">My Diary</span>
                 <span data-section="section-content" onclick="document.getElementById('section-content').scrollIntoView({behavior:'smooth'})" data-translate="nav_content"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">My Content</span>
+                    class="mech-key">My Content</span>
                 <span data-section="section-expertise" onclick="document.getElementById('section-expertise').scrollIntoView({behavior:'smooth'})" data-translate="nav_expertise"
-                    class="cursor-pointer transition-all duration-300 px-4 py-2 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)]">Skills</span>
+                    class="mech-key">Skills</span>
             </nav>
             <div class="flex items-center gap-4">
                 <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" data-translate="let_talk"
-                    class="hidden sm:flex bg-[#00bcd4] text-white text-xs font-bold uppercase tracking-wider py-2.5 px-6 items-center gap-2 transition-all duration-300 rounded-full" 
-                    style="box-shadow: 4px 4px 10px rgba(0, 188, 212, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9); letter-spacing: 0.08em;"
-                    onmousedown="this.style.boxShadow='inset 3px 3px 6px rgba(0, 140, 160, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.5)'"
-                    onmouseup="this.style.boxShadow='4px 4px 10px rgba(0, 188, 212, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9)'"
-                    onmouseleave="this.style.boxShadow='4px 4px 10px rgba(0, 188, 212, 0.4), -4px -4px 10px rgba(255, 255, 255, 0.9)'">
+                    class="hidden sm:flex mech-key cyan !px-6 !py-3 !text-[11px]">
                     Let's Talk <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
                             d="M5 19L19 5M19 5v14M19 5H5"></path>
@@ -1066,7 +1250,101 @@
                                     40%, 95% { opacity: 0; }
                                     100% { opacity: 1; }
                                 }
-                            </style>
+                            
+        /* The mechanical keycap styling with FINGER DISHING */
+        .mech-key {
+            appearance: none;
+            border: none;
+            outline: none;
+            position: relative;
+            cursor: pointer;
+            
+            /* Text styling */
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            
+            /* Size and shape */
+            padding: 10px 16px;
+            border-radius: 6px; /* Tighter corners for the top surface */
+            
+            /* Base color */
+            background-color: #f1f5f9;
+            color: #334155;
+            
+            /* The 3D Magic for the "Finger Dish" (Concave Top) and Skirt */
+            box-shadow: 
+                /* 1. THE DISH: These 4 inset shadows create the curved finger indentation */
+                inset 0 4px 5px rgba(255, 255, 255, 1),       /* Top inner rim highlight */
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         /* Bottom inner rim shadow */
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     /* Left inner rim highlight */
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         /* Right inner rim shadow */
+                
+                /* 2. THE SKIRT: The physical plastic height of the key */
+                0 6px 0 #94a3b8, 
+                
+                /* 3. THE DROP SHADOW: Cast onto the keyboard base */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+                
+            /* Snappy mechanical switch feel */
+            transition: all 0.08s cubic-bezier(0.4, 0.0, 0.2, 1);
+            
+            /* Flex layout to align contents if any */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* Cyan/Teal accent keys */
+        .mech-key.cyan {
+            background-color: #06b6d4;
+            color: #ffffff;
+            
+            /* Dish and skirt adjusted for the darker cyan color */
+            box-shadow: 
+                /* 1. THE DISH */
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                
+                /* 2. THE SKIRT */
+                0 6px 0 #0e7490, 
+                
+                /* 3. THE DROP SHADOW */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The physical press action (Pushed Down) */
+        .mech-key:active {
+            /* Moves the key down to cover the skirt distance */
+            transform: translateY(6px); 
+            
+            /* Keeps the finger dish, but removes the skirt height and shrinks the shadow */
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 1),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         
+                0 0px 0 #94a3b8, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+
+        /* The physical press action for cyan keys */
+        .mech-key.cyan:active {
+            transform: translateY(6px);
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                0 0px 0 #0e7490, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+</style>
                             <g class="animate-m-fade">
                                 <!-- Static M Logo at the start -->
                                 <path fill="#ffffff" d="M112.4,60c0,0.7,0,1.4,0,2.1c0,9.8,0,19.6,0,29.3c0,3.2,0,6.4,0,9.7c0,0.8,0,0.8-0.8,0.8c-7.2,0-14.5,0-21.7,0 c-0.9,0-0.9,0-0.9-0.9c0-7.5,0-15.1,0-22.6c0-12.5,0-25,0-37.5c0-7.8-0.1-15.5-0.1-23.3c0-0.8,0-0.8,0.8-0.8c7.4,0,14.9,0,22.3,0 c0.3,0,0.7,0.1,0.9,0.3c2.7,2.6,5.4,5.1,8.1,7.7c4,3.8,8,7.6,12,11.4c0.2,0.2,0.4,0.3,0.6,0.5c0.8-0.7,1.6-1.4,2.4-2.1 c5-4.5,10-9,15-13.5c1.5-1.3,3-2.7,4.5-4c0.2-0.2,0.6-0.3,0.8-0.3c7.4,0,14.9,0,22.3,0c0.6,0,0.7,0.2,0.7,0.7c0,6.8,0,13.7,0,20.5 c0,0.5-0.1,0.8-0.5,1.1c-3,2.6-5.9,5.2-8.9,7.7c-4.2,3.7-8.3,7.3-12.5,11c-4.7,4.1-9.4,8.2-14,12.3c-3.2,2.8-6.4,5.6-9.5,8.4 c-0.4,0.4-0.7,0.4-1.1,0c-2.6-2.5-5.3-4.9-7.9-7.3c-3.1-2.8-6.1-5.7-9.2-8.5c-1-0.9-2-1.9-3-2.9C112.6,59.9,112.5,59.9,112.4,60z" />
@@ -1265,7 +1543,101 @@
                     .hide-scrollbar::-webkit-scrollbar {
                         display: none;
                     }
-                </style>
+                
+        /* The mechanical keycap styling with FINGER DISHING */
+        .mech-key {
+            appearance: none;
+            border: none;
+            outline: none;
+            position: relative;
+            cursor: pointer;
+            
+            /* Text styling */
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            
+            /* Size and shape */
+            padding: 10px 16px;
+            border-radius: 6px; /* Tighter corners for the top surface */
+            
+            /* Base color */
+            background-color: #f1f5f9;
+            color: #334155;
+            
+            /* The 3D Magic for the "Finger Dish" (Concave Top) and Skirt */
+            box-shadow: 
+                /* 1. THE DISH: These 4 inset shadows create the curved finger indentation */
+                inset 0 4px 5px rgba(255, 255, 255, 1),       /* Top inner rim highlight */
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         /* Bottom inner rim shadow */
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     /* Left inner rim highlight */
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         /* Right inner rim shadow */
+                
+                /* 2. THE SKIRT: The physical plastic height of the key */
+                0 6px 0 #94a3b8, 
+                
+                /* 3. THE DROP SHADOW: Cast onto the keyboard base */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+                
+            /* Snappy mechanical switch feel */
+            transition: all 0.08s cubic-bezier(0.4, 0.0, 0.2, 1);
+            
+            /* Flex layout to align contents if any */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* Cyan/Teal accent keys */
+        .mech-key.cyan {
+            background-color: #06b6d4;
+            color: #ffffff;
+            
+            /* Dish and skirt adjusted for the darker cyan color */
+            box-shadow: 
+                /* 1. THE DISH */
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                
+                /* 2. THE SKIRT */
+                0 6px 0 #0e7490, 
+                
+                /* 3. THE DROP SHADOW */
+                0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The physical press action (Pushed Down) */
+        .mech-key:active {
+            /* Moves the key down to cover the skirt distance */
+            transform: translateY(6px); 
+            
+            /* Keeps the finger dish, but removes the skirt height and shrinks the shadow */
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 1),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         
+                0 0px 0 #94a3b8, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+
+        /* The physical press action for cyan keys */
+        .mech-key.cyan:active {
+            transform: translateY(6px);
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                0 0px 0 #0e7490, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+</style>
                 <div class="mt-16 pt-12 border-t border-gray-200 relative group" id="experience-section">
                     <div class="flex justify-between items-center mb-12">
                         <h3 class="text-[10px] font-bold uppercase tracking-widest text-brand-blue">Career Timeline</h3>
@@ -3748,11 +4120,58 @@
                 modal.classList.add('hidden');
             }
 
-            function openCertificateSidebar(imageSrc) {
+            let binImagesCache = null;
+
+            async function loadImagesFromBin() {
+                if (binImagesCache) return binImagesCache;
+                
+                try {
+                    const response = await fetch('images.bin');
+                    if (!response.ok) throw new Error('Failed to fetch images.bin');
+                    
+                    const buffer = await response.arrayBuffer();
+                    const view = new DataView(buffer);
+                    const decoder = new TextDecoder('utf-8');
+                    const images = {};
+                    let offset = 0;
+                    
+                    while (offset < buffer.byteLength) {
+                        const nameLen = view.getUint32(offset, true);
+                        offset += 4;
+                        
+                        const nameBytes = new Uint8Array(buffer, offset, nameLen);
+                        const name = decoder.decode(nameBytes);
+                        offset += nameLen;
+                        
+                        const size = view.getUint32(offset, true);
+                        offset += 4;
+                        
+                        const fileBytes = new Uint8Array(buffer, offset, size);
+                        const blob = new Blob([fileBytes], { type: name.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg' });
+                        offset += size;
+                        
+                        images[name] = URL.createObjectURL(blob);
+                    }
+                    
+                    binImagesCache = images;
+                    return images;
+                } catch (error) {
+                    console.error('Error loading images from bin:', error);
+                    return null;
+                }
+            }
+
+            async function openCertificateSidebar(imageSrc) {
                 const backdrop = document.getElementById('certificateBackdrop');
                 const modalContent = document.getElementById('certificateModalContent');
                 const img = document.getElementById('certificateImage');
-                img.src = imageSrc;
+                
+                const images = await loadImagesFromBin();
+                if (images && images[imageSrc]) {
+                    img.src = images[imageSrc];
+                } else {
+                    img.src = imageSrc; // fallback
+                }
                 
                 backdrop.classList.remove('hidden');
                 setTimeout(() => {
