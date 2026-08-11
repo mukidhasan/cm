@@ -988,6 +988,15 @@
                 0 0px 0 #0e7490, /* Skirt compresses to 0 */
                 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
         }
+
+        @keyframes scroll-news {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
 </style>
 </head>
 
@@ -1266,13 +1275,10 @@
                                         <span class="bg-[#00788C] text-white px-3 py-1.5 rounded-full shadow-sm">Live Count</span>
                                     </div>
                                 </div>
-                                                        <div class="text-xl md:text-2xl font-bold leading-tight text-left text-white/90 text-3d-wrapper" style="perspective: 1000px;">
-                                <h2 class="text-3d-item">
-                                    Bridging hardware logic with<br>creative digital experiences.
-                                </h2>
-                                <h2 class="text-3d-item">
-                                    Versatile Computer Operator<br>& Fast Software Learner.
-                                </h2>
+                                                        <div class="overflow-hidden whitespace-nowrap max-w-md w-full relative flex items-center h-8" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                                <div class="inline-block text-xl md:text-2xl font-bold leading-tight text-white/90" style="animation: scroll-news 8s linear infinite; white-space: nowrap; padding-left: 100%;">
+                                    I am a versatile technical ..
+                                </div>
                             </div>
 
                                 
