@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dished Mechanical Keycaps</title>
+    <style>
+        /* Centers the keyboard on a desk-like background */
+        body {
+            background-color: #d8e2eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* The silver/grey base that holds the keys */
+        .keyboard-base {
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+            padding: 22px 28px;
+            border-radius: 12px;
+            display: flex;
+            gap: 8px; /* Slightly more space for the wider bases */
+            box-shadow: 
+                inset 0 2px 5px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.1),
+                0 15px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* The mechanical keycap styling with FINGER DISHING */
+        .mech-key {
+            appearance: none;
+            border: none;
+            outline: none;
+            position: relative;
+            cursor: pointer;
+            
+            /* Text styling */
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            
+            /* Size and shape */
+            padding: 16px 22px;
+            border-radius: 6px; /* Tighter corners for the top surface */
+            
+            /* Base color */
+            background-color: #f1f5f9;
+            color: #334155;
+            
+            /* The 3D Magic for the "Finger Dish" (Concave Top) and Skirt */
+            box-shadow: 
+                /* 1. THE DISH: These 4 inset shadows create the curved finger indentation */
+                inset 0 4px 5px rgba(255, 255, 255, 1),       /* Top inner rim highlight */
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         /* Bottom inner rim shadow */
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     /* Left inner rim highlight */
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         /* Right inner rim shadow */
+                
+                /* 2. THE SKIRT: The physical plastic height of the key */
+                0 7px 0 #94a3b8, 
+                
+                /* 3. THE DROP SHADOW: Cast onto the keyboard base */
+                0 10px 15px rgba(0, 0, 0, 0.2);
+                
+            /* Snappy mechanical switch feel */
+            transition: all 0.08s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        /* Cyan/Teal accent keys */
+        .mech-key.cyan {
+            background-color: #06b6d4;
+            color: #ffffff;
+            
+            /* Dish and skirt adjusted for the darker cyan color */
+            box-shadow: 
+                /* 1. THE DISH */
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                
+                /* 2. THE SKIRT */
+                0 7px 0 #0e7490, 
+                
+                /* 3. THE DROP SHADOW */
+                0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The physical press action (Pushed Down) */
+        .mech-key:active {
+            /* Moves the key down to cover the skirt distance */
+            transform: translateY(7px); 
+            
+            /* Keeps the finger dish, but removes the skirt height and shrinks the shadow */
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 1),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.08),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.7),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.03),         
+                0 0px 0 #94a3b8, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+
+        /* The physical press action for cyan keys */
+        .mech-key.cyan:active {
+            transform: translateY(7px);
+            box-shadow: 
+                inset 0 4px 5px rgba(255, 255, 255, 0.5),       
+                inset 0 -4px 5px rgba(0, 0, 0, 0.15),         
+                inset 4px 0 4px rgba(255, 255, 255, 0.3),     
+                inset -4px 0 4px rgba(0, 0, 0, 0.05),         
+                0 0px 0 #0e7490, /* Skirt compresses to 0 */
+                0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow gets tight */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The keyboard container -->
+    <div class="keyboard-base">
+        <!-- The individual keys -->
+        <button class="mech-key cyan">HOME</button>
+        <button class="mech-key">EXPERIENCE</button>
+        <button class="mech-key">HOBBIES</button>
+        <button class="mech-key">INTERESTS</button>
+        <button class="mech-key cyan">LET'S TALK</button>
+    </div>
+
+</body>
+</html>
