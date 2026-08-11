@@ -1193,83 +1193,175 @@
                     }
                 </style>
                 <div class="mt-16 pt-12 border-t border-gray-200 relative group" id="experience-section">
-                    <div class="flex justify-between items-center mb-8">
+                    <div class="flex justify-between items-center mb-12">
                         <h3 class="text-[10px] font-bold uppercase tracking-widest text-brand-blue">Career Timeline</h3>
-                        <!-- Slider Navigation -->
-                        <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onclick="document.getElementById('experience-slider').scrollBy({left: -300, behavior: 'smooth'})" class="p-2 border border-gray-200 hover:border-brand-blue hover:text-brand-blue transition rounded-full bg-white text-gray-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                            </button>
-                            <button onclick="document.getElementById('experience-slider').scrollBy({left: 300, behavior: 'smooth'})" class="p-2 border border-gray-200 hover:border-brand-blue hover:text-brand-blue transition rounded-full bg-white text-gray-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </button>
-                        </div>
                     </div>
                     
-                    <div id="experience-slider" class="grid grid-flow-col auto-cols-[100%] md:auto-cols-[calc(50%-12px)] lg:auto-cols-[calc(33.333%-16px)] xl:auto-cols-[calc(25%-18px)] gap-6 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar scroll-smooth" style="scrollbar-width: none; -ms-overflow-style: none;">
-                        <!-- Job 1 -->
-                        <div class="flex flex-col gap-4 p-6 border border-gray-100 bg-white hover:border-brand-blue transition duration-300 snap-start h-full group/card">
-                            <div class="flex flex-col items-start border-b border-gray-100 pb-4">
-                                <span class="text-xs font-bold text-gray-400 block mb-1 group-hover/card:text-brand-blue transition">Present</span>
-                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black mb-1 line-clamp-2 min-h-[40px]">CORNEA Nursing Coaching Center</h4>
-                                <a href="https://www.facebook.com/cornealtd" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                <div class="h-8 flex items-center justify-start w-full">
-                                    <img src="Companies logos/Cornea Coaching Center.png" alt="CORNEA Logo" class="max-h-8 object-contain">
+                    <!-- Timeline Graph Container -->
+                    <div class="relative w-full max-w-5xl mx-auto mb-16 overflow-x-auto overflow-y-visible md:overflow-visible hide-scrollbar">
+                        <div class="min-w-[700px] w-full relative pt-24 pb-8 px-4">
+                            <!-- Timeline Blocks -->
+                            <div class="relative w-full h-8 flex">
+                                <!-- Job 3: Sunan Prokashoni -->
+                                <div onclick="showJobDetails('job3')" class="group relative cursor-pointer h-full bg-[#82c66d] hover:bg-[#68a655] transition-colors duration-300 shadow-sm" style="width: 28%;" title="Sunan Prokashoni (2015 - 2018)">
+                                    <!-- Pin -->
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 flex flex-col items-center">
+                                        <div class="text-center mb-1 whitespace-nowrap">
+                                            <span class="block text-[11px] font-bold text-gray-800 leading-tight">Sunan Prokashoni</span>
+                                            <span class="block text-[9px] text-gray-500">(IT Manager)</span>
+                                        </div>
+                                        <div class="w-2 h-2 rounded-full bg-gray-500 group-hover:bg-[#82c66d] transition-colors"></div>
+                                        <div class="h-16 w-px bg-gray-400 border-l border-dashed border-gray-400 group-hover:border-[#82c66d] transition-colors"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job 2: Inovace Technologies -->
+                                <div onclick="showJobDetails('job2')" class="group relative cursor-pointer h-full bg-[#008dda] hover:bg-[#0070ad] transition-colors duration-300 border-l border-white/30 shadow-sm" style="width: 66%;" title="Inovace Technologies Ltd (2018 - 2026)">
+                                    <!-- Pin -->
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 flex flex-col items-center">
+                                        <div class="text-center mb-1 whitespace-nowrap">
+                                            <span class="block text-[11px] font-bold text-gray-800 leading-tight">Inovace Technologies Ltd</span>
+                                            <span class="block text-[9px] text-gray-500">(Sr. Executive / Repair Manager)</span>
+                                        </div>
+                                        <div class="w-2 h-2 rounded-full bg-gray-500 group-hover:bg-[#008dda] transition-colors"></div>
+                                        <div class="h-20 w-px bg-gray-400 border-l border-dashed border-gray-400 group-hover:border-[#008dda] transition-colors"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job 1: CORNEA -->
+                                <div onclick="showJobDetails('job1')" class="group relative cursor-pointer h-full bg-[#fca311] hover:bg-[#d98c0f] transition-colors duration-300 border-l border-white/30 shadow-sm" style="width: 6%;" title="CORNEA (2026 - Present)">
+                                    <!-- Pin -->
+                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 flex flex-col items-center">
+                                        <div class="text-center mb-1 whitespace-nowrap">
+                                            <span class="block text-[11px] font-bold text-gray-800 leading-tight">CORNEA</span>
+                                            <span class="block text-[9px] text-gray-500 whitespace-nowrap">(Computer Op.)</span>
+                                        </div>
+                                        <div class="w-2 h-2 rounded-full bg-gray-500 group-hover:bg-[#fca311] transition-colors"></div>
+                                        <div class="h-12 w-px bg-gray-400 border-l border-dashed border-gray-400 group-hover:border-[#fca311] transition-colors"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex-1">
-                                <h5 class="text-md font-heading text-brand-black mb-3">Computer Operator / Graphic Designer</h5>
-                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                    <li>Design promotional graphics and visual advertisements for CORNEA marketing campaigns.</li>
-                                    <li>Type, format, and edit educational guide books, completing full textual corrections in softcopy format.</li>
-                                    <li>Conduct thorough text proofreading in both softcopy and printed formats to ensure 100% accuracy prior to final publication.</li>
-                                </ul>
+                            
+                            <!-- Years Axis -->
+                            <div class="flex w-full mt-[2px] bg-[#e5e7eb]">
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2015</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2016</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2017</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2018</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2019</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2020</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2021</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2022</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2023</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2024</div>
+                                <div class="flex-1 text-center py-1.5 border-r border-white text-[9px] font-bold text-gray-500 uppercase">2025</div>
+                                <div class="flex-1 text-center py-1.5 text-[9px] font-bold text-gray-500 uppercase">2026</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Details Panel (Dynamic) -->
+                    <div id="job-details-panel" class="w-full max-w-3xl mx-auto p-8 border border-gray-100 bg-white rounded-[20px] shadow-lg transition-all duration-500 transform">
+                        <div class="text-center text-gray-400 text-sm font-medium py-8" id="default-job-msg">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                            Click on a timeline block above to view details
                         </div>
                         
-                        <!-- Job 2 -->
-                        <div class="flex flex-col gap-4 p-6 border border-gray-100 bg-white hover:border-brand-blue transition duration-300 snap-start h-full group/card">
-                            <div class="flex flex-col items-start border-b border-gray-100 pb-4">
-                                <span class="text-xs font-bold text-gray-400 block mb-1 group-hover/card:text-brand-blue transition">Jul 2018 &ndash; Apr 2026</span>
-                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black mb-1 line-clamp-2 min-h-[40px]">Inovace Technologies Ltd</h4>
-                                <a href="https://inovacetech.com/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                <div class="h-8 flex items-center justify-start w-full">
-                                    <img src="Companies logos/Inovace Technologies.png" alt="Inovace Logo" class="max-h-8 object-contain">
+                        <!-- Job Content Container (Hidden Initially) -->
+                        <div id="job-content" class="hidden flex-col gap-6">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 pb-6 mb-2 gap-4">
+                                <div>
+                                    <span id="job-date" class="text-xs font-bold text-brand-blue block mb-2 uppercase tracking-wider">Present</span>
+                                    <h4 id="job-company" class="text-xl md:text-2xl font-bold uppercase tracking-wider text-brand-black mb-2">CORNEA Nursing Coaching Center</h4>
+                                    <a id="job-link" href="#" target="_blank" class="text-xs text-brand-blue hover:underline inline-flex items-center gap-1 font-medium">View Company <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>
+                                </div>
+                                <div class="h-16 flex items-center justify-start md:justify-end bg-gray-50/50 p-2 rounded-lg border border-gray-50">
+                                    <img id="job-logo" src="" alt="Company Logo" class="max-h-12 object-contain drop-shadow-sm mix-blend-multiply">
                                 </div>
                             </div>
-                            <div class="flex-1">
-                                <h5 class="text-md font-heading text-brand-black mb-3">Sr. Executive / Repair Manager</h5>
-                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                    <li>Managed the full cycle of returned products (RMA) and comprehensive stock repair documentation.</li>
-                                    <li>Developed data reports and maintained extensive maintenance logs for office hardware and systems.</li>
-                                    <li>Created and implemented Standard Operating Procedures (SOPs) and visual guidelines for streamlined office work.</li>
-                                    <li>Tracked office inventory diligently and managed the proper distribution of technical items and supplies.</li>
-                                    <li>Utilized Google Sheets and Airtable to track real-time inventory and archive daily data accurately.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Job 3 -->
-                        <div class="flex flex-col gap-4 p-6 border border-gray-100 bg-white hover:border-brand-blue transition duration-300 snap-start h-full group/card">
-                            <div class="flex flex-col items-start border-b border-gray-100 pb-4">
-                                <span class="text-xs font-bold text-gray-400 block mb-1 group-hover/card:text-brand-blue transition">Feb 2015 &ndash; Jun 2018</span>
-                                <h4 class="text-sm font-bold uppercase tracking-wider text-brand-black mb-1 line-clamp-2 min-h-[40px]">Sunan Prokashoni</h4>
-                                <a href="https://www.facebook.com/sunanprokashoni.bongshal/" target="_blank" class="text-[10px] text-brand-blue hover:underline block mb-3">View Company</a>
-                                <div class="h-8 flex items-center justify-start w-full">
-                                    <img src="Companies logos/Sunan Prokashoni.png" alt="Sunan Prokashoni Logo" class="max-h-8 object-contain">
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h5 class="text-md font-heading text-brand-black mb-3">IT Manager</h5>
-                                <ul class="list-disc list-inside text-xs text-gray-500 space-y-2 leading-relaxed">
-                                    <li>Safeguarded and maintained office computers, networking equipment, and software infrastructure.</li>
-                                    <li>Assisted in designing and formatting layouts for books and various promotional marketing materials.</li>
-                                    <li>Conducted daily data entry operations and efficiently managed corporate email correspondence.</li>
+                            <div>
+                                <h5 id="job-role" class="text-2xl font-heading text-brand-black mb-4">Computer Operator / Graphic Designer</h5>
+                                <ul id="job-desc" class="list-disc list-inside text-sm text-gray-600 space-y-3 leading-relaxed ml-1 font-medium">
+                                    <!-- Dynamic list items -->
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    const jobData = {
+                        'job1': {
+                            date: 'May 2026 - Present',
+                            company: 'CORNEA Nursing Coaching Center',
+                            link: 'https://www.facebook.com/cornealtd',
+                            logo: 'Companies logos/Cornea Coaching Center.png',
+                            role: 'Computer Operator / Graphic Designer',
+                            desc: [
+                                'Design promotional graphics and visual advertisements for CORNEA marketing campaigns.',
+                                'Type, format, and edit educational guide books, completing full textual corrections in softcopy format.',
+                                'Conduct thorough text proofreading in both softcopy and printed formats to ensure 100% accuracy prior to final publication.'
+                            ]
+                        },
+                        'job2': {
+                            date: 'Jul 2018 - Apr 2026',
+                            company: 'Inovace Technologies Ltd',
+                            link: 'https://inovacetech.com/',
+                            logo: 'Companies logos/Inovace Technologies.png',
+                            role: 'Sr. Executive / Repair Manager',
+                            desc: [
+                                'Managed the full cycle of returned products (RMA) and comprehensive stock repair documentation.',
+                                'Developed data reports and maintained extensive maintenance logs for office hardware and systems.',
+                                'Created and implemented Standard Operating Procedures (SOPs) and visual guidelines for streamlined office work.',
+                                'Tracked office inventory diligently and managed the proper distribution of technical items and supplies.',
+                                'Utilized Google Sheets and Airtable to track real-time inventory and archive daily data accurately.'
+                            ]
+                        },
+                        'job3': {
+                            date: 'Feb 2015 - Jun 2018',
+                            company: 'Sunan Prokashoni',
+                            link: 'https://www.facebook.com/sunanprokashoni.bongshal/',
+                            logo: 'Companies logos/Sunan Prokashoni.png',
+                            role: 'IT Manager',
+                            desc: [
+                                'Safeguarded and maintained office computers, networking equipment, and software infrastructure.',
+                                'Assisted in designing and formatting layouts for books and various promotional marketing materials.',
+                                'Conducted daily data entry operations and efficiently managed corporate email correspondence.'
+                            ]
+                        }
+                    };
+
+                    function showJobDetails(jobId) {
+                        const data = jobData[jobId];
+                        if (!data) return;
+                        
+                        document.getElementById('default-job-msg').style.display = 'none';
+                        document.getElementById('job-content').style.display = 'flex';
+                        
+                        document.getElementById('job-date').innerText = data.date;
+                        document.getElementById('job-company').innerText = data.company;
+                        document.getElementById('job-link').href = data.link;
+                        document.getElementById('job-logo').src = data.logo;
+                        document.getElementById('job-role').innerText = data.role;
+                        
+                        const descList = document.getElementById('job-desc');
+                        descList.innerHTML = '';
+                        data.desc.forEach(item => {
+                            const li = document.createElement('li');
+                            li.innerText = item;
+                            descList.appendChild(li);
+                        });
+                        
+                        // Add a slight pop animation
+                        const panel = document.getElementById('job-details-panel');
+                        panel.style.transform = 'scale(0.98)';
+                        panel.style.opacity = '0.5';
+                        setTimeout(() => {
+                            panel.style.transform = 'scale(1)';
+                            panel.style.opacity = '1';
+                        }, 50);
+                    }
+                </script>
             </section>
 
             
