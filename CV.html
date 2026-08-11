@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 12mm 15mm;
+        background-color: #fcfcfc;
+    }
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.45;
+        color: #222;
+        margin: 0;
+        padding: 0;
+        background-color: #fcfcfc;
+    }
+    /* Header Layout */
+    .header-table {
+        display: table;
+        width: 100%;
+        border-bottom: 2px solid #2c3e50;
+        padding-bottom: 12px;
+        margin-bottom: 15px;
+    }
+    .header-left {
+        display: table-cell;
+        vertical-align: middle;
+        width: 110px;
+        padding-right: 15px;
+    }
+    .header-middle {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .header-right {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        width: 100px;
+    }
+    
+    /* Photo Container */
+    .photo-container {
+        width: 100px;
+        height: 120px;
+        border: 2px solid #bdc3c7;
+        background-color: #ecf0f1;
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+    }
+    .photo-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .photo-placeholder-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 9pt;
+        color: #7f8c8d;
+    }
+
+    h1 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 20pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .subtitle {
+        margin: 2px 0 8px 0;
+        font-size: 11.5pt;
+        color: #3498db;
+        font-weight: bold;
+    }
+    .contact-info {
+        font-size: 10pt;
+        color: #444;
+        line-height: 1.4;
+    }
+    
+    /* QR Code Container */
+    .qr-container img {
+        width: 80px;
+        height: 80px;
+        border: 1px solid #ddd;
+        padding: 3px;
+        background: #fff;
+    }
+    .qr-text {
+        font-size: 7.5pt;
+        color: #7f8c8d;
+        margin-top: 4px;
+        font-weight: bold;
+    }
+    
+    /* Section Styles */
+    h2 {
+        font-size: 12pt;
+        color: #2c3e50;
+        border-left: 4px solid #3498db;
+        padding-left: 8px;
+        margin-top: 15px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        background-color: #f0f4f8;
+        padding: 5px 8px;
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+    
+    .section-content {
+        margin-bottom: 12px;
+    }
+    
+    /* Summary */
+    .summary {
+        text-align: justify;
+    }
+
+    /* Experience */
+    .job {
+        margin-bottom: 15px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .job-header {
+        display: table;
+        width: 100%;
+        margin-bottom: 2px;
+    }
+    .job-title-wrapper {
+        display: table-cell;
+        vertical-align: bottom;
+    }
+    .job-date-wrapper {
+        display: table-cell;
+        vertical-align: bottom;
+        text-align: right;
+        font-style: italic;
+        color: #7f8c8d;
+        font-size: 10pt;
+    }
+    .job-title {
+        font-size: 11.5pt;
+        font-weight: bold;
+        color: #2980b9;
+        margin: 0;
+    }
+    .job-company {
+        font-weight: bold;
+        color: #34495e;
+        font-size: 10.5pt;
+        margin-bottom: 4px;
+    }
+    .job-company img {
+        height: 16px;
+        vertical-align: middle;
+        margin-right: 6px;
+    }
+    .company-link {
+        display: block;
+        font-size: 9pt;
+        font-weight: normal;
+        margin-top: 1px;
+    }
+    .company-link a {
+        color: #2980b9;
+        text-decoration: none;
+    }
+    .company-link a:hover {
+        text-decoration: underline;
+    }
+    ul {
+        margin-top: 3px;
+        margin-bottom: 0;
+        padding-left: 18px;
+    }
+    li {
+        margin-bottom: 3px;
+    }
+
+    /* Core Skills Columns */
+    .two-col-table {
+        display: table;
+        width: 100%;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    /* Global 2-column layout for bottom sections */
+    .bottom-layout {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .col-half {
+        display: table-cell;
+        width: 50%;
+        vertical-align: top;
+    }
+    .col-left {
+        padding-right: 15px;
+    }
+    .col-right {
+        padding-left: 15px;
+    }
+    
+    .detail-row {
+        margin-bottom: 4px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .detail-label {
+        font-weight: bold;
+        color: #2c3e50;
+        display: inline-block;
+        width: 110px;
+    }
+    
+    .reference-block {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        padding: 10px;
+        border-radius: 4px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .ref-name {
+        font-weight: bold;
+        font-size: 11pt;
+        color: #2c3e50;
+    }
+</style>
+</head>
+<body>
+    <div class="header-table">
+        <div class="header-left">
+            <div class="photo-container">
+                <img src="photo.png" alt="Profile Photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="photo-placeholder-text" style="display:none;">Photo</div>
+            </div>
+        </div>
+        <div class="header-middle">
+            <h1>MD MUKID HASAN SEIAM</h1>
+            <div class="subtitle">Versatile Computer Operator & Fast Software Learner</div>
+            <div class="contact-info">
+                <strong>Address:</strong> 47/1 Hazi Osman Goni Road, Bangshal, Dhaka<br>
+                <strong>Phone:</strong> 01626 282 648 &nbsp;|&nbsp; <strong>Email:</strong> mukidhasanseiam@gmail.com<br>
+                <strong>LinkedIn:</strong> linkedin.com/in/mukidhasanseiam
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://mukidhasan.github.io/cm/&margin=0" alt="Portfolio QR Code">
+                <div class="qr-text">Scan for Portfolio</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-content summary">
+        <h2>Summary</h2>
+        <p style="margin:0;">I am an organized and adaptable worker with a solid foundation in data entry, hardware tracking, and general office duties. Rather than claiming to be an advanced expert, I pride myself on being highly resourceful and a very fast learner. I know how to use standard computer software tools efficiently and rely on modern AI assistants (like Gemini and ChatGPT) to elevate my output to a professional level. I am looking for a reliable role where I can use my practical skills, quick learning ability, and dedication to support the team and run daily operations smoothly.</p>
+    </div>
+
+    <div class="section-content">
+        <h2>Experiences</h2>
+        
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title-wrapper">
+                    <div class="job-title">Computer Operator / Graphic Designer</div>
+                </div>
+                <div class="job-date-wrapper">Present</div>
+            </div>
+            <div class="job-company">
+                <img src="photo2.png" alt="CORNEA Logo"> CORNEA Nursing Coaching Center
+                <span class="company-link"><a href="https://www.facebook.com/cornealtd" target="_blank">https://www.facebook.com/cornealtd</a></span>
+            </div>
+            <ul>
+                <li>Design promotional graphics and visual advertisements for CORNEA marketing campaigns.</li>
+                <li>Type, format, and edit educational guide books, completing full textual corrections in softcopy format.</li>
+                <li>Conduct thorough text proofreading in both softcopy and printed formats to ensure 100% accuracy prior to final publication.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title-wrapper">
+                    <div class="job-title">Sr. Executive / Repair Manager</div>
+                </div>
+                <div class="job-date-wrapper">Jul 2018 &ndash; Apr 2026</div>
+            </div>
+            <div class="job-company">
+                <img src="https://inovacetech.com/wp-content/uploads/2018/12/cropped-Inovace-Logo-New-Feb-2018-300x94.png" alt="Inovace Technologies Logo"> Inovace Technologies Ltd
+                <span class="company-link"><a href="https://inovacetech.com/" target="_blank">https://inovacetech.com/</a></span>
+            </div>
+            <ul>
+                <li>Managed the full cycle of returned products (RMA) and comprehensive stock repair documentation.</li>
+                <li>Developed data reports and maintained extensive maintenance logs for office hardware and systems.</li>
+                <li>Created and implemented Standard Operating Procedures (SOPs) and visual guidelines for streamlined office work.</li>
+                <li>Tracked office inventory diligently and managed the proper distribution of technical items and supplies.</li>
+                <li>Utilized Google Sheets and Airtable to track real-time inventory and archive daily data accurately.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div class="job-title-wrapper">
+                    <div class="job-title">IT Manager</div>
+                </div>
+                <div class="job-date-wrapper">Feb 2015 &ndash; Jun 2018</div>
+            </div>
+            <div class="job-company">
+                <img src="photo3.png" alt="Sunan Prokashoni Logo"> Sunan Prokashoni
+                <span class="company-link"><a href="https://www.facebook.com/sunanprokashoni.bongshal/" target="_blank">https://www.facebook.com/sunanprokashoni.bongshal/</a></span>
+            </div>
+            <ul>
+                <li>Safeguarded and maintained office computers, networking equipment, and software infrastructure.</li>
+                <li>Assisted in designing and formatting layouts for books and various promotional marketing materials.</li>
+                <li>Conducted daily data entry operations and efficiently managed corporate email correspondence.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-content">
+        <h2>Core Clerical & Technical Skills</h2>
+        <div class="two-col-table">
+            <div class="col-half col-left">
+                <ul>
+                    <li><strong>Office Work:</strong> MS Word, Excel, Google Sheets, Airtable</li>
+                    <li><strong>Data Work:</strong> Tracking inventory, accurate data entry</li>
+                    <li><strong>Computer Tools:</strong> Gemini, ChatGPT, GitHub Copilot</li>
+                </ul>
+            </div>
+            <div class="col-half col-right">
+                <ul>
+                    <li><strong>Record Keeping:</strong> Office rules (SOPs), maintenance logs</li>
+                    <li><strong>Finance:</strong> Processing invoices and generating bills</li>
+                    <li><strong>Languages:</strong> Bengali (Native), English, Hindi (Listen/Understand), Arabic (Reading Only)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2-COLUMN LAYOUT -->
+    <div class="bottom-layout">
+        <!-- LEFT COLUMN -->
+        <div class="col-half col-left">
+            <div class="section-content">
+                <h2>Personal Details</h2>
+                <div class="detail-row"><span class="detail-label">Father's Name:</span> MD. Hossain</div>
+                <div class="detail-row"><span class="detail-label">Date of Birth:</span> 21 May 1994</div>
+                <div class="detail-row"><span class="detail-label">Gender:</span> Male</div>
+                <div class="detail-row"><span class="detail-label">Marital Status:</span> Married</div>
+                <div class="detail-row"><span class="detail-label">Religion:</span> Islam</div>
+                <div class="detail-row"><span class="detail-label">Nationality:</span> Bangladeshi</div>
+                <div class="detail-row"><span class="detail-label">Blood Group:</span> O+</div>
+            </div>
+            
+            <div class="section-content">
+                <h2>Interests</h2>
+                <ul>
+                    <li>Writing philosophy books</li>
+                    <li>Entrepreneurship (Pharmacy primary business & small business shareholder)</li>
+                    <li>Video editing, vlogs, short stories & podcasts</li>
+                    <li>Building community presence and engaging with people</li>
+                    <li>Content creation, memes & internet trends</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col-half col-right">
+            <div class="section-content">
+                <h2>Education & Highlights</h2>
+                <ul>
+                    <li><strong>Higher Secondary Certificate (HSC) - Commerce</strong><br>
+                        Shaikh Burhanuddin Post Graduate College | Pass: 2014</li>
+                    <li style="margin-top: 8px;">Proficient in creating official visual designs using Adobe Photoshop and Illustrator.</li>
+                    <li style="margin-top: 8px;">Fast and accurate typing speeds in both Bengali and English, highly suitable for professional administrative tasks.</li>
+                </ul>
+            </div>
+            
+            <div class="section-content">
+                <h2>Hobbies</h2>
+                <ul>
+                    <li>Riding bikes, long-distance cycling & swimming</li>
+                    <li>Making small electronic items (12V)</li>
+                    <li>Eco-friendly farming, travel & antiques</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOWN ALONE REFERENCE AREA -->
+    <div class="section-content">
+        <h2>Reference</h2>
+        <div class="reference-block" style="width: 48%;">
+            <div class="ref-name">Mohammad Ikram</div>
+            <div>Chief Technology Officer (CTO)</div>
+            <div>Inovace Technologies Ltd</div>
+            <div style="margin-top: 5px;">
+                <strong>Mobile:</strong> +8801675431024<br>
+                <strong>Email:</strong> ik.shimul@gmail.com
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
