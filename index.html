@@ -1678,6 +1678,221 @@
 
             </section>
 
+            <!-- Page: My Content -->
+            <section id="section-content" class="py-6 flex flex-col gap-12">
+                <div class="max-w-4xl mb-6">
+                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">Portfolio</span>
+                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
+                        MY <span class="text-brand-blue">CONTENT</span>
+                    </h2>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed font-medium"
+                        data-translate="creative_content_desc">
+                        প্রযুক্তির সীমানা ছাড়িয়ে বিভিন্ন কাস্টম ক্রাফট, ২ডি গেম মডিফিকেশন এবং ভিন্টেজ মিডিয়া আর্কাইভ
+                        নিয়ে আমার নানা এক্সপেরিমেন্ট ও শখের কাজগুলো এখানে তুলে ধরা হলো।
+                    </p>
+                </div>
+                <div class="relative group/slider">
+                    <!-- Left Arrow -->
+                    <button onclick="document.getElementById('content-slider').scrollBy({left: -300, behavior: 'smooth'})" 
+                        class="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 text-gray-800 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 hidden md:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+
+                    <div id="content-slider" class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar px-1">
+                        <!-- Content Card Design -->
+                        <div onclick="openGraphicDesignModal()" onmouseenter="startCardSlide('design', this)" onmouseleave="stopCardSlide('design', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
+                                    Graphic Design</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
+                                    Graphic Design samples
+                                </h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
+                                    A collection of creative graphic design projects, branding, and visual content.
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/Adobe_Photoshop_CC_icon.svg" alt="Photoshop CC" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/Adobe_Illustrator_CC_icon.svg" alt="Illustrator CC" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/Canva_logo.svg" alt="Canva" class="h-8 object-contain drop-shadow-sm">
+                                </div>
+                            </div>
+                            <div onclick="openGraphicDesignModal()"
+                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span>View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <!-- Content Card Data & Automation -->
+                        <div onclick="openDataAutomationModal()" onmouseenter="startCardSlide('data', this)" onmouseleave="stopCardSlide('data', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
+                                    Data & Automation</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
+                                    Data & Automation
+                                </h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
+                                    Streamlining workflows, managing data, and building custom solutions using powerful tools.
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/Google_Sheets_logo_(2014-2020).svg" alt="Google Sheets" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/Google_AppSheet_Logo.svg" alt="AppSheet" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/Google_Antigravity_Logo.svg" alt="Gemini" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/ChatGPT-Logo.svg" alt="GPT" class="h-8 object-contain drop-shadow-sm">
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span>View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Card Diy -->
+                        <div onclick="openDiyConceptModal()" onmouseenter="startCardSlide('diy', this)" onmouseleave="stopCardSlide('diy', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppcase tracking-widest mb-3 block"
+                                    data-translate="content_c2_tag">Hardware
+                                    & DIY</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                    data-translate="content_c2_title">DIY Concept Crafts</h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c2_desc">
+                                    দৈনন্দিন জীবন ও কর্মক্ষেত্রের কাজকে সহজ করতে বিভিন্ন কাস্টম হার্ডওয়্যার মডিফিকেশন,
+                                    টেস্টিং টুলস এবং ইলেকট্রনিক্স ডিজাইন প্রজেক্ট।
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/tinkercad.svg" alt="Tinkercad" class="h-8 object-contain drop-shadow-sm">
+                                </div>
+                            </div>
+                            <div onclick="openDiyConceptModal()"
+                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span data-translate="btn_view_concept">View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        </div>
+
+                        <!-- Content Card Social -->
+                        <div onclick="openSocialMediaModal()" onmouseenter="startCardSlide('social', this)" onmouseleave="stopCardSlide('social', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
+                                    data-translate="content_c3_tag">Media</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                    data-translate="content_c3_title">Social Media Activities
+                                </h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c3_desc">
+                                    Social media activities and content.
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/Capcut-icon.svg" alt="CapCut" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/Wondershare_filmora_logo.svg" alt="Filmora" class="h-8 object-contain drop-shadow-sm">
+                                </div>
+                            </div>
+                            <div onclick="openSocialMediaModal()"
+                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span data-translate="btn_view_concept">View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        </div>
+
+                        <!-- Content Card Diaries -->
+                        <div onclick="openDiariesModal()" onmouseenter="startCardSlide('diaries', this)" onmouseleave="stopCardSlide('diaries', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
+                                    Publications</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
+                                    My Diaries
+                                </h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
+                                    A collection of my written diaries, thoughts, and publications on society, technology, and reality.
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span>View Diaries</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Card Game -->
+                        <div onclick="openGameProjectsModal()" onmouseenter="startCardSlide('game', this)" onmouseleave="stopCardSlide('game', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
+                                    data-translate="content_c1_tag">2D
+                                    Game Development</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
+                                    data-translate="content_c1_title">2D game Projects</h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c1_desc">
+                                    কাস্টম স্প্রাইট শিট ডিজাইনিং, টু-ডি অ্যানিমেশন ফ্রেম অ্যালাইনমেন্ট এবং ওপেন-সোর্স
+                                    ইঞ্জিনগুলোর মাধ্যমে ক্যারেক্টার মেকানিক্স মডিফিকেশন।
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/OPENBOR.png" alt="OpenBOR" class="h-8 object-contain drop-shadow-md">
+                                    <img src="Software Logos/MUGEN.png" alt="MUGEN" class="h-8 object-contain drop-shadow-md">
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span data-translate="btn_view_concept">View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Right Arrow -->
+                    <button onclick="document.getElementById('content-slider').scrollBy({left: 300, behavior: 'smooth'})" 
+                        class="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 text-gray-800 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 hidden md:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </section>
+
+
             <!-- Page: Experience -->
             <section id="section-experience" class="py-10">
                 <div class="flex justify-between items-end mb-10">
@@ -1963,220 +2178,6 @@
             </section>
 
             
-
-            <!-- Page: My Content -->
-            <section id="section-content" class="py-6 flex flex-col gap-12">
-                <div class="max-w-4xl mb-6">
-                    <span class="text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4 block">Portfolio</span>
-                    <h2 class="font-heading text-5xl uppercase leading-none text-brand-black mb-8">
-                        MY <span class="text-brand-blue">CONTENT</span>
-                    </h2>
-                    <p class="text-gray-600 text-sm md:text-base leading-relaxed font-medium"
-                        data-translate="creative_content_desc">
-                        প্রযুক্তির সীমানা ছাড়িয়ে বিভিন্ন কাস্টম ক্রাফট, ২ডি গেম মডিফিকেশন এবং ভিন্টেজ মিডিয়া আর্কাইভ
-                        নিয়ে আমার নানা এক্সপেরিমেন্ট ও শখের কাজগুলো এখানে তুলে ধরা হলো।
-                    </p>
-                </div>
-                <div class="relative group/slider">
-                    <!-- Left Arrow -->
-                    <button onclick="document.getElementById('content-slider').scrollBy({left: -300, behavior: 'smooth'})" 
-                        class="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 text-gray-800 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 hidden md:block">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                    </button>
-
-                    <div id="content-slider" class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar px-1">
-                        <!-- Content Card Design -->
-                        <div onclick="openGraphicDesignModal()" onmouseenter="startCardSlide('design', this)" onmouseleave="stopCardSlide('design', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
-                                    Graphic Design</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
-                                    Graphic Design samples
-                                </h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
-                                    A collection of creative graphic design projects, branding, and visual content.
-                                </p>
-                                <div class="flex gap-3 mt-4">
-                                    <img src="Software Logos/Adobe_Photoshop_CC_icon.svg" alt="Photoshop CC" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/Adobe_Illustrator_CC_icon.svg" alt="Illustrator CC" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/Canva_logo.svg" alt="Canva" class="h-8 object-contain drop-shadow-sm">
-                                </div>
-                            </div>
-                            <div onclick="openGraphicDesignModal()"
-                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span>View Concept</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-                        </div>
-                        
-                        <!-- Content Card Data & Automation -->
-                        <div onclick="openDataAutomationModal()" onmouseenter="startCardSlide('data', this)" onmouseleave="stopCardSlide('data', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
-                                    Data & Automation</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
-                                    Data & Automation
-                                </h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
-                                    Streamlining workflows, managing data, and building custom solutions using powerful tools.
-                                </p>
-                                <div class="flex gap-3 mt-4">
-                                    <img src="Software Logos/Google_Sheets_logo_(2014-2020).svg" alt="Google Sheets" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/Google_AppSheet_Logo.svg" alt="AppSheet" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/Google_Antigravity_Logo.svg" alt="Gemini" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/ChatGPT-Logo.svg" alt="GPT" class="h-8 object-contain drop-shadow-sm">
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span>View Concept</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Card Diy -->
-                        <div onclick="openDiyConceptModal()" onmouseenter="startCardSlide('diy', this)" onmouseleave="stopCardSlide('diy', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppcase tracking-widest mb-3 block"
-                                    data-translate="content_c2_tag">Hardware
-                                    & DIY</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
-                                    data-translate="content_c2_title">DIY Concept Crafts</h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c2_desc">
-                                    দৈনন্দিন জীবন ও কর্মক্ষেত্রের কাজকে সহজ করতে বিভিন্ন কাস্টম হার্ডওয়্যার মডিফিকেশন,
-                                    টেস্টিং টুলস এবং ইলেকট্রনিক্স ডিজাইন প্রজেক্ট।
-                                </p>
-                                <div class="flex gap-3 mt-4">
-                                    <img src="Software Logos/tinkercad.svg" alt="Tinkercad" class="h-8 object-contain drop-shadow-sm">
-                                </div>
-                            </div>
-                            <div onclick="openDiyConceptModal()"
-                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span data-translate="btn_view_concept">View Concept</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-                        </div>
-
-                        <!-- Content Card Social -->
-                        <div onclick="openSocialMediaModal()" onmouseenter="startCardSlide('social', this)" onmouseleave="stopCardSlide('social', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
-                                    data-translate="content_c3_tag">Media</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
-                                    data-translate="content_c3_title">Social Media Activities
-                                </h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c3_desc">
-                                    Social media activities and content.
-                                </p>
-                                <div class="flex gap-3 mt-4">
-                                    <img src="Software Logos/Capcut-icon.svg" alt="CapCut" class="h-8 object-contain drop-shadow-sm">
-                                    <img src="Software Logos/Wondershare_filmora_logo.svg" alt="Filmora" class="h-8 object-contain drop-shadow-sm">
-                                </div>
-                            </div>
-                            <div onclick="openSocialMediaModal()"
-                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span data-translate="btn_view_concept">View Concept</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-                        </div>
-
-                        <!-- Content Card Diaries -->
-                        <div onclick="openDiariesModal()" onmouseenter="startCardSlide('diaries', this)" onmouseleave="stopCardSlide('diaries', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
-                                    Publications</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
-                                    My Diaries
-                                </h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
-                                    A collection of my written diaries, thoughts, and publications on society, technology, and reality.
-                                </p>
-                            </div>
-                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span>View Diaries</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Card Game -->
-                        <div onclick="openGameProjectsModal()" onmouseenter="startCardSlide('game', this)" onmouseleave="stopCardSlide('game', this)"
-                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
-                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
-                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
-                            <div>
-                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block"
-                                    data-translate="content_c1_tag">2D
-                                    Game Development</span>
-                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4"
-                                    data-translate="content_c1_title">2D game Projects</h3>
-                                <p class="text-gray-500 text-xs leading-relaxed mb-6" data-translate="content_c1_desc">
-                                    কাস্টম স্প্রাইট শিট ডিজাইনিং, টু-ডি অ্যানিমেশন ফ্রেম অ্যালাইনমেন্ট এবং ওপেন-সোর্স
-                                    ইঞ্জিনগুলোর মাধ্যমে ক্যারেক্টার মেকানিক্স মডিফিকেশন।
-                                </p>
-                                <div class="flex gap-3 mt-4">
-                                    <img src="Software Logos/OPENBOR.png" alt="OpenBOR" class="h-8 object-contain drop-shadow-md">
-                                    <img src="Software Logos/MUGEN.png" alt="MUGEN" class="h-8 object-contain drop-shadow-md">
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
-                                <span data-translate="btn_view_concept">View Concept</span>
-                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
-                                    </path>
-                                </svg>
-                            </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <!-- Right Arrow -->
-                    <button onclick="document.getElementById('content-slider').scrollBy({left: 300, behavior: 'smooth'})" 
-                        class="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 text-gray-800 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 hidden md:block">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                </div>
-            </section>
 
             <!-- Page: Education -->
             <section id="section-education" class="py-6">
