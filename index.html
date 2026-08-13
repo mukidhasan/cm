@@ -226,6 +226,72 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        let isDocumentDesignLoaded = false;
+        async function openDocumentDesignModal() {
+            const modal = document.getElementById('documentDesignModal');
+            if (modal) modal.classList.remove('hidden');
+            
+            if (isDocumentDesignLoaded) return;
+            isDocumentDesignLoaded = true;
+            
+            const grid = document.getElementById('documentDesignGalleryGrid');
+            const cacheKey = 'document_design_gallery_v1';
+            const cached = localStorage.getItem(cacheKey);
+            const cacheTime = localStorage.getItem(cacheKey + '_time');
+            
+            const renderGallery = (images) => {
+                if (!images || images.length === 0) {
+                    grid.innerHTML = '<div class="w-full text-center text-white/50 py-10">No images found in Document Design & Formatting folder.</div>';
+                    return;
+                }
+                
+                grid.innerHTML = images.map(img => `
+                    <div class="aspect-square w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] max-w-sm bg-gray-900 rounded-lg overflow-hidden border border-gray-800 shadow-xl group relative flex-grow-0 flex-shrink-0">
+                        <img onclick="openLightbox(this.src)" src="${img.url}" alt="${img.name}" 
+                             class="cursor-pointer w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                             onerror="this.src='https://placehold.co/600x600/1a1a2e/00AECC?text=Error+Loading'">
+                    </div>
+                `).join('');
+            };
+            
+            if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < 3600000)) {
+                renderGallery(JSON.parse(cached));
+                return;
+            }
+            
+            try {
+                const response = await fetch('https://api.github.com/repos/mukidhasan/cm/contents/Document%20Design%20%26%20Formatting');
+                if (!response.ok) throw new Error('Failed to fetch from GitHub API');
+                
+                const files = await response.json();
+                
+                const images = files
+                    .filter(file => file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
+                    .map(file => ({
+                        name: file.name,
+                        url: `Document Design & Formatting/${file.name}`
+                    }));
+                    
+                localStorage.setItem(cacheKey, JSON.stringify(images));
+                localStorage.setItem(cacheKey + '_time', Date.now().toString());
+                
+                renderGallery(images);
+            } catch (error) {
+                console.error('Error loading gallery from GitHub:', error);
+                if (cached) {
+                    renderGallery(JSON.parse(cached));
+                } else {
+                    grid.innerHTML = '<div class="w-full text-center text-red-400 py-10">Failed to load images from GitHub. Please try again later.</div>';
+                    isDocumentDesignLoaded = false;
+                }
+            }
+        }
+
+        function closeDocumentDesignModal() {
+            const modal = document.getElementById('documentDesignModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
         let isDataAutomationLoaded = false;
         async function openDataAutomationModal() {
             const modal = document.getElementById('dataAutomationModal');
@@ -1728,6 +1794,38 @@
                     </button>
 
                     <div id="content-slider" class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory hide-scrollbar px-1">
+                        <!-- Content Card Document Design -->
+                        <div onclick="openDocumentDesignModal()" onmouseenter="startCardSlide('docdesign', this)" onmouseleave="stopCardSlide('docdesign', this)"
+                            class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
+                            <div class="card-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0 pointer-events-none"></div>
+                            <div class="relative z-10 p-8 flex flex-col justify-between h-full">
+                            <div>
+                                <span class="text-brand-blue text-[9px] font-extrabold uppercase tracking-widest mb-3 block">
+                                    Formatting</span>
+                                <h3 class="font-heading text-2xl uppercase text-brand-black mb-4">
+                                    Document Design & Formatting
+                               </h3>
+                                <p class="text-gray-500 text-xs leading-relaxed mb-6">
+                                    Professional document formatting, templates, layout creation, and digital publishing.
+                                </p>
+                                <div class="flex gap-3 mt-4">
+                                    <img src="Software Logos/Microsoft_Office_Word_(2025–present).svg" alt="MS Word" class="h-8 object-contain drop-shadow-sm">
+                                    <img src="Software Logos/bijoy-bayanno-seeklogo.eps" alt="Bijoy Bayanno" class="h-8 object-contain drop-shadow-sm" onerror="this.src='Software Logos/bijoy-bayanno-seeklogo.png'">
+                                    <img src="Software Logos/foxit-reader.svg" alt="Foxit Reader" class="h-8 object-contain drop-shadow-sm">
+                                </div>
+                            </div>
+                            <div onclick="openDocumentDesignModal()"
+                                class="flex items-center gap-2 text-brand-black font-bold uppercase text-[10px] tracking-wider group-hover:text-brand-blue transition cursor-pointer">
+                                <span>View Concept</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        </div>
+
                         <!-- Content Card Design -->
                         <div onclick="openGraphicDesignModal()" onmouseenter="startCardSlide('design', this)" onmouseleave="stopCardSlide('design', this)"
                             class="flex-none w-[85vw] md:w-[45vw] lg:w-[280px] snap-start group relative overflow-hidden border border-gray-200 flex flex-col justify-between hover:border-brand-blue transition duration-300 bg-white shadow-sm hover:shadow-md cursor-pointer">
@@ -3105,6 +3203,32 @@
         </div>
     </div>
 
+        <!-- Document Design Modal -->
+        <div id="documentDesignModal"
+            class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
+            <button onclick="closeDocumentDesignModal()"
+                class="absolute top-6 right-6 text-gray-400 hover:text-white transition duration-300 z-50 p-2 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+            <div class="max-w-7xl w-full max-h-[90vh] overflow-y-auto p-4 space-y-8 no-scrollbar">
+                <h3 class="font-heading text-4xl uppercase text-white text-center mb-4">Document Design & Formatting Projects</h3>
+                
+                <!-- Dynamic Photo Grid -->
+                <div id="documentDesignGalleryGrid" class="flex flex-wrap justify-center gap-6">
+                    <div class="w-full text-center text-white/50 py-10 flex flex-col items-center">
+                        <svg class="animate-spin h-8 w-8 mb-4 text-[#00AECC]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading Document Design & Formatting Gallery...
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Graphic Design Modal -->
         <div id="graphicDesignModal"
             class="fixed inset-0 z-50 bg-[#0b0f19] bg-opacity-98 hidden flex flex-col items-center justify-center p-4">
@@ -4454,14 +4578,16 @@
                 'Graphic Design/SSC Result feature.png',
                 'https://placehold.co/600x600/1a1a2e/00AECC?text=Design+2',
                 'https://placehold.co/600x600/1a1a2e/00AECC?text=Design+3'
-            ]
+            ],
+            'docdesign': []
         };
 
         const cardState = {
             'game': { index: 0, interval: null },
             'diy': { index: 0, interval: null },
             'social': { index: 0, interval: null },
-            'design': { index: 0, interval: null }
+            'design': { index: 0, interval: null },
+            'docdesign': { index: 0, interval: null }
         };
 
         function startCardSlide(cardId, element) {
