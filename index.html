@@ -1417,7 +1417,13 @@
                             
                             <!-- Software Logos Gallery Links -->
                             <div class="relative w-fit mb-8 mt-2 bg-[#056172] rounded-3xl p-4 md:p-5 shadow-lg border border-white/10">
-                                <div class="grid grid-cols-5 gap-x-4 gap-y-5 relative z-10 justify-items-center">
+                                <div class="grid grid-cols-5 gap-x-4 gap-y-5 relative z-10 justify-items-center max-h-[340px] overflow-y-auto app-drawer-scroll pr-1 pb-1" style="scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.3) transparent;">
+                                    <style>
+                                        .app-drawer-scroll::-webkit-scrollbar { width: 4px; }
+                                        .app-drawer-scroll::-webkit-scrollbar-track { background: transparent; }
+                                        .app-drawer-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 10px; }
+                                        .app-drawer-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
+                                    </style>
                                     
                                     <!-- Graphic Design -->
                                     <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openGraphicDesignModal()" title="Adobe Photoshop">
@@ -1450,9 +1456,27 @@
                                         <img src="Software Logos/Google_Antigravity_Logo.svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm">
                                         <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm">Gemini</span>
                                     </div>
+                                    <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDataAutomationModal()" title="Gemini 2025">
+                                        <img src="Software Logos/Google_Gemini_icon_2025.svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm">
+                                        <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm text-center">Gemini 25</span>
+                                    </div>
                                     <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDataAutomationModal()" title="ChatGPT">
                                         <img src="Software Logos/ChatGPT-Logo.svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm bg-white rounded-full">
                                         <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm">ChatGPT</span>
+                                    </div>
+
+                                    <!-- Document Design -->
+                                    <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDocumentDesignModal()" title="Bijoy Bayanno">
+                                        <img src="Software Logos/bijoy-bayanno-seeklogo [Converted].svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm bg-white rounded-xl p-1">
+                                        <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm text-center">Bijoy</span>
+                                    </div>
+                                    <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDocumentDesignModal()" title="Microsoft Word">
+                                        <img src="Software Logos/Microsoft_Office_Word_(2025–present).svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm">
+                                        <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm">Word</span>
+                                    </div>
+                                    <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDocumentDesignModal()" title="Foxit Reader">
+                                        <img src="Software Logos/foxit-reader.svg" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm bg-white rounded-full p-0.5">
+                                        <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm">Foxit</span>
                                     </div>
 
                                     <!-- Social Media -->
@@ -1467,7 +1491,7 @@
 
                                     <!-- DIY Concept -->
                                     <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" onclick="openDiyConceptModal()" title="Tinkercad">
-                                        <img src="Software Logos/tinkercad.svg" class="w-[36pt] h-[36pt] object-contain drop-shadow-sm mb-1.5 filter drop-shadow-sm">
+                                        <img src="Software Logos/tinkercad.svg" class="w-[36pt] h-[36pt] object-contain drop-shadow-sm mb-1.5 filter drop-shadow-sm bg-white rounded-md p-1">
                                         <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm text-center">Tinkercad</span>
                                     </div>
 
