@@ -84,9 +84,11 @@
                     const nameParts = img.name.split('.');
                     nameParts.pop();
                     const cleanName = nameParts.join('.').replace(/[-_]/g, ' ');
+                    const isSvg = img.name.toLowerCase().endsWith('.svg');
+                    const sizeClass = isSvg ? 'w-[38pt] h-[38pt]' : 'w-[36pt] h-[36pt]';
                     return `
                     <div class="flex flex-col items-center justify-start hover:-translate-y-1 transition-all duration-200 cursor-pointer" title="${cleanName}">
-                        <img src="${img.url}" class="w-[36pt] h-[36pt] object-contain mb-1.5 filter drop-shadow-sm bg-white rounded-md p-1">
+                        <img src="${img.url}" class="${sizeClass} object-contain mb-1.5 filter drop-shadow-sm bg-white rounded-md p-1">
                         <span class="text-[10pt] font-extrabold text-white leading-none drop-shadow-sm text-center capitalize overflow-hidden text-ellipsis w-full whitespace-nowrap px-1">${cleanName}</span>
                     </div>
                     `;
