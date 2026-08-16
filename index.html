@@ -592,7 +592,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    if (!data || !data.contents) throw new Error("404");
+                    if (!data || data.status?.http_code === 404) throw new Error("404");
 
                     const domain = extractDomain(url);
                     if (!domain) throw new Error("Invalid Domain");
@@ -643,12 +643,18 @@
                             }
                         });
                 })
-                .catch(() => {
+                .catch((err) => {
                     spinnerEl.classList.add('hidden');
-                    statusEl.innerText = "404 Not Found";
-                    statusEl.className = "text-[9px] font-bold uppercase tracking-wider text-red-500 flex items-center gap-1";
-                    statusEl.classList.remove('hidden');
-                    inputEl.classList.add('border-red-500');
+                    if (err.message === "404" || err.message === "Invalid Domain") {
+                        statusEl.innerText = "404 Not Found";
+                        statusEl.className = "text-[9px] font-bold uppercase tracking-wider text-red-500 flex items-center gap-1";
+                        statusEl.classList.remove('hidden');
+                        inputEl.classList.add('border-red-500');
+                    } else {
+                        // If it's a CORS error, rdap block, or proxy block, assume valid
+                        badgeEl.classList.remove('hidden');
+                        inputEl.classList.add('border-green-500');
+                    }
                 });
         }
 
@@ -661,13 +667,13 @@
             const currentLang = localStorage.getItem('lang') || 'EN';
 
             // Hide and reset
-            statusEl.classList.add('hidden');
-            spinnerEl.classList.remove('hidden');
-            mapContainer.classList.add('hidden');
-            inputEl.classList.remove('border-green-500', 'border-red-500');
+            if (statusEl) statusEl.classList.add('hidden');
+            if (spinnerEl) spinnerEl.classList.remove('hidden');
+            if (mapContainer) mapContainer.classList.add('hidden');
+            if (inputEl) inputEl.classList.remove('border-green-500', 'border-red-500');
 
             if (!addressVal) {
-                spinnerEl.classList.add('hidden');
+                if (spinnerEl) spinnerEl.classList.add('hidden');
                 return;
             }
 
@@ -675,28 +681,34 @@
             fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addressVal)}&format=json&limit=1`)
                 .then(res => res.json())
                 .then(data => {
-                    spinnerEl.classList.add('hidden');
+                    if (spinnerEl) spinnerEl.classList.add('hidden');
                     if (data && data.length > 0) {
-                        inputEl.classList.add('border-green-500');
+                        if (inputEl) inputEl.classList.add('border-green-500');
 
                         // Load Google Map Embed
-                        const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(addressVal)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
-                        mapIframe.src = embedUrl;
-                        mapContainer.classList.remove('hidden');
+                        if (mapIframe && mapContainer) {
+                            const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(addressVal)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
+                            mapIframe.src = embedUrl;
+                            mapContainer.classList.remove('hidden');
+                        }
                     } else {
-                        inputEl.classList.add('border-red-500');
-                        statusEl.innerText = currentLang === 'BN' ? "ঠিকানা পাওয়া যায়নি" : "Address Not Found";
-                        statusEl.className = "text-[9px] font-bold uppercase tracking-wider text-red-500 flex items-center gap-1";
-                        statusEl.classList.remove('hidden');
+                        if (inputEl) inputEl.classList.add('border-red-500');
+                        if (statusEl) {
+                            statusEl.innerText = currentLang === 'BN' ? "ঠিকানা পাওয়া যায়নি" : "Address Not Found";
+                            statusEl.className = "text-[9px] font-bold uppercase tracking-wider text-red-500 flex items-center gap-1";
+                            statusEl.classList.remove('hidden');
+                        }
                     }
                 })
                 .catch(() => {
-                    spinnerEl.classList.add('hidden');
+                    if (spinnerEl) spinnerEl.classList.add('hidden');
                     // Fallback to directly embedding search on Google Maps
-                    const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(addressVal)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
-                    mapIframe.src = embedUrl;
-                    mapContainer.classList.remove('hidden');
-                    inputEl.classList.add('border-green-500');
+                    if (mapIframe && mapContainer) {
+                        const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(addressVal)}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
+                        mapIframe.src = embedUrl;
+                        mapContainer.classList.remove('hidden');
+                    }
+                    if (inputEl) inputEl.classList.add('border-green-500');
                 });
         }
 
