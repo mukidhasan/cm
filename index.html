@@ -1434,63 +1434,14 @@
                 </g>
                 </svg>
             </span>
-            <nav
-                class="hidden md:flex items-center gap-3 lg:gap-4 xl:gap-5 text-gray-500 flex-wrap justify-end p-2 bg-gradient-to-b from-[#e2e8f0] to-[#cbd5e1] rounded-[10px] shadow-[inset_0_2px_5px_rgba(255,255,255,0.8),inset_0_-2px_5px_rgba(0,0,0,0.1),0_15px_25px_rgba(0,0,0,0.15)]">
-                <span data-section="section-home" onclick="document.getElementById('section-home').scrollIntoView({behavior:'smooth'})" data-translate="nav_home"
-                    class="mech-key cyan">Home</span>
-                <span data-section="section-content" onclick="document.getElementById('section-content').scrollIntoView({behavior:'smooth'})" data-translate="nav_content"
-                    class="mech-key">My Content</span>
-                <span data-section="section-experience" onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'})" data-translate="nav_experience"
-                    class="mech-key">Experience</span>
-                <span data-section="section-hobbies" onclick="document.getElementById('section-hobbies').scrollIntoView({behavior:'smooth'})" data-translate="nav_hobbies"
-                    class="mech-key">Hobbies</span>
-                <span data-section="section-interests" onclick="document.getElementById('section-interests').scrollIntoView({behavior:'smooth'})" data-translate="nav_interests"
-                    class="mech-key">Interests</span>
-                <span data-section="section-education" onclick="document.getElementById('section-education').scrollIntoView({behavior:'smooth'})" data-translate="nav_education"
-                    class="mech-key">Certificates</span>
-                <span onclick="openDiariesModal()" data-translate="nav_books"
-                    class="mech-key">My Diary</span>
-                <span data-section="section-expertise" onclick="document.getElementById('section-expertise').scrollIntoView({behavior:'smooth'})" data-translate="nav_expertise"
-                    class="mech-key">Skills</span>
-            </nav>
             <div class="flex items-center gap-4">
                 <button onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth'})" data-translate="let_talk"
-                    class="hidden sm:flex mech-key cyan !px-6 !py-3 !text-[11px]">
+                    class="flex mech-key cyan !px-6 !py-3 !text-[11px]">
                     Let's Talk <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
                             d="M5 19L19 5M19 5v14M19 5H5"></path>
                     </svg>
                 </button>
-                <button onclick="toggleMobileMenu()"
-                    class="md:hidden text-brand-black hover:text-brand-blue transition p-2 focus:outline-none"
-                    id="mobileMenuBtn">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path id="hamburgerIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Mobile Navigation Overlay (Dropdown) -->
-            <div id="mobileNavMenu"
-                class="absolute top-[80px] left-0 w-full bg-[#f4f7f9] shadow-[0_10px_30px_rgba(0,0,0,0.1)] hidden md:hidden flex-col p-6 gap-3 z-50 transition-all duration-300">
-                <span data-section="section-home" onclick="document.getElementById('section-home').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_home"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-[#00bcd4] bg-[#e0f7fa] shadow-[inset_3px_3px_6px_rgba(0,188,212,0.2),inset_-3px_-3px_6px_rgba(255,255,255,1)] font-bold text-sm uppercase tracking-wider text-center">Home</span>
-                <span id="mobile-nav-content" data-section="section-content" onclick="document.getElementById('section-content').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()"
-                    data-translate="nav_content"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">My Content</span>
-                <span data-section="section-experience" onclick="document.getElementById('section-experience').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_experience"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">Experience</span>
-                <span data-section="section-hobbies" onclick="document.getElementById('section-hobbies').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_hobbies"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">Hobbies</span>
-                <span data-section="section-interests" onclick="document.getElementById('section-interests').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_interests"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">Interests</span>
-                <span data-section="section-education" onclick="document.getElementById('section-education').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_education"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">Certificates</span>
-                <span onclick="openDiariesModal(); toggleMobileMenu()" data-translate="nav_books"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">My Diary</span>
-                <span data-section="section-expertise" onclick="document.getElementById('section-expertise').scrollIntoView({behavior:'smooth'}); toggleMobileMenu()" data-translate="nav_expertise"
-                    class="mobile-nav-item cursor-pointer transition-all duration-300 px-4 py-3 rounded-full text-gray-500 hover:text-gray-700 hover:shadow-[3px_3px_8px_rgba(163,177,198,0.4),-3px_-3px_8px_rgba(255,255,255,0.9)] font-bold text-sm uppercase tracking-wider text-center">Skills</span>
             </div>
         </header>
 
